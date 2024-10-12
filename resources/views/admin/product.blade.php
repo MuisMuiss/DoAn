@@ -4,11 +4,11 @@
 
     <!-- Page Heading -->
     <h1 class="h3 mb-2 text-gray-800">Quản lý sản phẩm</h1>
-    <a href="#" class="btn btn-success btn-icon-split">
+    <a href="themsp" class="btn btn-success btn-icon-split">
         <span class="icon text-white-50">
             <i class="fas fa-plus"></i>
         </span>
-        <span class="text">Thêm người dùng</span>
+        <span class="text">Thêm sản phẩm</span>
     </a>
     <hr>
     <!-- DataTales Example -->

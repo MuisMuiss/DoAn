@@ -8,7 +8,7 @@
         <span class="icon text-white-50">
             <i class="fas fa-plus"></i>
         </span>
-        <span class="text">Thêm người dùng</span>
+        <span class="text">Thêm danh mục</span>
     </a>
     <hr>
     <!-- DataTales Example -->
