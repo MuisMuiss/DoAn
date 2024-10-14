@@ -56,7 +56,7 @@
 
             <!-- Quản lý user -->
             <li class="nav-item">
-                <a class="nav-link" href="aduser">
+                <a class="nav-link" href="{{route('admin.alluser')}}">
                     <i class="fab fa-reddit-alien"></i>
                     <span>Quản lý người dùng</span></a>
             </li>

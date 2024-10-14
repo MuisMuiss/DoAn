@@ -4,7 +4,7 @@
 
     <!-- Page Heading -->
     <h1 class="h3 mb-2 text-gray-800">Quản lý người dùng</h1>
-    <a href="#" class="btn btn-success btn-icon-split">
+    <a href="{{route('admin.themuser')}}" class="btn btn-success btn-icon-split">
         <span class="icon text-white-50">
             <i class="fas fa-plus"></i>
         </span>
@@ -52,6 +52,7 @@
                                         <th rowspan="1" colspan="1">Số điện thoại</th>
                                         <th rowspan="1" colspan="1">Địa chỉ</th>
                                         <th rowspan="1" colspan="1">Ảnh</th>
+                                        <th rowspan="1" colspan="1">IsAdmin</th>
                                         <th rowspan="1" colspan="1">Ngày tạo</th>
                                         <th rowspan="1" colspan="1">Trạng thái</th>
                                     </tr>
@@ -64,6 +65,9 @@
                                         <td>113</td>
                                         <td>Tiền Giang</td>
                                         <td>ảnh</td>
+                                        <td>
+                                            Admin
+                                        </td>
                                         <td>12/2/2024</td>
                                         <td>Hoạt động</td>
                                         <td>
@@ -90,9 +94,6 @@
                                     <li class="paginate_button page-item active"><a href="#" aria-controls="dataTable" data-dt-idx="1" tabindex="0" class="page-link">1</a></li>
                                     <li class="paginate_button page-item "><a href="#" aria-controls="dataTable" data-dt-idx="2" tabindex="0" class="page-link">2</a></li>
                                     <li class="paginate_button page-item "><a href="#" aria-controls="dataTable" data-dt-idx="3" tabindex="0" class="page-link">3</a></li>
-                                    <li class="paginate_button page-item "><a href="#" aria-controls="dataTable" data-dt-idx="4" tabindex="0" class="page-link">4</a></li>
-                                    <li class="paginate_button page-item "><a href="#" aria-controls="dataTable" data-dt-idx="5" tabindex="0" class="page-link">5</a></li>
-                                    <li class="paginate_button page-item "><a href="#" aria-controls="dataTable" data-dt-idx="6" tabindex="0" class="page-link">6</a></li>
                                     <li class="paginate_button page-item next" id="dataTable_next"><a href="#" aria-controls="dataTable" data-dt-idx="7" tabindex="0" class="page-link">Next</a></li>
                                 </ul>
                             </div>
