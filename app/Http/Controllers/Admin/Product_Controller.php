@@ -15,7 +15,10 @@ class Product_Controller extends Controller
      */
     public function index()
     {
-        //
+        $product= DB::table ('san_pham')->get();
+        $cate_product= DB::table ('loai_sp')->get();
+        $brand_product= DB::table ('nha_cung_cap')->get();
+       return view('admin.product')->with('product',$product)->with('cate_product',$cate_product)->with('brand_product',$brand_product);
     }
 
     /**
@@ -23,8 +26,8 @@ class Product_Controller extends Controller
      */
     public function themsp()
     {
-        $cate_product= DB::table ('san_pham')->oderby('san_pham_id','desc')->get();
-        return view('product');
+         $cate_product= DB::table ('loai_sp')->orderByDesc('loai_sp_id')->get();$brand_product= DB::table ('nha_cung_cap')->orderByDesc('nha_cung_cap_id')->get();
+        return view('admin.addproduct')->with('cate_product',$cate_product)->with('brand_product',$brand_product);
     }
 
     /**
