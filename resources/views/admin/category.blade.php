@@ -1,9 +1,5 @@
 @include("admin.autth.head")
 <!-- Begin Page Content -->
-<<<<<<< HEAD
-=======
-<div class="container-fluid">
->>>>>>> 1f7db35eec24f105bdcb26715aed7ce8dab4b0e7
 
     <!-- Page Heading -->
     <h1 class="h3 mb-2 text-gray-800">Quản lý danh mục</h1>
@@ -11,17 +7,13 @@
         <span class="icon text-white-50">
             <i class="fas fa-plus"></i>
         </span>
-<<<<<<< HEAD
         <span class="text">Thêm danh mục</span>
-=======
-        <span class="text">Thêm người dùng</span>
->>>>>>> 1f7db35eec24f105bdcb26715aed7ce8dab4b0e7
     </a>
     <hr>
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Bảng dữ liệu người dùng / User datatable</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Bảng dữ liệu danh mục / category datatable</h6>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -44,14 +36,6 @@
                         <div class="col-sm-12">
                             <table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
                                 <thead>
-                                    <!-- <tr role="row">
-                                        <th class="sorting sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 190.775px;">Name</th>
-                                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 309.712px;">Position</th>
-                                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Office: activate to sort column ascending" style="width: 137.288px;">Office</th>
-                                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Age: activate to sort column ascending" style="width: 63.9125px;">Age</th>
-                                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Start date: activate to sort column ascending" style="width: 129.8px;">Start date</th>
-                                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Salary: activate to sort column ascending" style="width: 116.512px;">Salary</th>
-                                    </tr> -->
                                     <tr>
                                         <th rowspan="1" colspan="1">Id</th>
                                         <th rowspan="1" colspan="1">Tên danh mục</th>
