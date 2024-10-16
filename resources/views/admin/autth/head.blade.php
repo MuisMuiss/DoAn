@@ -44,7 +44,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="{{route('admin.home')}}">
+                <a class="nav-link" href="index.html">
                     <i class="fab fa-fort-awesome"></i>
                     <span>Dashboard</span></a>
             </li>
@@ -56,7 +56,7 @@
 
             <!-- Quản lý user -->
             <li class="nav-item">
-                <a class="nav-link" href="{{route('admin.alluser')}}">
+                <a class="nav-link" href="aduser">
                     <i class="fab fa-reddit-alien"></i>
                     <span>Quản lý người dùng</span></a>
             </li>
