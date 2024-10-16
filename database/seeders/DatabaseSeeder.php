@@ -19,5 +19,16 @@ class DatabaseSeeder extends Seeder
             'name' => 'Test User',
             'email' => 'test@example.com',
         ]);
+        // $user = new User;
+        // $user->fullname = 'Admin';
+        // $user->username = 'admin';
+        // $user->email='admin@gmail.com';
+        // $user->password = bcrypt('123456');
+        // $user->phone='0123456789';
+        // $user->address='HCM';
+        // $user->isadmin=true;
+        // $user->anh='a.jpg';
+        // $user->date='';
+        // $user->status=true;
     }
 }

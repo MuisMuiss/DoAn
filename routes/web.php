@@ -1,6 +1,5 @@
 <?php
 use App\Http\Controllers\Admin\AdminController;
-use App\Http\Controllers\Admin\Product_Controller;
 use Illuminate\Support\Facades\Route;
 
 
@@ -49,23 +48,20 @@ Route::get('/register', function () {
 // Route::post('/homeadmin', function () {
 //     return view('admin.home');
 // });
-// Route::get('/adproduct', function () {
-//     return view('admin.product');
-// });
-Route::get('/aduser', function () {
-    return view('admin.user');
+Route::get('/adproduct', function () {
+    return view('admin.product');
 });
+// Route::get('/aduser', function () {
+//     return view('admin.user');
+// });
 Route::get('/adcat', function () {
     return view('admin.category');
 });
 //Route::put('/login', [AdminController::class, "viewlogin"])->name('admin.login');
 Route::match(['get', 'post'], '/login', [AdminController::class, "viewlogin"])->name('admin.login');
-Route::match(['get', 'post'], '/homeadmin', [AdminController::class, "viewhome"])->name('admin.home');
-Route::get('allproducts',[Product_Controller::class,"index"])->name('product.all');
-Route::get('addproducts',[Product_Controller::class,"themsp"])->name('product.add');
-//Route::put('/login', [AdminController::class, "viewlogin"])->name('admin.login');
 Route::get('/login', [AdminController::class, "viewlogin"])->name('admin.login');
 Route::post('/login', [AdminController::class, "login"])->name('admin.login');
+Route::match(['get', 'post'], '/homeadmin', [AdminController::class, "viewhome"])->name('admin.home');
 Route::match(['get', 'post'], '/themuser', [AdminController::class, "themuser"])->name('admin.themuser');
 Route::match(['get', 'post'], '/alluser', [AdminController::class, "viewuser"])->name('admin.alluser');
 Route::match(['get', 'post'], '/addUser', [AdminController::class, "addUser"])->name('admin.addUser');
