@@ -4,11 +4,19 @@
 
     <!-- Page Heading -->
     <h1 class="h3 mb-2 text-gray-800">Quản lý sản phẩm</h1>
+<<<<<<< HEAD
     <a href="{{route('product.add')}}" class="btn btn-success btn-icon-split">
         <span class="icon text-white-50">
             <i class="fas fa-plus"></i>
         </span>
         <span class="text">Thêm sản phẩm</span>
+=======
+    <a href="#" class="btn btn-success btn-icon-split">
+        <span class="icon text-white-50">
+            <i class="fas fa-plus"></i>
+        </span>
+        <span class="text">Thêm người dùng</span>
+>>>>>>> 1f7db35eec24f105bdcb26715aed7ce8dab4b0e7
     </a>
     <hr>
     <!-- DataTales Example -->
@@ -52,12 +60,16 @@
                                         <th rowspan="1" colspan="1">Giá</th>
                                         <th rowspan="1" colspan="1">Mô tả</th>
                                         <th rowspan="1" colspan="1">Số lượng kho</th>
+<<<<<<< HEAD
                                         <th rowspan="1" colspan="1">Nhà cung cấp</th>
+=======
+>>>>>>> 1f7db35eec24f105bdcb26715aed7ce8dab4b0e7
                                         <th rowspan="1" colspan="1">Hình ảnh</th>
                                         <th rowspan="1" colspan="1">Ngày tạo</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+<<<<<<< HEAD
                                 @foreach($product as $key => $pro)
 
                                     <tr >
@@ -81,6 +93,17 @@
 
                                         <td>{{$pro->hinh_anh}}</td>
                                         <td>{{$pro->ngay_tao}}</td>
+=======
+                                    <tr class="odd">
+                                        <td class="sorting_1"></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+>>>>>>> 1f7db35eec24f105bdcb26715aed7ce8dab4b0e7
                                         <td>
                                             <a href="#" class="btn btn-warning btn-circle btn-sm">
                                                 <i class="fas fa-fw fa-wrench"></i>
@@ -89,8 +112,11 @@
                                                 <i class="fas fa-trash"></i>
                                             </a>
                                         </td>
+<<<<<<< HEAD
                                         @endforeach
                                         
+=======
+>>>>>>> 1f7db35eec24f105bdcb26715aed7ce8dab4b0e7
                                     </tr>
                                 </tbody>
                             </table>
