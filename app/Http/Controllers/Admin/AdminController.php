@@ -3,10 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\nguoiDung;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-
-
+use Illuminate\Support\Facades\Hash;
 class AdminController extends Controller
 {
     public function viewlogin(){
@@ -17,19 +18,32 @@ class AdminController extends Controller
     }
     public function login(Request $request)
     {
-        $username = $request->input('username');
-        $password = $request->input('password');
-        $tk = DB::table('nguoi_dung')->where('vai_tro', '=', 1)->select("*")->get();
-        foreach ($tk as $row) {
-            if ($row->ten_dang_nhap == $username && $row->mat_khau == md5($password)) {
-                $dt = DB::table('san_pham')->select('*');
-                $dt = $dt->get();
-                setcookie("id", $row->Id, time() + 3600);
-                return view("home", compact('dt'));
-                break;
-            }
-        }
-        return view("login", ['loginError' => "Sai mật khẩu hoặc tài khoản", 'SignUpError' => ""]);
+        // $email = $request->email;
+        // $password = $request->password;
+        // $hashedPassword = Hash::make($password);
+        // $dn=Auth::attempt(['email' => $email, 'password' => $hashedPassword]);
+        // dd($dn);
+        // if($dn==true){
+        //     $user=Auth::user();
+        //     dd($user);
+        //     return view('admin.home');
+        // }
+        // return back()->with('msg','Email hoặc mật khẩu không chính xác');
+
+        // $email = $request->input('email');
+        // $password = $request->input('password');
+        // $tk = DB::table('users')->where('isadmin', '=', 1)->select("*")->get();
+        // foreach ($tk as $row) {
+        //     if ($row->email == $email && $row->password == md5($password)) {
+        //         $dt = DB::table('users')->select('*');
+        //         $dt = $dt->get();
+        //         setcookie("id", $row->Id, time() + 3600);
+        //         return view("admin.home");
+        //         break;
+        //     }
+        // }
+        // return view("admin.login", ['loginError' => "Sai mật khẩu hoặc tài khoản", 'SignUpError' => ""]);
+        
     }
     //CRUD 
     //Thêm user
@@ -55,7 +69,7 @@ class AdminController extends Controller
             'mat_khau.min' => 'Mật khẩu phải có ít nhất 6 ký tự.',
             'so_dien_thoai.required' => 'Số điện thoại không được để trống.',
             'so_dien_thoai.min' => 'Mật khẩu phải có ít nhất 10 ký tự.',
-            'so_dien_thoai.integer' => 'Số điện thoại phải là số nguyên.',
+            //'so_dien_thoai.integer' => 'Số điện thoại phải là số nguyên.',
             'dia_chi.required'=> 'Địa chỉ không được để trống.'
         ];
     
@@ -63,31 +77,57 @@ class AdminController extends Controller
             'ho_ten' => 'required',
             'ten_dang_nhap' => 'required',
             'email' => 'required|email',
-            'mat_khau' => 'required|min:6',
-            'so_dien_thoai' => 'required|integer|min:10',
+            'so_dien_thoai' => 'required|min:10',
             'dia_chi'=> 'required',
+            'vai_tro'=>'required|boolean',
+            'trang_thai'=>'required|boolean',
         ], $messages);
-        try {
-            //code...
-            $db_user = DB::table('nguoi_dung')->insert(
-                array(
-                    'ho_ten'=>$request->input('ho_ten'),
-                    'ten_dang_nhap'=>$request->input('ten_dang_nhap'),
-                    'mat_khau'=>md5($request->input('mat_khau')),
-                    'email'=>$request->input('email'),
-                    'so_dien_thoai'=>$request->input('so_dien_thoai'),
-                    'dia_chi'=>$request->input('dia_chi'),
-                    'vai_tro'=>$request->input('vai_tro'),
-                    'avatar'=>$request->input('avatar'),
-                    'trang_thai'=>$request->input('trang_thai'),
+        // if($request->hasFile('avatar')){
+        //     $img=$request->file('avatar')->getClientOriginalName();
+        //     $request->avatar->move(public_path('images/avatar'),$img);
+        // }else{$img=null;}
+        //code...
+        $existingUser = nguoiDung::where('email', $request->email)->first();
 
-                )
-                );
-        } catch (\Throwable $th) {
-            //throw $th;
+        if ($existingUser) {
+            return redirect()->back()->with(['status' => 'Email đã tồn tại.']);
         }
+        $user = new nguoiDung;
+        $user->ho_ten=$request->input('ho_ten');
+        $user->ten_dang_nhap=$request->input('ten_dang_nhap');
+        $user->mat_khau=bcrypt($request->input('mat_khau'));
+        $user->email=$request->input('email');
+        $user->so_dien_thoai=$request->input('so_dien_thoai');
+        $user->dia_chi=$request->input('dia_chi');
+        $user->vai_tro=$request->vai_tro ? 1 : 0;
+        if($request->hasFile('avatar')){
+            $file=$request->file('avatar');
+            $extension=$file->getClientOriginalExtension();
+            $filename = time().'.'.$extension;
+            $file->move('images/avatar/',$filename);
+            $user->avatar=$filename;
+        }
+        $user->trang_thai=$request->trang_thai? 1 : 0;;
+        $user->save();
+        return redirect()->back()->with('status','Thêm user thành công');
     }
     public function viewuser(){
-        return view('admin.user');
+        $nguoiDung = nguoiDung::all();
+        return view('admin.user',compact('nguoiDung'));
+    }
+    //Edit
+    public function suauser($nguoi_dung_id){
+        $nguoiDung=nguoiDung::find($nguoi_dung_id);
+        return view('admin.curduser.edituser',compact('nguoiDung'));
+    }
+    public function updateuser(Request $request, $nguoi_dung_id){
+        $nguoiDung=nguoiDung::find($nguoi_dung_id);
+        return view('admin.curduser.edituser',compact('nguoiDung'));
+    }
+    //Delete
+    public function deleteUser($nguoi_dung_id){
+        $nguoiDung=nguoiDung::find($nguoi_dung_id);
+        $nguoiDung->delete();
+        return redirect()->back()->with('status','Xóa user thành công');
     }
 }
