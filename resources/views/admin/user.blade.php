@@ -4,7 +4,7 @@
 
     <!-- Page Heading -->
     <h1 class="h3 mb-2 text-gray-800">Quản lý người dùng</h1>
-    <a href="#" class="btn btn-success btn-icon-split">
+    <a href="{{route('admin.themuser')}}" class="btn btn-success btn-icon-split">
         <span class="icon text-white-50">
             <i class="fas fa-plus"></i>
         </span>
@@ -16,6 +16,9 @@
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">Bảng dữ liệu người dùng / User datatable</h6>
         </div>
+        @if (session('status'))
+                        <h5 class="alert alert-success">{{session('status')}}</h5>
+                    @endif
         <div class="card-body">
             <div class="table-responsive">
                 <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
@@ -52,29 +55,31 @@
                                         <th rowspan="1" colspan="1">Số điện thoại</th>
                                         <th rowspan="1" colspan="1">Địa chỉ</th>
                                         <th rowspan="1" colspan="1">Ảnh</th>
-                                        <th rowspan="1" colspan="1">Ngày tạo</th>
+                                        <th rowspan="1" colspan="1">IsAdmin</th>
                                         <th rowspan="1" colspan="1">Trạng thái</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach ( $nguoiDung as $nd )
                                     <tr class="odd">
-                                        <td class="sorting_1">1</td>
-                                        <td>Bình</td>
-                                        <td>binh@gmail.com</td>
-                                        <td>113</td>
-                                        <td>Tiền Giang</td>
-                                        <td>ảnh</td>
-                                        <td>12/2/2024</td>
-                                        <td>Hoạt động</td>
+                                        <td class="sorting_1">{{$nd->nguoi_dung_id}}</td>
+                                        <td>{{$nd->ho_ten}}</td>
+                                        <td>{{$nd->email}}</td>
+                                        <td>{{$nd->so_dien_thoai}}</td>
+                                        <td>{{$nd->dia_chi}}</td>
+                                        <td>{{$nd->avatar}}</td>
+                                        <td>{{$nd->vai_tro}}</td>
+                                        <td>{{$nd->trang_thai}}</td>
                                         <td>
-                                            <a href="#" class="btn btn-warning btn-circle btn-sm">
+                                            <a href="{{ route('admin.suauser', ['nguoi_dung_id' => $nd->nguoi_dung_id]) }}" class="btn btn-warning btn-circle btn-sm">
                                                 <i class="fas fa-fw fa-wrench"></i>
                                             </a>
-                                            <a href="#" class="btn btn-danger btn-circle btn-sm">
+                                            <a href="{{ route('admin.deleteUser', ['nguoi_dung_id' => $nd->nguoi_dung_id]) }}" class="btn btn-danger btn-circle btn-sm">
                                                 <i class="fas fa-trash"></i>
                                             </a>
                                         </td>
                                     </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -90,9 +95,6 @@
                                     <li class="paginate_button page-item active"><a href="#" aria-controls="dataTable" data-dt-idx="1" tabindex="0" class="page-link">1</a></li>
                                     <li class="paginate_button page-item "><a href="#" aria-controls="dataTable" data-dt-idx="2" tabindex="0" class="page-link">2</a></li>
                                     <li class="paginate_button page-item "><a href="#" aria-controls="dataTable" data-dt-idx="3" tabindex="0" class="page-link">3</a></li>
-                                    <li class="paginate_button page-item "><a href="#" aria-controls="dataTable" data-dt-idx="4" tabindex="0" class="page-link">4</a></li>
-                                    <li class="paginate_button page-item "><a href="#" aria-controls="dataTable" data-dt-idx="5" tabindex="0" class="page-link">5</a></li>
-                                    <li class="paginate_button page-item "><a href="#" aria-controls="dataTable" data-dt-idx="6" tabindex="0" class="page-link">6</a></li>
                                     <li class="paginate_button page-item next" id="dataTable_next"><a href="#" aria-controls="dataTable" data-dt-idx="7" tabindex="0" class="page-link">Next</a></li>
                                 </ul>
                             </div>
