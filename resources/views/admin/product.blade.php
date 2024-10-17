@@ -54,7 +54,6 @@
                                         <th rowspan="1" colspan="1">Số lượng kho</th>
                                         <th rowspan="1" colspan="1">Nhà cung cấp</th>
                                         <th rowspan="1" colspan="1">Hình ảnh</th>
-                                        <th rowspan="1" colspan="1">Ngày tạo</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -79,7 +78,7 @@
                                         @endforeach
 
                                         <td>{{$pro->hinh_anh}}</td>
-                                        <td>{{$pro->ngay_tao}}</td>
+
                                         <td>
                                             <a href="#" class="btn btn-warning btn-circle btn-sm">
                                                 <i class="fas fa-fw fa-wrench"></i>

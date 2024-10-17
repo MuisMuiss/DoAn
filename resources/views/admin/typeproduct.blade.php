@@ -3,18 +3,18 @@
 <div class="container-fluid">
 
     <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800">Quản lý danh mục</h1>
+    <h1 class="h3 mb-2 text-gray-800">Quản lý loại sản phẩm</h1>
     <a href="{{route('admin.themuser')}}" class="btn btn-success btn-icon-split">
         <span class="icon text-white-50">
             <i class="fas fa-plus"></i>
         </span>
-        <span class="text">Thêm danh mục</span>
+        <span class="text">Thêm loại sản phẩm</span>
     </a>
     <hr>
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Bảng dữ liệu danh mục / Category datatable</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Bảng dữ liệu loại sản phẩm / Product type datatable</h6>
         </div>
         @if (session('status'))
                         <h5 class="alert alert-success">{{session('status')}}</h5>
@@ -50,7 +50,7 @@
                                     </tr> -->
                                     <tr>
                                         <th rowspan="1" colspan="1">Id</th>
-                                        <th rowspan="1" colspan="1">Tên danh mục</th>
+                                        <th rowspan="1" colspan="1">Tên loại sản phẩm</th>
                                     </tr>
                                 </thead>
                                 <tbody>

@@ -58,6 +58,9 @@ Route::get('/adproduct', function () {
 Route::get('/adcat', function () {
     return view('admin.category');
 });
+Route::get('/type', function () {
+    return view('admin.typeproduct');
+});
 //Route::put('/login', [AdminController::class, "viewlogin"])->name('admin.login');
 Route::match(['get', 'post'], '/login', [AdminController::class, "viewlogin"])->name('admin.login');
 Route::get('/login', [AdminController::class, "viewlogin"])->name('admin.login');
