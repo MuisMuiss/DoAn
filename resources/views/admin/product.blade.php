@@ -4,19 +4,11 @@
 
     <!-- Page Heading -->
     <h1 class="h3 mb-2 text-gray-800">Quản lý sản phẩm</h1>
-<<<<<<< HEAD
     <a href="{{route('product.add')}}" class="btn btn-success btn-icon-split">
         <span class="icon text-white-50">
             <i class="fas fa-plus"></i>
         </span>
         <span class="text">Thêm sản phẩm</span>
-=======
-    <a href="#" class="btn btn-success btn-icon-split">
-        <span class="icon text-white-50">
-            <i class="fas fa-plus"></i>
-        </span>
-        <span class="text">Thêm người dùng</span>
->>>>>>> 1f7db35eec24f105bdcb26715aed7ce8dab4b0e7
     </a>
     <hr>
     <!-- DataTales Example -->
@@ -45,14 +37,7 @@
                         <div class="col-sm-12">
                             <table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
                                 <thead>
-                                    <!-- <tr role="row">
-                                        <th class="sorting sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 190.775px;">Name</th>
-                                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 309.712px;">Position</th>
-                                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Office: activate to sort column ascending" style="width: 137.288px;">Office</th>
-                                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Age: activate to sort column ascending" style="width: 63.9125px;">Age</th>
-                                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Start date: activate to sort column ascending" style="width: 129.8px;">Start date</th>
-                                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Salary: activate to sort column ascending" style="width: 116.512px;">Salary</th>
-                                    </tr> -->
+                                   
                                     <tr>
                                         <th rowspan="1" colspan="1">Id</th>
                                         <th rowspan="1" colspan="1">Tên sản phẩm</th>
@@ -60,16 +45,12 @@
                                         <th rowspan="1" colspan="1">Giá</th>
                                         <th rowspan="1" colspan="1">Mô tả</th>
                                         <th rowspan="1" colspan="1">Số lượng kho</th>
-<<<<<<< HEAD
                                         <th rowspan="1" colspan="1">Nhà cung cấp</th>
-=======
->>>>>>> 1f7db35eec24f105bdcb26715aed7ce8dab4b0e7
                                         <th rowspan="1" colspan="1">Hình ảnh</th>
                                         <th rowspan="1" colspan="1">Ngày tạo</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-<<<<<<< HEAD
                                 @foreach($product as $key => $pro)
 
                                     <tr >
@@ -93,17 +74,6 @@
 
                                         <td>{{$pro->hinh_anh}}</td>
                                         <td>{{$pro->ngay_tao}}</td>
-=======
-                                    <tr class="odd">
-                                        <td class="sorting_1"></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
->>>>>>> 1f7db35eec24f105bdcb26715aed7ce8dab4b0e7
                                         <td>
                                             <a href="#" class="btn btn-warning btn-circle btn-sm">
                                                 <i class="fas fa-fw fa-wrench"></i>
@@ -112,11 +82,8 @@
                                                 <i class="fas fa-trash"></i>
                                             </a>
                                         </td>
-<<<<<<< HEAD
                                         @endforeach
                                         
-=======
->>>>>>> 1f7db35eec24f105bdcb26715aed7ce8dab4b0e7
                                     </tr>
                                 </tbody>
                             </table>
