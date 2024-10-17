@@ -14,7 +14,7 @@
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Bảng dữ liệu người dùng / User datatable</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Bảng dữ liệu sản phẩm / Product datatable</h6>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -59,7 +59,6 @@
                                 </thead>
                                 <tbody>
                                 @foreach($product as $key => $pro)
-
                                     <tr >
                                         <td>{{$pro->san_pham_id}}</td>
                                         <td>{{$pro->ten_san_pham}}</td>
