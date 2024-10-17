@@ -1,6 +1,5 @@
 @include("admin.autth.head")
 <!-- Begin Page Content -->
-<div class="container-fluid">
 
     <!-- Page Heading -->
     <h1 class="h3 mb-2 text-gray-800">Quản lý danh mục</h1>
@@ -8,7 +7,7 @@
         <span class="icon text-white-50">
             <i class="fas fa-plus"></i>
         </span>
-        <span class="text">Thêm người dùng</span>
+        <span class="text">Thêm danh mục</span>
     </a>
     <hr>
     <!-- DataTales Example -->

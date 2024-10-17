@@ -41,11 +41,12 @@
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
                                     </div>
-                                    <form action="{{route('admin.home')}}" class="user" for="login" method="post"> 
+                                    <form action="homeadmin" class="user" for="login" method="post">
+                                        @csrf
                                         <div class="form-group">
                                             <input type="email" class="form-control form-control-user"
                                                 id="exampleInputEmail" aria-describedby="emailHelp"
-                                                placeholder="Enter Email Address..."  id="email" name="email" required>
+                                                placeholder="Enter Email Address..."  id="username" name="username" required>
                                         </div>
                                         <div class="form-group">
                                             <input type="password" class="form-control form-control-user"
@@ -58,8 +59,7 @@
                                                     Me</label>
                                             </div>
                                         </div>
-                                        <button class="btn btn-primary btn-user btn-block" type="submit" value="Login" name="login">Login</button>
-                                        @csrf
+                                        <input class="btn btn-primary btn-user btn-block" type="submit" value="Login" name="login">
                                         <!-- <a href="homeadmin" class="btn btn-primary btn-user btn-block">
                                             Login
                                         </a> -->

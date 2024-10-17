@@ -1,5 +1,6 @@
 <?php
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\Product_Controller;
 use Illuminate\Support\Facades\Route;
 
 
@@ -68,3 +69,5 @@ Route::match(['get', 'post'], '/addUser', [AdminController::class, "addUser"])->
 Route::match(['get', 'post'], '/suauser/{nguoi_dung_id}', [AdminController::class, "suauser"])->name('admin.suauser');
 Route::match(['get', 'post'], '/updateUser/{nguoi_dung_id}', [AdminController::class, "updateUser"])->name('admin.updateUser');
 Route::match(['get', 'post'], '/deleteUser/{nguoi_dung_id}', [AdminController::class, "deleteUser"])->name('admin.deleteUser');
+Route::get('allproducts',[Product_Controller::class,"index"])->name('product.all');
+Route::get('addproducts',[Product_Controller::class,"themsp"])->name('product.add');

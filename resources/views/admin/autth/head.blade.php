@@ -62,7 +62,7 @@
             </li>
             <!-- Quản lý product -->
             <li class="nav-item">
-                <a class="nav-link" href="adproduct">
+                <a class="nav-link" href="{{route('product.all')}}">
                     <i class="fab fa-reddit-alien"></i>
                     <span>Quản lý sản phẩm</span></a>
             </li>
