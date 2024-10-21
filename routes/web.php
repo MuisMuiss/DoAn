@@ -8,6 +8,22 @@ use Illuminate\Support\Facades\Route;
 Route::get('/index', function () {
     return view('user.index');
 });
+Route::get('/shopsua', function () {
+    return view('user.shopsua');
+});
+Route::get('/shopta', function () {
+    return view('user.shopta');
+});
+Route::get('/cart', function () {
+    return view('user.cart');
+});
+Route::get('/checkout', function () {
+    return view('user.checkout');
+});
+Route::get('/detail', function () {
+    return view('user.shopdetail');
+});
+
 
 
 
@@ -61,6 +77,8 @@ Route::get('/adcat', function () {
 Route::get('/type', function () {
     return view('admin.typeproduct');
 });
+
+Route::match(['get', 'post'], '/upuser/{nguoi_dung_id}', [AdminController::class, "upuser"])->name('admin.upuser');
 //Route::put('/login', [AdminController::class, "viewlogin"])->name('admin.login');
 Route::match(['get', 'post'], '/login', [AdminController::class, "viewlogin"])->name('admin.login');
 Route::get('/login', [AdminController::class, "viewlogin"])->name('admin.login');

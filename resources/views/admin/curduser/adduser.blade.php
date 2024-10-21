@@ -1,4 +1,9 @@
 @include('admin.autth.layout')
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
                     <div class="card-header">
                         <h3>Thêm mới một Users</h3>
                     </div>

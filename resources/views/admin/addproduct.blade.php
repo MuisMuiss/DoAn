@@ -42,7 +42,7 @@
 
         <div class="form-group">
             <label for="price">Hình Ảnh</label>
-            <input type="text" class="form-control" id="price" name="price"
+            <input type="file" class="form-control" id="price" name="price"
                 value="">
         </div>
 
@@ -50,5 +50,9 @@
             <label for="price">Ngày Tạo</label>
             <input type="text" class="form-control" id="price" name="price"
                 value="">
+        </div>
+        <div class="form-group mb-3">
+            <button type="submit" class="btn btn-primary">Lưu</button>
+            <a href="{{route('admin.alluser')}}" class="btn btn-danger float-end">Back</a>
         </div>
     </div>

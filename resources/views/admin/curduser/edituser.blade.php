@@ -1,4 +1,10 @@
-@include('admin.autth.layout')
+@extends('admin.autth.layout')
+@section('content')
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
                     <div class="card-header">
                         <h3>Sửa một Users</h3>
                     </div>
@@ -57,7 +63,7 @@
 
                             <div class="form-group mb-3">
                                 <label for="">Vai trò:</label>
-                                <select name="vai_tro" class="form-control" >
+                                <select name="vai_tro" class="form-control" value="{{$nguoiDung->vai_tro}}" >
                                     <option value="0">Khách hàng</option>
                                     <option value="1">Admin</option>
                                 </select>
@@ -69,9 +75,9 @@
                             </div>
                             <div class="form-group mb-3">
                                 <label for="">Trạng thái:</label>
-                                <select name="trang_thai" class="form-control">
-                                    <option value="0">Ngừng hoạt động</option>
-                                    <option value="1">Hoạt động</option>
+                                <select name="trang_thai" class="form-control">>
+                                    <option value="{{$nguoiDung->trang_thai,old(0)}}">Ngừng hoạt động</option>
+                                    <option value="{{$nguoiDung->trang_thai,old(1)}}}}">Hoạt động</option>
                                 </select>
                             </div>
                             <div class="form-group mb-3">
