@@ -77,7 +77,7 @@
                                         @endif
                                         @endforeach
 
-                                        <td>{{$pro->hinh_anh}}</td>
+                                        <td><img src="{{asset('images/product/'.$pro->hinh_anh)}}" width="70px" height="70px" alt="Image"></td>
 
                                         <td>
                                             <a href="#" class="btn btn-warning btn-circle btn-sm">

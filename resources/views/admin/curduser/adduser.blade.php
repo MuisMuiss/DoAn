@@ -11,7 +11,7 @@
                         <h5 class="alert alert-success">{{session('status')}}</h5>
                     @endif
                     <div class="card-body">
-                        <form action="{{route('admin.addUser')}}" method="post">
+                        <form action="{{route('admin.addUser')}}" method="post" enctype="multipart/form-data">
                             @csrf
                             <div class="form-group mb-3">
                                 <label for="">Họ và tên:</label>
@@ -71,6 +71,7 @@
                             <div class="form-group mb-3">
                                 <label for="">Ảnh:</label>
                                 <input type="file" name="avatar" id="" class="form-control">
+                                <img src="" width="70px" height="70px" alt="Image">
                             </div>
                             <div class="form-group mb-3">
                                 <label for="">Trạng thái:</label>

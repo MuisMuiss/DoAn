@@ -53,15 +53,6 @@ class AdminController extends Controller
         return view('admin.curduser.adduser');
     }
     public function addUser(Request $request){
-        // $validatedData = $request->validate([
-        //     'ho_ten' => 'required',
-        //     'ten_dang_nhap' => 'required',
-        //     'mat_khau' => 'required|min:6',
-        //     'email' => 'required|email',
-        //     'so_dien_thoai' => 'required|integer',
-        //     'dia_chi'=> 'required',
-            
-        // ]);
         $messages = [
             'ho_ten.required' => 'Họ và Tên không được để trống.',
             'ten_dang_nhap.required' => 'Tên đăng nhập không được để trống.',
@@ -84,13 +75,7 @@ class AdminController extends Controller
             'vai_tro'=>'required|boolean',
             'trang_thai'=>'required|boolean',
         ], $messages);
-        // if($request->hasFile('avatar')){
-        //     $img=$request->file('avatar')->getClientOriginalName();
-        //     $request->avatar->move(public_path('images/avatar'),$img);
-        // }else{$img=null;}
-        //code...
         $existingUser = nguoiDung::where('email', $request->email)->first();
-
         if ($existingUser) {
             return redirect()->back()->with(['status' => 'Email đã tồn tại.']);
         }
@@ -102,15 +87,15 @@ class AdminController extends Controller
         $user->so_dien_thoai=$request->input('so_dien_thoai');
         $user->dia_chi=$request->input('dia_chi');
         $user->vai_tro=$request->vai_tro ? 1 : 0;
-        $params= $request->except('_token');
+        $user->trang_thai=$request->trang_thai? 1 : 0;
+
         if($request->hasFile('avatar')){
             $file=$request->file('avatar');
             $extension=$file->getClientOriginalExtension();
             $filename = time().'.'.$extension;
-            $file->move('puclic/images/avatar/',$filename);
+            $file->move('images/avatar/', $filename);
             $user->avatar=$filename;
         }
-        $user->trang_thai=$request->trang_thai? 1 : 0;;
         $user->save();
         return redirect()->back()->with('status','Thêm user thành công');
     }
@@ -120,10 +105,6 @@ class AdminController extends Controller
     }
     //Edit
     public function suauser($nguoi_dung_id){
-        $nguoiDung=nguoiDung::find($nguoi_dung_id);
-        return view('admin.curduser.edituser',compact('nguoiDung'));
-    }
-    public function upuser($nguoi_dung_id){
         $nguoiDung=nguoiDung::find($nguoi_dung_id);
         return view('admin.curduser.edituser',compact('nguoiDung'));
     }

@@ -67,9 +67,9 @@
                                         <td>{{$nd->email}}</td>
                                         <td>{{$nd->so_dien_thoai}}</td>
                                         <td>{{$nd->dia_chi}}</td>
-                                        <td>{{$nd->avatar}}</td>
-                                        <td>{{$nd->vai_tro}}</td>
-                                        <td>{{$nd->trang_thai}}</td>
+                                        <td><img src="{{asset('images/avatar/'.$nd->avatar)}}" width="70px" height="70px" alt="Image"></td>
+                                        <td><p>{{ $nd->vai_tro == 1 ? 'Admin' : 'User' }}</p></td>
+                                        <td><p>{{ $nd->trang_thai == 1 ? 'Hoạt động' : 'Ngưng hoạt động' }}</p></td>
                                         <td>
                                             <a href="{{ route('admin.suauser', ['nguoi_dung_id' => $nd->nguoi_dung_id]) }}" class="btn btn-warning btn-circle btn-sm">
                                                 <i class="fas fa-fw fa-wrench"></i>
