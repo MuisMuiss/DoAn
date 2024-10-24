@@ -18,7 +18,7 @@ class Product_Controller extends Controller
     {
         $product= DB::table ('san_pham')->get();
         $cate_product= DB::table ('loai_sp')->get();
-        $brand_product= DB::table ('nha_cung_cap')->get();
+        $brand_product= DB::table ('thuong_hieu')->get();
        return view('admin.product')->with('product',$product)->with('cate_product',$cate_product)->with('brand_product',$brand_product);
     }
 
@@ -28,7 +28,7 @@ class Product_Controller extends Controller
     public function themsp()
     {
          $cate_product= DB::table ('loai_sp')->orderByDesc('loai_sp_id')->get();
-         $brand_product= DB::table ('nha_cung_cap')->orderByDesc('nha_cung_cap_id')->get();
+         $brand_product= DB::table ('thuong_hieu')->orderByDesc('thuong_hieu_id')->get();
         return view('admin.curdproduct.addproduct')->with('cate_product',$cate_product)->with('brand_product',$brand_product);
     }
 
@@ -53,12 +53,11 @@ class Product_Controller extends Controller
         ], $messages);
         $product= new Product();
         $product->ten_san_pham=$request->input('ten_san_pham');
-        
-        $product->loai_sp_id=$request->input('loai_sp_id');
+        $product->loai_sp_id=$request->loai_sp_id ?? 1;
         $product->gia=$request->input('gia');
         $product->mo_ta=$request->input('mo_ta');
         $product->so_luong_kho=$request->input('so_luong_kho');
-        $product->nha_cung_cap_id=$request->input('nha_cung_cap_id');
+        $product->thuong_hieu_id=$request->thuong_hieu_id ?? 1;
         if($request->hasFile('hinh_anh')){
             $file=$request->file('hinh_anh');
             $extension=$file->getClientOriginalExtension();
@@ -67,6 +66,7 @@ class Product_Controller extends Controller
             $product->hinh_anh=$filename;
         }
         $product->save();
+        
         return redirect()->back()->with('status','Thêm sản phẩm thành công');
     }
 

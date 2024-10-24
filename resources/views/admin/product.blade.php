@@ -71,8 +71,8 @@
                                         <td>{{$pro->mo_ta}}</td>
                                         <td>{{$pro->so_luong_kho}}</td>
                                         @foreach($brand_product as $keybrand => $brand)
-                                        @if ($pro->nha_cung_cap_id == $brand->nha_cung_cap_id)
-                                        <td>{{$brand->ten_nha_cung_cap}}</td>
+                                        @if ($pro->thuong_hieu_id == $brand->thuong_hieu_id)
+                                        <td>{{$brand->ten_thuong_hieu}}</td>
                                         
                                         @endif
                                         @endforeach

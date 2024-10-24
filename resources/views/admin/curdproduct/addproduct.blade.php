@@ -80,12 +80,12 @@
                             </div>
                             <div class="form-group mb-3">
                                 <label for="">Loại sản phẩm:</label>
-                                <select type="text" name="ten_loaisp" id="" class="form-control" value="{{old('ten_loaisp')}}">
+                                <select type="text" name="loai_sp_id" id="" class="form-control" value="{{old('loai_sp_id')}}">
                                     @foreach($cate_product as $key => $cate)
-                                        <option Value="1">{{ $cate->ten_loaisp}}</option>
+                                        <option value="{{ $cate->loai_sp_id }}">{{ $cate->ten_loaisp }}</option>
                                     @endforeach
                                 </select>
-                                @error('ten_loaisp')
+                                @error('loai_sp_id')
                                     <span class="text-danger">{{$message}}</span>
                                 @enderror
                             </div>
@@ -115,13 +115,13 @@
                             </div>
 
                             <div class="form-group mb-3">
-                                <label for="">Nhà cung cấp:</label>
-                                <select type="text" name="ten_nha_cung_cap" id="" class="form-control" value="{{old('ten_nha_cung_cap')}}">
+                                <label for="">Nhà cung cấp:</label> 
+                                <select type="text" name="thuong_hieu_id" id="" class="form-control" value="{{old('thuong_hieu_id')}}">
                                     @foreach($brand_product as $key => $cate)
-                                        <option Value="1">{{ $cate->ten_nha_cung_cap}}</option>
+                                        <option value="{{ $cate->thuong_hieu_id}}">{{ $cate->ten_thuong_hieu}}</option>
                                     @endforeach
                                 </select>
-                                @error('ten_nha_cung_cap')
+                                @error('thuong_hieu_id')
                                     <span class="text-danger">{{$message}}</span>
                                 @enderror
                             </div>

@@ -19,7 +19,7 @@ class Product extends Authenticatable
         'gia',
         'mo_ta',
         'so_luong_kho',
-        'nha_cung_cap_id',
+        'thuong_hieu_id',
         'hinh_anh',
         'ngay_tao',
 
