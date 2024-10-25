@@ -1,7 +1,6 @@
 <?php
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\Product_Controller;
-use App\Http\Controllers\Admin\Category_Controller;
 use Illuminate\Support\Facades\Route;
 
 
@@ -9,6 +8,22 @@ use Illuminate\Support\Facades\Route;
 Route::get('/index', function () {
     return view('user.index');
 });
+Route::get('/shopsua', function () {
+    return view('user.shopsua');
+});
+Route::get('/shopta', function () {
+    return view('user.shopta');
+});
+Route::get('/cart', function () {
+    return view('user.cart');
+});
+Route::get('/checkout', function () {
+    return view('user.checkout');
+});
+Route::get('/detail', function () {
+    return view('user.shopdetail');
+});
+
 
 
 
@@ -62,18 +77,20 @@ Route::get('/adcat', function () {
 Route::get('/type', function () {
     return view('admin.typeproduct');
 });
+
+Route::match(['get', 'post'], '/upuser/{nguoi_dung_id}', [AdminController::class, "upuser"])->name('admin.upuser');
 //Route::put('/login', [AdminController::class, "viewlogin"])->name('admin.login');
 Route::match(['get', 'post'], '/login', [AdminController::class, "viewlogin"])->name('admin.login');
 Route::get('/login', [AdminController::class, "viewlogin"])->name('admin.login');
 Route::post('/login', [AdminController::class, "login"])->name('admin.login');
 Route::match(['get', 'post'], '/homeadmin', [AdminController::class, "viewhome"])->name('admin.home');
-Route::match(['get', 'post'], '/themuser', [AdminController::class, "themuser"])->name('admin.themuser');
-Route::match(['get', 'post'], '/alluser', [AdminController::class, "viewuser"])->name('admin.alluser');
-Route::match(['get', 'post'], '/addUser', [AdminController::class, "addUser"])->name('admin.addUser');
-Route::match(['get', 'post'], '/suauser/{nguoi_dung_id}', [AdminController::class, "suauser"])->name('admin.suauser');
-Route::match(['get', 'post'], '/updateUser/{nguoi_dung_id}', [AdminController::class, "updateUser"])->name('admin.updateUser');
+
+Route::get('/themuser', [AdminController::class, "themuser"])->name('admin.themuser');
+Route::get('/alluser', [AdminController::class, "viewuser"])->name('admin.alluser');
+Route::post('/addUser', [AdminController::class, "addUser"])->name('admin.addUser');
+Route::get( '/suauser/{nguoi_dung_id}', [AdminController::class, "suauser"])->name('admin.suauser');
+Route::post( '/updateUser/{nguoi_dung_id}', [AdminController::class, "updateUser"])->name('admin.updateUser');
 Route::match(['get', 'post'], '/deleteUser/{nguoi_dung_id}', [AdminController::class, "deleteUser"])->name('admin.deleteUser');
-Route::get('allproducts',[Product_Controller::class,"index"])->name('product.all');
-Route::get('addproducts',[Product_Controller::class,"themsp"])->name('product.add');
-Route::get('allcate', [Category_Controller::class, "index"])->name('Cate.all');
-Route::get('addcate', [Category_Controller::class, "themcategory"])->name('Cate.add');
+Route::get('/allproducts',[Product_Controller::class,"viewProduct"])->name('product.all');
+Route::get('/addproducts',[Product_Controller::class,"themsp"])->name('product.add');
+Route::post('/addProduct', [Product_Controller::class, "addProduct"])->name('admin.addProduct');

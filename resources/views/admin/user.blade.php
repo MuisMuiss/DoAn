@@ -67,17 +67,21 @@
                                         <td>{{$nd->email}}</td>
                                         <td>{{$nd->so_dien_thoai}}</td>
                                         <td>{{$nd->dia_chi}}</td>
-                                        <td>{{$nd->avatar}}</td>
-                                        <td>{{$nd->vai_tro}}</td>
-                                        <td>{{$nd->trang_thai}}</td>
+                                        <td><img src="{{asset('images/avatar/'.$nd->avatar)}}" width="70px" height="70px" alt="Image"></td>
+                                        <td><p>{{ $nd->vai_tro == 1 ? 'Admin' : 'User' }}</p></td>
+                                        <td><p>{{ $nd->trang_thai == 1 ? 'Hoạt động' : 'Ngưng hoạt động' }}</p></td>
                                         <td>
                                             <a href="{{ route('admin.suauser', ['nguoi_dung_id' => $nd->nguoi_dung_id]) }}" class="btn btn-warning btn-circle btn-sm">
                                                 <i class="fas fa-fw fa-wrench"></i>
                                             </a>
-                                            <a href="{{ route('admin.deleteUser', ['nguoi_dung_id' => $nd->nguoi_dung_id]) }}" class="btn btn-danger btn-circle btn-sm">
+                                            {{-- <a href="upuser" class="btn btn-warning btn-circle btn-sm">
+                                                <i class="fas fa-fw fa-wrench"></i>
+                                            </a> --}}
+                                            <a href="{{ route('admin.deleteUser', ['nguoi_dung_id' => $nd->nguoi_dung_id]) }}" class="btn btn-danger btn-circle btn-sm"data-toggle="modal" data-target="#deleteModal">
                                                 <i class="fas fa-trash"></i>
                                             </a>
                                         </td>
+                                        
                                     </tr>
                                     @endforeach
                                 </tbody>
@@ -105,6 +109,25 @@
         </div>
     </div>
 
+</div>
+<!-- Delete Modal-->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+aria-hidden="true">
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" style="color: red;" id="exampleModalLabel">Thông báo!!!</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+        <div class="modal-body">Bạn chắc chắn có muốn xóa không</div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+            <a class="btn btn-primary" href="{{ route('admin.deleteUser', ['nguoi_dung_id' => $nd->nguoi_dung_id]) }}">Detele</a>       
+        </div>
+    </div>
+</div>
 </div>
 <!-- End of Main Content -->
 @include("admin.autth.footer")

@@ -67,6 +67,12 @@
                     <span>Quản lý sản phẩm</span></a>
             </li>
             <!-- Quản lý danh mục -->
+            {{-- <li class="nav-item">
+                <a class="nav-link" href="adcat">
+                    <i class="fab fa-reddit-alien"></i>
+                    <span>Quản lý danh mục</span></a>
+            </li> --}}
+            <!-- Quản lý product -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
@@ -80,21 +86,6 @@
                     </div>
                 </div>
             </li>
-            <!-- Quản lý product -->
-            <!-- <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-                    aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fab fa-product-hunt"></i>
-                    <span>Quản lý sản phẩm</span>
-                </a>
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Product:</h6>
-                        <a class="collapse-item" href="adproduct">Sữa</a>
-                        <a class="collapse-item" href="adproduct">Tả</a>
-                    </div>
-                </div>
-            </li> -->
             <!-- Quản lý danh mục -->
             <!-- <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
