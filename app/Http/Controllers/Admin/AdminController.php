@@ -11,42 +11,65 @@ use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpFoundation\File\File;
 
 class AdminController extends Controller
-{
+{   
+    // public function viewhome(){
+    //     return view('admin.home');
+    // }
     public function viewlogin(){
         return view('admin.login');
     }
-    public function viewhome(){
-        return view('admin.home');
-    }
+    // public function login(Request $request)
+    // {
+    //     // Kiểm tra xem email có tồn tại trong bảng không
+    //     $nguoiDung = nguoiDung::where('email', $request->email)->first();
+
+    //     // Nếu không tìm thấy người dùng
+    //     if (!$nguoiDung) {
+    //         return back()->with([
+    //             'msg' => 'Email không tồn tại.',
+    //         ]);
+    //     }
+
+    //     // Mã hóa mật khẩu nhập vào bằng MD5
+    //     $matKhauMd5 = md5($request->mat_khau);
+    //     // Kiểm tra mật khẩu
+    //     if ($matKhauMd5 === $nguoiDung->mat_khau) {
+    //         // Lưu thông tin người dùng vào session
+    //         session(['user' => $nguoiDung]);
+
+    //         return view('admin.home');// Redirect về trang chính
+    //     }
+
+    //     // Nếu mật khẩu không đúng
+    //     return back()->with([
+    //         'msg' => 'Mật khẩu không đúng.',
+    //     ]);
+    // }
     public function login(Request $request)
     {
-        $email = $request->email;
-        $password = $request->password;
-        $hashedPassword = Hash::make($password);
-        $dn=Auth::attempt(['email' => $email, 'password' => $hashedPassword]);
-        dd($dn);
-        if($dn==true){
-            $user=Auth::user();
-            dd($user);
-            return view('admin.home');
-        }
-        return back()->with('msg','Email hoặc mật khẩu không chính xác');
+        $mat_khau = $request->input('mat_khau');
 
-        // $email = $request->input('email');
-        // $password = $request->input('password');
-        // $tk = DB::table('users')->where('isadmin', '=', 1)->select("*")->get();
-        // foreach ($tk as $row) {
-        //     if ($row->email == $email && $row->password == md5($password)) {
-        //         $dt = DB::table('users')->select('*');
-        //         $dt = $dt->get();
-        //         setcookie("id", $row->Id, time() + 3600);
-        //         return view("admin.home");
-        //         break;
-        //     }
+        // Tìm người dùng theo email
+        $nguoiDung = nguoiDung::where('email', $request->email)->where('vai_tro', 1)->first();
+        // Kiểm tra nếu người dùng tồn tại và mật khẩu khớp
+        // if ($nguoiDung && Hash::check($mat_khau, $nguoiDung->mat_khau)) {
+        //     // Đăng nhập thành công
+        //     Auth::login($nguoiDung);
+        //     $request->session()->regenerate();
+        //     return redirect()->route('homeadmin')->with('msg', 'Đăng nhập thành công'); // Chuyển hướng sau khi đăng nhập
         // }
-        // return view("admin.login", ['loginError' => "Sai mật khẩu hoặc tài khoản", 'SignUpError' => ""]);
+        if ($nguoiDung && Hash::check($mat_khau, $nguoiDung->mat_khau)) {
+            Auth::login($nguoiDung);
+            $request->session()->regenerate();
         
+            // Kiểm tra xem người dùng đã được công nhận là đăng nhập chưa
+            if (Auth::check()) {
+                return redirect()->route('homeadmin')->with('msg', 'Đăng nhập thành công');
+            }
+        }
+        return back()->with('msg','Email hoặc mật khẩu không chính xác');  
     }
+
     //CRUD 
     //Thêm user
     public function themuser(){
@@ -70,6 +93,7 @@ class AdminController extends Controller
             'ho_ten' => 'required',
             'ten_dang_nhap' => 'required',
             'email' => 'required|email',
+            'mat_khau' => 'required|min:6',
             'so_dien_thoai' => 'required|min:10',
             'dia_chi'=> 'required',
             'vai_tro'=>'required|boolean',
