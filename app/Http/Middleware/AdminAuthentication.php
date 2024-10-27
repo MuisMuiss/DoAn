@@ -9,17 +9,11 @@ class AdminAuthentication
 {
     public function handle($request, Closure $next)
     {
-        if (Session::has('admin')) {
-            $isAdmin = DB::table('ten_dang_nhap')
-                ->where('nguoi_dung_id', Session::get('admin'))
-                ->where('vai_tro', 1)
-                ->first();
-
-            if ($isAdmin) {
-                return $next($request);
-            }
+        if (session('user') && session('user')->vai_tro == 1) {
+            dd('Middleware passed');
+            return $next($request);
         }
 
-        return redirect('/login')->with('flag',0);
+        return redirect()->route('login')->with('Bạn không có quyền truy cập.');
     }
 }

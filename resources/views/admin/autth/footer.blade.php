@@ -25,7 +25,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <h5 class="modal-title" style="color: red;" id="exampleModalLabel">Thông báo!!!</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
@@ -38,7 +38,7 @@
             </div>
         </div>
     </div>
-
+    
     <!-- Bootstrap core JavaScript-->
     <script src="assets/admin/vendor/jquery/jquery.min.js"></script>
     <script src="assets/admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
