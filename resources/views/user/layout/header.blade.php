@@ -62,7 +62,12 @@
                     <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
                         <div class="navbar-nav mx-auto">
                             <a href="index" class="nav-item nav-link active">Home</a>
-                            <a href="shopsua" class="nav-item nav-link">Sữa</a>
+                            <div class="nav-item dropdown">
+                                <a href="shopsua" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Sữa</a>
+                                <div class="dropdown-menu m-0 bg-secondary rounded-0">
+                                    <a href="#" class="dropdown-item">Sữa bột</a>
+                                </div>
+                            </div>
                             <a href="shopta" class="nav-item nav-link">Tã</a>
                             <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>

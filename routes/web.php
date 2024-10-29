@@ -67,10 +67,12 @@ Route::get('/type', function () {
     return view('admin.typeproduct');
 });
 
-// Route::match(['get', 'post'], '/homeadmin', [AdminController::class, 'viewhome'])->name('admin.home');
+
+
+
 Route::middleware('auth')->group(function(){
     Route::get('/homeadmin', function() {
-        dd(Auth::user()); // Kiểm tra người dùng đã đăng nhập chưa
+         // Kiểm tra người dùng đã đăng nhập chưa
         return view('admin.home');
     })->name('admin.home');
     //them

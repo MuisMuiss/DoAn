@@ -51,22 +51,10 @@ class AdminController extends Controller
 
         // Tìm người dùng theo email
         $nguoiDung = nguoiDung::where('email', $request->email)->where('vai_tro', 1)->first();
-        // Kiểm tra nếu người dùng tồn tại và mật khẩu khớp
-        // if ($nguoiDung && Hash::check($mat_khau, $nguoiDung->mat_khau)) {
-        //     // Đăng nhập thành công
-        //     Auth::login($nguoiDung);
-        //     $request->session()->regenerate();
-        //     return redirect()->route('homeadmin')->with('msg', 'Đăng nhập thành công'); // Chuyển hướng sau khi đăng nhập
-        // }
         if ($nguoiDung && Hash::check($mat_khau, $nguoiDung->mat_khau)) {
             Auth::login($nguoiDung);
             $request->session()->regenerate();
-        
-            // Kiểm tra xem người dùng đã được công nhận là đăng nhập chưa
-            if (Auth::check()) {
-                dd(Auth::user());
-                return redirect()->route('admin.home')->with('msg', 'Đăng nhập thành công');
-            }
+            return redirect()->route('admin.home');
         }
         return back()->with('msg','Email hoặc mật khẩu không chính xác');  
     }
