@@ -100,7 +100,8 @@
 
                             <div class="form-group mb-3">
                                 <label for="">Mô tả:</label>
-                                <input type="text" name="mo_ta" id="" class="form-control" value="{{old('mo_ta')}}">
+                                {{-- <input type="text" name="mo_ta" id="" class="form-control" value="{{old('mo_ta')}}"> --}}
+                                <textarea name="mo_ta" class="form-control description" placeholder="...">{{old('mo_ta')}}</textarea>
                                 @error('mo_ta')
                                     <span class="text-danger">{{$message}}</span>
                                 @enderror
@@ -115,7 +116,7 @@
                             </div>
 
                             <div class="form-group mb-3">
-                                <label for="">Nhà cung cấp:</label> 
+                                <label for="">Thương hiệu:</label> 
                                 <select type="text" name="thuong_hieu_id" id="" class="form-control" value="{{old('thuong_hieu_id')}}">
                                     @foreach($brand_product as $key => $cate)
                                         <option value="{{ $cate->thuong_hieu_id}}">{{ $cate->ten_thuong_hieu}}</option>

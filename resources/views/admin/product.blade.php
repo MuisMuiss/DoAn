@@ -52,7 +52,7 @@
                                         <th rowspan="1" colspan="1">Giá</th>
                                         <th rowspan="1" colspan="1">Mô tả</th>
                                         <th rowspan="1" colspan="1">Số lượng kho</th>
-                                        <th rowspan="1" colspan="1">Nhà cung cấp</th>
+                                        <th rowspan="1" colspan="1">Thương hiệu</th>
                                         <th rowspan="1" colspan="1">Hình ảnh</th>
                                     </tr>
                                 </thead>
@@ -77,15 +77,19 @@
                                         @endif
                                         @endforeach
 
-                                        <td><img src="{{asset('images/product/'.$pro->hinh_anh)}}" width="70px" height="70px" alt="Image"></td>
-
+                                        <td style="text-align: center; vertical-align: middle;">
+                                            <img src="{{asset('images/product/'.$pro->hinh_anh)}}" width="70px" height="70px" alt="Image">
+                                        </td>
                                         <td>
-                                            <a href="#" class="btn btn-warning btn-circle btn-sm">
-                                                <i class="fas fa-fw fa-wrench"></i>
-                                            </a>
-                                            <a href="#" class="btn btn-danger btn-circle btn-sm">
-                                                <i class="fas fa-trash"></i>
-                                            </a>
+                                            <div style="display: flex; justify-content: center; align-items: center;">
+                                                <a href="{{ route('admin.editsp', ['san_pham_id' => $pro->san_pham_id]) }}" class="btn btn-warning btn-circle btn-sm" style=" margin-right: 10px;">
+                                                    <i class="fas fa-fw fa-wrench"></i>
+                                                </a>
+                                                <a href="#" class="btn btn-danger btn-circle btn-sm" >
+                                                    <i class="fas fa-trash"></i>
+                                                </a>
+                                            </div>
+                                            
                                         </td>
                                         @endforeach
                                         

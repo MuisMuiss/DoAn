@@ -70,35 +70,10 @@ class Product_Controller extends Controller
         return redirect()->back()->with('status','Thêm sản phẩm thành công');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+    public function editsp($san_pham_id){
+        $product=Product::find($san_pham_id);
+        $cate_product= DB::table ('loai_sp')->orderByDesc('loai_sp_id')->get();
+        $brand_product= DB::table ('thuong_hieu')->orderByDesc('thuong_hieu_id')->get();
+        return view('admin.curdproduct.editproduct',compact('product','cate_product','brand_product'));
     }
 }

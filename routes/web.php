@@ -1,20 +1,20 @@
 <?php
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\Product_Controller;
+use App\Http\Controllers\User\ProductController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
 
 
-Route::get('/index', function () {
-    return view('user.index');
-});
-Route::get('/shopsua', function () {
-    return view('user.shopsua');
-});
-Route::get('/shopta', function () {
-    return view('user.shopta');
-});
+// Route::get('/index', function () {
+//     return view('user.index');
+// });
+Route::get('/index',[ProductController::class,"index"]);
+
+Route::get('/shopsua', [ProductController::class,"shopsua"]);
+Route::get('/shopta', [ProductController::class,"shopta"]);
+
 Route::get('/cart', function () {
     return view('user.cart');
 });
@@ -75,21 +75,29 @@ Route::middleware('auth')->group(function(){
          // Kiểm tra người dùng đã đăng nhập chưa
         return view('admin.home');
     })->name('admin.home');
-    //them
     // Route::match(['get', 'post'], '/homeadmin', [AdminController::class, 'viewhome'])->name('admin.home');
-    //them
+    // Thêm User
     Route::get('/themuser', [AdminController::class, "themuser"])->name('admin.themuser');
     Route::get('/alluser', [AdminController::class, "viewuser"])->name('admin.alluser');
     Route::post('/addUser', [AdminController::class, "addUser"])->name('admin.addUser');
-    //sua
-    Route::get( '/suauser/{nguoi_dung_id}', [AdminController::class, "suauser"])->name('admin.suauser');
+    // Cập nhật User
+    Route::get( '/edituser/{nguoi_dung_id}', [AdminController::class, "edituser"])->name('admin.edituser');
     Route::post( '/updateUser/{nguoi_dung_id}', [AdminController::class, "updateUser"])->name('admin.updateUser');
-    //xoa
-    Route::match(['get', 'post'], '/deleteUser/{nguoi_dung_id}', [AdminController::class, "deleteUser"])->name('admin.deleteUser');
-    //them san pham
+    // Xóa User
+    Route::get('/deleteUser/{nguoi_dung_id}', [AdminController::class, "deleteUser"])->name('admin.deleteUser');
+    
+
+    
+    // Thêm sản phẩm
     Route::get('/allproducts',[Product_Controller::class,"viewProduct"])->name('product.all');
     Route::get('/addproducts',[Product_Controller::class,"themsp"])->name('product.add');
     Route::post('/addProduct', [Product_Controller::class, "addProduct"])->name('admin.addProduct');
+    // Cập nhật sản phẩm
+    Route::get( '/editsp/{san_pham_id}', [Product_Controller::class, "editsp"])->name('admin.editsp');
+    Route::post( '/updatesp/{san_pham_id}', [Product_Controller::class, "updatesp"])->name('admin.updatesp');
+    // Xóa sản phẩm
+    Route::get('/deletesp/{san_pham_id}', [Product_Controller::class, "deletesp"])->name('admin.deletesp');
+
 });
 
 Route::get('/login', [AdminController::class, "viewlogin"])->name('login');
