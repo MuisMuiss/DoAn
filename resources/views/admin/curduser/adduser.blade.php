@@ -63,7 +63,7 @@
                             <div class="form-group mb-3">
                                 <label for="">Vai trò:</label>
                                 <select name="vai_tro" class="form-control">
-                                    <option value="0">Khách hàng</option>
+                                    <option value="0">User</option>
                                     <option value="1">Admin</option>
                                 </select>
                             </div>

@@ -35,12 +35,13 @@
                         <div id="carouselId" class="carousel slide position-relative" data-bs-ride="carousel">
                             <div class="carousel-inner" role="listbox">
                                 <div class="carousel-item active rounded">
-                                    <img src="img/hero-img-1.png" class="img-fluid w-100 h-100 bg-secondary rounded" alt="First slide">
-                                    <a href="#" class="btn px-4 py-2 text-white rounded">Fruites</a>
+                                    <img src="assets/user/img/qc1.jpg" class="img-fluid w-100 h-100 bg-secondary rounded" alt="First slide">
                                 </div>
                                 <div class="carousel-item rounded">
-                                    <img src="img/hero-img-2.jpg" class="img-fluid w-100 h-100 rounded" alt="Second slide">
-                                    <a href="#" class="btn px-4 py-2 text-white rounded">Vesitables</a>
+                                    <img src="assets/user/img/qc2.jpg" class="img-fluid w-100 h-100 rounded" alt="Second slide">
+                                </div>
+                                <div class="carousel-item rounded">
+                                    <img src="assets/user/img/qc3.jpg" class="img-fluid w-100 h-100 rounded" alt="Second slide">
                                 </div>
                             </div>
                             <button class="carousel-control-prev" type="button" data-bs-target="#carouselId" data-bs-slide="prev">
@@ -121,47 +122,35 @@
                         <div class="col-lg-4 text-start">
                             <h1>Products Sữa và Tã</h1>
                         </div>
-                        <div class="col-lg-8 text-end">
-                            <ul class="nav nav-pills d-inline-flex text-center mb-5">
-                                <li class="nav-item">
-                                    <a class="d-flex m-2 py-2 bg-light rounded-pill active" data-bs-toggle="pill" href="#tab-1">
-                                        <span class="text-dark" style="width: 130px;">All Products</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="d-flex py-2 m-2 bg-light rounded-pill" data-bs-toggle="pill" href="#tab-2">
-                                        <span class="text-dark" style="width: 130px;">Sữa</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="d-flex m-2 py-2 bg-light rounded-pill" data-bs-toggle="pill" href="#tab-3">
-                                        <span class="text-dark" style="width: 130px;">Tã</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
                     </div>
                     <div class="tab-content">
                         <div id="tab-1" class="tab-pane fade show p-0 active">
                             <div class="row g-4">
                                 <div class="col-lg-12">
                                     <div class="row g-4">
+                                        @foreach ($product as $key => $pro)
                                         <div class="col-md-6 col-lg-4 col-xl-3">
-                                            <div class="rounded position-relative fruite-item">
-                                                <div class="fruite-img">
-                                                    <img src="img/fruite-item-5.jpg" class="img-fluid w-100 rounded-top" alt="">
-                                                </div>
-                                                <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">Fruits</div>
-                                                <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                                                    <h4>Tên sản phẩm</h4>
-                                                    <p>thông tin cơ bản</p>
-                                                    <div class="d-flex justify-content-between flex-lg-wrap">
-                                                        <p class="text-dark fs-5 fw-bold mb-0">Giá</p>
-                                                        <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                                            
+                                                <div class="rounded position-relative fruite-item">
+                                                    <div class="fruite-img">
+                                                        <img src="{{asset('images/product/'.$pro->hinh_anh)}}" class="img-fluid w-100 rounded-top" alt="">
+                                                    </div>
+                                                    @foreach($brand_product as $keybrand => $brand)
+                                                        @if ($pro->thuong_hieu_id == $brand->thuong_hieu_id)
+                                                        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">{{$brand->ten_thuong_hieu}}</div>
+                                                        @endif
+                                                    @endforeach
+                                                    <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+                                                        <h6 style="font-family: 'Arial', sans-serif;">{{$pro->ten_san_pham}}</h6>
+                                                        <div class="d-flex justify-content-between flex-lg-wrap">
+                                                            <p class="text-dark fs-5 fw-bold mb-0">{{$pro->gia}}đ</p>
+                                                            <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            
                                         </div>
+                                        @endforeach
                                     </div>
                                 </div>
                             </div>
@@ -264,8 +253,8 @@
                                 <img src="img/featur-1.jpg" class="img-fluid rounded-top w-100" alt="">
                                 <div class="px-4 rounded-bottom">
                                     <div class="service-content bg-primary text-center p-4 rounded">
-                                        <h5 class="text-white">Fresh Apples</h5>
-                                        <h3 class="mb-0">20% OFF</h3>
+                                        <h5 class="text-white">Sữa</h5>
+                                        <h3 class="mb-0">100% Chính hãng</h3>
                                     </div>
                                 </div>
                             </div>
@@ -277,26 +266,14 @@
                                 <img src="img/featur-2.jpg" class="img-fluid rounded-top w-100" alt="">
                                 <div class="px-4 rounded-bottom">
                                     <div class="service-content bg-light text-center p-4 rounded">
-                                        <h5 class="text-primary">Tasty Fruits</h5>
-                                        <h3 class="mb-0">Free delivery</h3>
+                                        <h5 class="text-primary">Tã</h5>
+                                        <h3 class="mb-0">100% Chính hãng</h3>
                                     </div>
                                 </div>
                             </div>
                         </a>
                     </div>
-                    <div class="col-md-6 col-lg-4">
-                        <a href="#">
-                            <div class="service-item bg-primary rounded border border-primary">
-                                <img src="img/featur-3.jpg" class="img-fluid rounded-top w-100" alt="">
-                                <div class="px-4 rounded-bottom">
-                                    <div class="service-content bg-secondary text-center p-4 rounded">
-                                        <h5 class="text-white">Exotic Vegitable</h5>
-                                        <h3 class="mb-0">Discount 30$</h3>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
+
                 </div>
             </div>
         </div>

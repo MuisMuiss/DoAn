@@ -67,19 +67,27 @@
                                         <td>{{$nd->email}}</td>
                                         <td>{{$nd->so_dien_thoai}}</td>
                                         <td>{{$nd->dia_chi}}</td>
-                                        <td><img src="{{asset('images/avatar/'.$nd->avatar)}}" width="70px" height="70px" alt="Image"></td>
+                                        <td style="text-align: center; vertical-align: middle;">
+                                            <img src="{{asset('images/avatar/'.$nd->avatar)}}" width="70px" height="70px" alt="Image">
+                                        </td>
                                         <td><p>{{ $nd->vai_tro == 1 ? 'Admin' : 'User' }}</p></td>
                                         <td><p>{{ $nd->trang_thai == 1 ? 'Hoạt động' : 'Ngưng hoạt động' }}</p></td>
-                                        <td>
-                                            <a href="{{ route('admin.suauser', ['nguoi_dung_id' => $nd->nguoi_dung_id]) }}" class="btn btn-warning btn-circle btn-sm">
-                                                <i class="fas fa-fw fa-wrench"></i>
-                                            </a>
-                                            {{-- <a href="upuser" class="btn btn-warning btn-circle btn-sm">
-                                                <i class="fas fa-fw fa-wrench"></i>
-                                            </a> --}}
-                                            <a href="{{ route('admin.deleteUser', ['nguoi_dung_id' => $nd->nguoi_dung_id]) }}" class="btn btn-danger btn-circle btn-sm"data-toggle="modal" data-target="#deleteModal">
+                                        <td> 
+                                            <div style="display: flex; justify-content: center; align-items: center;">
+                                                <a href="{{ route('admin.edituser', ['nguoi_dung_id' => $nd->nguoi_dung_id]) }}" class="btn btn-warning btn-circle btn-sm" style=" margin-right: 10px;">
+                                                    <i class="fas fa-fw fa-wrench"></i>
+                                                </a>
+                                                <a href="{{ route('admin.deleteUser', ['nguoi_dung_id' => $nd->nguoi_dung_id]) }}" class="btn btn-danger btn-circle btn-sm"data-toggle="modal" data-target="#deleteModal">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <i class="fas fa-trash"></i>
+                                                </a>
+                                            </div>
+                                            {{-- <form action="{{ route('admin.deleteUser',$nd->nguoi_dung_id) }}" method="POST" class="btn btn-danger btn-circle btn-sm"data-toggle="modal" data-target="#deleteModal">
+                                                @csrf
+                                                @method('DELETE')
                                                 <i class="fas fa-trash"></i>
-                                            </a>
+                                            </form> --}}
                                         </td>
                                         
                                     </tr>
