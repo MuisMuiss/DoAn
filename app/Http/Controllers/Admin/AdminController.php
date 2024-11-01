@@ -19,33 +19,7 @@ class AdminController extends Controller
     public function viewlogin(){
         return view('admin.login');
     }
-    // public function login(Request $request)
-    // {
-    //     // Kiểm tra xem email có tồn tại trong bảng không
-    //     $nguoiDung = nguoiDung::where('email', $request->email)->first();
-
-    //     // Nếu không tìm thấy người dùng
-    //     if (!$nguoiDung) {
-    //         return back()->with([
-    //             'msg' => 'Email không tồn tại.',
-    //         ]);
-    //     }
-
-    //     // Mã hóa mật khẩu nhập vào bằng MD5
-    //     $matKhauMd5 = md5($request->mat_khau);
-    //     // Kiểm tra mật khẩu
-    //     if ($matKhauMd5 === $nguoiDung->mat_khau) {
-    //         // Lưu thông tin người dùng vào session
-    //         session(['user' => $nguoiDung]);
-
-    //         return view('admin.home');// Redirect về trang chính
-    //     }
-
-    //     // Nếu mật khẩu không đúng
-    //     return back()->with([
-    //         'msg' => 'Mật khẩu không đúng.',
-    //     ]);
-    // }
+    
     public function login(Request $request)
     {
         $mat_khau = $request->input('mat_khau');
@@ -95,7 +69,7 @@ class AdminController extends Controller
         if ($existingUser) {
             return redirect()->back()->with(['status' => 'Email đã tồn tại.']);
         }
-        $user = new nguoiDung;
+        $user = new nguoiDung();
         $user->ho_ten=$request->input('ho_ten');
         $user->ten_dang_nhap=$request->input('ten_dang_nhap');
         $user->mat_khau=bcrypt($request->input('mat_khau'));
@@ -188,6 +162,11 @@ class AdminController extends Controller
     //Delete
     public function deleteUser($nguoi_dung_id){
         $nguoiDung=nguoiDung::find($nguoi_dung_id);
+        $anhcu = public_path('images/avatar/' . $nguoiDung->avatar);
+            // Kiểm tra xem ảnh cũ có tồn tại không và xóa nếu có
+            if (File::exists($anhcu)) {
+                File::delete($anhcu);
+            }
         $nguoiDung->delete();
         return redirect()->back()->with('status','Xóa user thành công');
     }

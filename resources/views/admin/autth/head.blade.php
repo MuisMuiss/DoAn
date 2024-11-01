@@ -66,23 +66,17 @@
                     <i class="fab fa-reddit-alien"></i>
                     <span>Quản lý sản phẩm</span></a>
             </li>
-            <!-- Quản lý danh mục -->
-            {{-- <li class="nav-item">
-                <a class="nav-link" href="adcat">
-                    <i class="fab fa-reddit-alien"></i>
-                    <span>Quản lý danh mục</span></a>
-            </li> --}}
-            <!-- Quản lý product -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
                     <i class="fab fa-product-hunt"></i>
-                    <span>Quản lý danh mục</span>
+                    <span>Quản lý</span>
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="adcat">Danh mục</a>
-                        <a class="collapse-item" href="type">Loại sản phẩm</a>
+                        <a class="collapse-item" href="{{route('cate.all')}}">Danh mục</a>
+                        <a class="collapse-item" href="{{route('type.all')}}">Loại sản phẩm</a>
+                        <a class="collapse-item" href="{{route('brand.all')}}">Thương hiệu</a>
                     </div>
                 </div>
             </li>
