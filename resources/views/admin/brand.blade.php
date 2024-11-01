@@ -3,18 +3,18 @@
 <div class="container-fluid">
 
     <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800">Quản lý danh mục</h1>
-    <a href="{{route('cate.add')}}" class="btn btn-success btn-icon-split">
+    <h1 class="h3 mb-2 text-gray-800">Quản lý thương hiệu</h1>
+    <a href="{{route('brand.add')}}" class="btn btn-success btn-icon-split">
         <span class="icon text-white-50">
             <i class="fas fa-plus"></i>
         </span>
-        <span class="text">Thêm danh mục</span>
+        <span class="text">Thêm thương hiệu</span>
     </a>
     <hr>
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Bảng dữ liệu danh mục / Category datatable</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Bảng dữ liệu thương hiệu / Brand datatable</h6>
         </div>
         @if (session('status'))
                         <h5 class="alert alert-success">{{session('status')}}</h5>
@@ -50,20 +50,22 @@
                                     </tr> -->
                                     <tr>
                                         <th rowspan="1" colspan="1">Id</th>
-                                        <th rowspan="1" colspan="1">Tên danh mục</th>
+                                        <th rowspan="1" colspan="1">Tên thương hiệu</th>
+                                        <th rowspan="1" colspan="1">Mô tả</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($category as $key => $cate)
+                                    @foreach ($brand as $key => $th)
                                     <tr>
-                                        <td>{{$cate->danh_muc_id}}</td>
-                                        <td>{{$cate->ten_danh_muc}}</td>
+                                        <td>{{$th->thuong_hieu_id}}</td>
+                                        <td>{{$th->ten_thuong_hieu}}</td>
+                                        <td>{{$th->mo_ta}}</td>
                                         <td>
                                             <div style="display: flex; justify-content: center; align-items: center;">
-                                                <a href="{{ route('admin.editcate', ['danh_muc_id' => $cate->danh_muc_id]) }}" class="btn btn-warning btn-circle btn-sm" style=" margin-right: 10px;">
+                                                <a href="{{ route('admin.editbrand', ['thuong_hieu_id' => $th->thuong_hieu_id]) }}" class="btn btn-warning btn-circle btn-sm" style=" margin-right: 10px;">
                                                     <i class="fas fa-fw fa-wrench"></i>
                                                 </a>
-                                                <a href="{{ route('admin.deletecate', ['danh_muc_id' => $cate->danh_muc_id]) }}"
+                                                <a href="{{ route('admin.deletebrand', ['thuong_hieu_id' => $th->thuong_hieu_id]) }}"
                                                     class="btn btn-danger btn-circle btn-sm"data-toggle="modal"
                                                     data-target="#deleteModal">
                                                     @csrf
@@ -115,7 +117,7 @@
             <div class="modal-footer">
                 <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
                 <a class="btn btn-danger"
-                    href="{{ route('admin.deletecate', ['danh_muc_id' => $cate->danh_muc_id]) }}">Detele</a>
+                    href="{{ route('admin.deletebrand', ['thuong_hieu_id' => $th->thuong_hieu_id]) }}">Detele</a>
             </div>
         </div>
     </div>

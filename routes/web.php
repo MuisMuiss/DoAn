@@ -4,7 +4,7 @@ use App\Http\Controllers\Admin\Product_Controller;
 use App\Http\Controllers\User\ProductController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-
+use App\Http\Controllers\Admin\ManageController;
 
 
 // Route::get('/index', function () {
@@ -76,6 +76,8 @@ Route::middleware('auth')->group(function(){
         return view('admin.home');
     })->name('admin.home');
     // Route::match(['get', 'post'], '/homeadmin', [AdminController::class, 'viewhome'])->name('admin.home');
+
+    //User
     // Thêm User
     Route::get('/themuser', [AdminController::class, "themuser"])->name('admin.themuser');
     Route::get('/alluser', [AdminController::class, "viewuser"])->name('admin.alluser');
@@ -86,7 +88,7 @@ Route::middleware('auth')->group(function(){
     // Xóa User
     Route::get('/deleteUser/{nguoi_dung_id}', [AdminController::class, "deleteUser"])->name('admin.deleteUser');
     
-
+    //Product
     
     // Thêm sản phẩm
     Route::get('/allproducts',[Product_Controller::class,"viewProduct"])->name('product.all');
@@ -98,6 +100,38 @@ Route::middleware('auth')->group(function(){
     // Xóa sản phẩm
     Route::get('/deletesp/{san_pham_id}', [Product_Controller::class, "deletesp"])->name('admin.deletesp');
 
+    //Danh mục
+    // Thêm danh mục
+    Route::get('/allcate',[ManageController::class,"viewCate"])->name('cate.all');
+    Route::get('/addcate',[ManageController::class,"themcate"])->name('cate.add');
+    Route::post('/addcate', [ManageController::class, "addcate"])->name('admin.addcate');
+    // Cập nhật danh mục
+    Route::get( '/editcate/{danh_muc_id}', [ManageController::class, "editcate"])->name('admin.editcate');
+    Route::post( '/updatecate/{danh_muc_id}', [ManageController::class, "updatecate"])->name('admin.updatecate');
+    // Xóa danh mục
+    Route::get('/deletecate/{danh_muc_id}', [ManageController::class, "deletecate"])->name('admin.deletecate');
+
+    //Thương hiệu
+    // Thêm thương hiệu
+    Route::get('/allbrand',[ManageController::class,"viewbrand"])->name('brand.all');
+    Route::get('/addbrand',[ManageController::class,"thembrand"])->name('brand.add');
+    Route::post('/addbrand', [ManageController::class, "addbrand"])->name('admin.addbrand');
+    // Cập nhật thương hiệu
+    Route::get( '/editbrand/{thuong_hieu_id}', [ManageController::class, "editbrand"])->name('admin.editbrand');
+    Route::post( '/updatebrand/{thuong_hieu_id}', [ManageController::class, "updatebrand"])->name('admin.updatebrand');
+    // Xóa thương hiệu
+    Route::get('/deletebrand/{thuong_hieu_id}', [ManageController::class, "deletebrand"])->name('admin.deletebrand');
+
+    //Loại sản phẩm
+    // Thêm Loại sản phẩm
+    Route::get('/alltype',[ManageController::class,"viewtype"])->name('type.all');
+    Route::get('/addtype',[ManageController::class,"themtype"])->name('type.add');
+    Route::post('/addtype', [ManageController::class, "addtype"])->name('admin.addtype');
+    // Cập nhật Loại sản phẩm
+    Route::get( '/edittype/{loai_sp_id}', [ManageController::class, "edittype"])->name('admin.edittype');
+    Route::post( '/updatetype/{loai_sp_id}', [ManageController::class, "updatetype"])->name('admin.updatetype');
+    // Xóa Loại sản phẩm
+    Route::get('/deletetype/{loai_sp_id}', [ManageController::class, "deletetype"])->name('admin.deletetype');
 });
 
 Route::get('/login', [AdminController::class, "viewlogin"])->name('login');

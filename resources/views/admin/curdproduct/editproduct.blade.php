@@ -11,7 +11,7 @@
                             <h5 class="alert alert-success">{{session('status')}}</h5>
                         @endif
                         <div class="card-body">
-                            <form action="{{route('admin.addProduct')}}" method="post" enctype="multipart/form-data">
+                            <form action="{{route('admin.updatesp',['san_pham_id' => $product->san_pham_id])}}" method="post" enctype="multipart/form-data">
                                 @csrf
                                 <div class="form-group mb-3">
                                     <label for="">Tên sản phẩm:</label>
@@ -76,8 +76,8 @@
                                 </div>
                                 <div class="form-group mb-3">
                                     <label for="">Ảnh:</label>
-                                    <input type="file" name="hinh_anh" id="" class="form-control">
-                                    <img src="{{asset('images/product/'.$product->hinh_anh)}}" width="100px" height="100px" >
+                                    <input type="file" name="hinh_anh" class="form-control" id="">
+                                <img src="{{asset('images/product/'.$product->hinh_anh)}}" width="100px" height="100px" >
                                 </div>
                                 <div class="form-group mb-3">
                                     <button type="submit" class="btn btn-primary">Cập nhật</button>
