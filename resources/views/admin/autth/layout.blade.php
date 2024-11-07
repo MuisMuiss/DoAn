@@ -17,6 +17,8 @@
         rel="stylesheet">
     <link href="{{asset('assets/admin/css/sb-admin-2.min.css')}}" rel="stylesheet">
     <link href="{{asset('assets/admin/vendor/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
-
+    <script src="https://cdn.ckeditor.com/ckeditor5/37.1.0/classic/ckeditor.js"></script>
+</script>
 </head>
+
 

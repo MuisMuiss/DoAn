@@ -46,7 +46,7 @@
                                 <div class="form-group mb-3">
                                     <label for="">Mô tả:</label>
                                     {{-- <input type="text" name="mo_ta" id="" class="form-control" value="{{$product->mo_ta,old('mo_ta')}}"> --}}
-                                    <textarea name="mo_ta" class="form-control description" placeholder="Product content">{{$product->mo_ta,old('mo_ta')}}</textarea>
+                                    <textarea name="mo_ta" id="editor" class="form-control description" placeholder="Product content">{{$product->mo_ta,old('mo_ta')}}</textarea>
                                     @error('mo_ta')
                                         <span class="text-danger">{{$message}}</span>
                                     @enderror
@@ -59,7 +59,7 @@
                                         <span class="text-danger">{{$message}}</span>
                                     @enderror
                                 </div>
-    
+                                
                                 <div class="form-group mb-3">
                                     <label for="">Thương hiệu:</label> 
                                     <select name="thuong_hieu_id" id="" class="form-control">
@@ -80,6 +80,26 @@
                                 <img src="{{asset('images/product/'.$product->hinh_anh)}}" width="100px" height="100px" >
                                 </div>
                                 <div class="form-group mb-3">
+                                    <label for="">Album ảnh:</label>
+                                    <input type="file" name="album[]" class="form-control" multiple onchange="showOtherImage(this)">
+                                    <hr>
+                                    <div class="row" style="margin-right: 10.25rem;">
+                                        @foreach ($product->images as $img)
+                                        <div class="col-md-3" style="position: relative">
+                                            <a href="" class="thumbnail">
+                                                <img src="{{asset('images/product/'.$img->album_sp)}}" alt="" style="width: 100px">
+                                            </a>
+                                            <a onclick="return confirm('Bạn có chắc chắn muốn xóa ảnh không')" href="{{ route('product.deleteImage', $img->album_anh_id) }}" style="position: absolute; right:85px" class="btn btn-sm btn-danger">
+                                                <i class="fa fa-trash"></i>
+                                            </a>
+                                                {{-- <a onclick="return confirm('Are you sure delete it?')" href="{{ route('product.destroyImage', $img->san_pham_id) }}" style="position: absolute; top:5px; right:20px" class="btn btn-sm btn-danger">
+                                                    <i class="fa fa-trash"></i>
+                                                </a> --}}
+                                        </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+                                <div class="form-group mb-3">
                                     <button type="submit" class="btn btn-primary">Cập nhật</button>
                                     <a href="{{route('product.all')}}" class="btn btn-danger float-end">Back</a>
                                 </div>
@@ -89,6 +109,36 @@
                 </div>
             </div>
         </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                ClassicEditor
+                    .create(document.querySelector('#editor'), {
+                        removeFormat: {
+                            elements: 'p',
+                            attributes: false,
+                            styles: false
+                        }
+                    })
+                    .then(editor => {
+                        // Lấy nội dung khi người dùng nhấn lưu
+                        document.getElementById('saveButton').addEventListener('click', function() {
+                            let content = editor.getData(); // Lấy dữ liệu từ CKEditor
+                            
+                            // Loại bỏ thẻ <p> khỏi nội dung
+                            content = content.replace(/<\/?p>/g, ''); // Loại bỏ thẻ <p>
+                            
+                            // Gửi dữ liệu đã xử lý đến máy chủ
+                            // Ví dụ sử dụng fetch hoặc AJAX để gửi dữ liệu
+                            console.log(content); // Kiểm tra kết quả
+
+                            // Tiến hành gửi content qua AJAX hoặc form submit
+                        });
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    });
+            });
+        </script>
     </body>
     
     </html>

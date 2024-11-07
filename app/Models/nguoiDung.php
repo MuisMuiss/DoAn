@@ -16,7 +16,6 @@ class nguoiDung extends Authenticatable
     protected $fillable = [
         'nguoi_dung_id',
         'ho_ten',
-        'ten_dang_nhap',
         'mat_khau',
         'email',
         'so_dien_thoai',
@@ -29,11 +28,11 @@ class nguoiDung extends Authenticatable
     protected static function boot()
     {
         parent::boot();
+        
 
         static::creating(function ($user) {
-            // Tìm giá trị lớn nhất của nguoi_dung_id và ép kiểu về int
-            $maxId = (int) nguoiDung::max('nguoi_dung_id'); // Ép kiểu về int
-            $user->nguoi_dung_id = $maxId + 1; // Tăng lên 1
+            $maxId = (int) nguoiDung::max('nguoi_dung_id'); // Lấy giá trị lớn nhất của nguoi dung id
+            $user->nguoi_dung_id = $maxId > 0 ? $maxId + 1 : 1; // Nếu không có ng dung, gán nguoi dung id = 1
         });
     }
     // Model của bạn

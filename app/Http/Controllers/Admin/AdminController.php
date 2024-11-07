@@ -44,7 +44,6 @@ class AdminController extends Controller
     public function addUser(Request $request){
         $messages = [
             'ho_ten.required' => 'Họ và Tên không được để trống.',
-            'ten_dang_nhap.required' => 'Tên đăng nhập không được để trống.',
             'email.required' => 'Email không được để trống.',
             'email.email' => 'Email không hợp lệ.',
             'mat_khau.required' => 'Mật khẩu không được để trống.',
@@ -57,7 +56,6 @@ class AdminController extends Controller
     
         $validatedData = $request->validate([
             'ho_ten' => 'required',
-            'ten_dang_nhap' => 'required',
             'email' => 'required|email',
             'mat_khau' => 'required|min:6',
             'so_dien_thoai' => 'required|min:10',
@@ -71,7 +69,6 @@ class AdminController extends Controller
         }
         $user = new nguoiDung();
         $user->ho_ten=$request->input('ho_ten');
-        $user->ten_dang_nhap=$request->input('ten_dang_nhap');
         $user->mat_khau=bcrypt($request->input('mat_khau'));
         $user->email=$request->input('email');
         $user->so_dien_thoai=$request->input('so_dien_thoai');
@@ -102,7 +99,6 @@ class AdminController extends Controller
     public function updateuser(Request $request, $nguoi_dung_id) {
         $messages = [
             'ho_ten.required' => 'Họ và Tên không được để trống.',
-            'ten_dang_nhap.required' => 'Tên đăng nhập không được để trống.',
             'email.required' => 'Email không được để trống.',
             'email.email' => 'Email không hợp lệ.',
             'mat_khau.required' => 'Mật khẩu không được để trống.',
@@ -113,7 +109,6 @@ class AdminController extends Controller
         ];
         $validatedData = $request->validate([
             'ho_ten' => 'required',
-            'ten_dang_nhap' => 'required',
             'email' => 'required|email',
             'so_dien_thoai' => 'required|min:10',
             'dia_chi'=> 'required',

@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use App\Models\ProductImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\File;
+
 
 
 class Product_Controller extends Controller
@@ -54,10 +56,17 @@ class Product_Controller extends Controller
 
         ], $messages);
         $product= new Product();
+        
         $product->ten_san_pham=$request->input('ten_san_pham');
         $product->loai_sp_id=$request->loai_sp_id ?? 1;
         $product->gia=$request->input('gia');
-        $product->mo_ta=$request->input('mo_ta');
+        $editorData = $request->input('mo_ta');  // Dữ liệu nhận được từ CKEditor
+
+        // Loại bỏ tất cả thẻ <p> (bao gồm thẻ <p> có thuộc tính và thẻ đóng <p>)
+        $editorData = preg_replace('/<\/?p[^>]*>/i', '', $editorData);
+        
+        // Lưu vào cơ sở dữ liệu
+        $product->mo_ta = $editorData;
         $product->so_luong_kho=$request->input('so_luong_kho');
         $product->thuong_hieu_id=$request->thuong_hieu_id ?? 1;
         if($request->hasFile('hinh_anh')){
@@ -69,6 +78,17 @@ class Product_Controller extends Controller
         }
         $product->save();
         
+        if ($request->has('album')) {
+            foreach ($request->album as $img) {
+                $album_name = $img->hashName();
+                $img->move(public_path('images/product'), $album_name);
+        
+                DB::table('album_anh')->insert([
+                    'album_sp' => $album_name,
+                    'album_sp_id' => $product->san_pham_id // Sử dụng san_pham_id từ sản phẩm vừa tạo
+                ]);
+            }
+        }
         return redirect()->back()->with('status','Thêm sản phẩm thành công');
     }
 
@@ -114,9 +134,18 @@ class Product_Controller extends Controller
     
             $product->hinh_anh = $filename;
         }
-    
         $product->save();
-    
+        if ($request->has('album')) {
+            foreach ($request->album as $img) {
+                $album_name = $img->hashName();
+                $img->move(public_path('images/product'), $album_name);
+        
+                DB::table('album_anh')->insert([
+                    'album_sp' => $album_name,
+                    'album_sp_id' => $product->san_pham_id // Sử dụng san_pham_id từ sản phẩm vừa tạo
+                ]);
+            }
+        }
         return redirect()->back()->with('status', 'Cập nhật sản phẩm thành công');
     }
     public function deletesp($san_pham_id){
@@ -126,7 +155,33 @@ class Product_Controller extends Controller
             if (File::exists($anhcu)) {
                 File::delete($anhcu);
             }
+        // Xóa các hình ảnh trong album liên quan đến sản phẩm
+        $albumImages = DB::table('album_anh')->where('album_sp_id', $san_pham_id)->get();
+        foreach ($albumImages as $image) {
+            $albumImagePath = public_path('images/product/' . $image->album_sp);
+            if (File::exists($albumImagePath)) {
+                File::delete($albumImagePath);
+            }
+        }
+
+        // Xóa các bản ghi trong bảng album_anh liên quan đến sản phẩm
+        DB::table('album_anh')->where('album_sp_id', $san_pham_id)->delete();
         $product->delete();
         return redirect()->back()->with('status','Xóa san phẩm thành công');
+    }
+    public function deleteImage(ProductImage $image)
+    {
+        $img_name = $image->album_sp;
+        if ($image->delete()) {
+            $image_path = public_path('images/product').'/'.$img_name;
+            if (file_exists($image_path)) {
+                unlink($image_path);
+            }
+
+            return redirect()->back()->with('ok','Xóa ảnh thành công');
+        }
+
+        return redirect()->back()->with('no','Đã xảy ra lỗi, vui lòng thử lại');
+
     }
 }
