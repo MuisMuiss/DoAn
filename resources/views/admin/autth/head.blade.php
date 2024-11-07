@@ -20,6 +20,7 @@
     <!-- Custom styles for this template-->
     <link href="assets/admin/css/sb-admin-2.min.css" rel="stylesheet">
     <link href="assets/admin/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <script type="text/javascript" src="{{asset('public/ckeditor/ckeditor.js')}}"></script>
 
 </head>
 

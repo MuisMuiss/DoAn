@@ -2,9 +2,9 @@
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\Product_Controller;
 use App\Http\Controllers\User\ProductController;
+use App\Http\Controllers\Admin\ManageController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\Admin\ManageController;
 
 
 // Route::get('/index', function () {
@@ -98,6 +98,7 @@ Route::middleware('auth')->group(function(){
     Route::get( '/editsp/{san_pham_id}', [Product_Controller::class, "editsp"])->name('admin.editsp');
     Route::post( '/updatesp/{san_pham_id}', [Product_Controller::class, "updatesp"])->name('admin.updatesp');
     // Xóa sản phẩm
+    Route::get('deleteimage/{image}', [Product_Controller::class,'deleteImage'])->name('product.deleteImage');
     Route::get('/deletesp/{san_pham_id}', [Product_Controller::class, "deletesp"])->name('admin.deletesp');
 
     //Danh mục

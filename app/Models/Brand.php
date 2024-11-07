@@ -19,10 +19,10 @@ class Brand extends Model
     {
         parent::boot();
 
-        static::creating(function ($user) {
+        static::creating(function ($brand) {
             // Tìm giá trị lớn nhất của nguoi_dung_id và ép kiểu về int
             $maxId = (int) Brand::max('thuong_hieu_id'); // Ép kiểu về int
-            $user->thuong_hieu_id = $maxId + 1; // Tăng lên 1
+            $brand->thuong_hieu_id = $maxId > 0 ? $maxId + 1 : 1; // Tăng lên 1
         });
     }
 }

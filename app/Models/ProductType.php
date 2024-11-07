@@ -19,10 +19,10 @@ class ProductType extends Model
     {
         parent::boot();
 
-        static::creating(function ($user) {
+        static::creating(function ($type) {
             // Tìm giá trị lớn nhất của nguoi_dung_id và ép kiểu về int
             $maxId = (int) ProductType::max('loai_sp_id'); // Ép kiểu về int
-            $user->loai_sp_id = $maxId + 1; // Tăng lên 1
+            $type->loai_sp_id = $maxId > 0 ? $maxId + 1 : 1;  // Tăng lên 1
         });
     }
 

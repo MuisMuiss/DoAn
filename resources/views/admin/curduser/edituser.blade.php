@@ -21,14 +21,6 @@
                                 @enderror
                             </div>
                             <div class="form-group mb-3">
-                                <label for="">Tên đăng nhập:</label>
-                                <input type="text" name="ten_dang_nhap" id="" class="form-control" value="{{$nguoiDung->ten_dang_nhap,old('ten_dang_nhap')}}">
-                                @error('ten_dang_nhap')
-                                    <span class="text-danger">{{$message}}</span>
-                                @enderror
-                            </div>
-
-                            <div class="form-group mb-3">
                                 <label for="">Mật khẩu:</label>
                                 <input type="password" name="mat_khau" id="" class="form-control" value="{{$nguoiDung->mat_khau,old('mat_khau')}}">
                                 @error('mat_khau')

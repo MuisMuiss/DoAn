@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Models\ProductImage;
 
 class Product extends Authenticatable
 {
@@ -24,14 +25,18 @@ class Product extends Authenticatable
         'ngay_tao',
 
     ];
+    
     protected static function boot()
     {
         parent::boot();
 
-        static::creating(function ($user) {
-            // Tìm giá trị lớn nhất của nguoi_dung_id và ép kiểu về int
-            $maxId = (int) Product::max('san_pham_id'); // Ép kiểu về int
-            $user->san_pham_id = $maxId + 1; // Tăng lên 1
+        static::creating(function ($product) {
+            $maxId = (int) Product::max('san_pham_id'); // Lấy giá trị lớn nhất của san_pham_id
+            $product->san_pham_id = $maxId > 0 ? $maxId + 1 : 1; // Nếu không có sản phẩm, gán san_pham_id = 1
         });
+    }
+    //1sp-n`anh
+    public function images(){
+        return $this->hasMany(ProductImage::class,'album_sp_id','san_pham_id');
     }
 }
