@@ -27,7 +27,7 @@ class AdminController extends Controller
         // Tìm người dùng theo email
         $nguoiDung = nguoiDung::where('email', $request->email)->where('vai_tro', 1)->first();
         if ($nguoiDung && Hash::check($mat_khau, $nguoiDung->mat_khau)) {
-            Auth::login($nguoiDung);
+            Auth::guard('admin')->login($nguoiDung);
             $request->session()->regenerate();
             return redirect()->route('admin.home');
             
@@ -35,7 +35,13 @@ class AdminController extends Controller
         // dd($request->all());
         return back()->with('msg','Email hoặc mật khẩu không chính xác');  
     }
-
+    public function adminLogout(Request $request)
+    {
+        Auth::guard('admin')->logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect()->route('admin.login');
+    }
     //CRUD 
     //Thêm user
     public function themuser(){
@@ -124,7 +130,6 @@ class AdminController extends Controller
         }
         $nguoiDung = nguoiDung::find($nguoi_dung_id);
         $nguoiDung->ho_ten = $request->input('ho_ten');
-        $nguoiDung->ten_dang_nhap = $request->input('ten_dang_nhap');
         // Cập nhật mật khẩu nếu có
         if ($request->filled('mat_khau')) {
             $nguoiDung->mat_khau = bcrypt($request->input('mat_khau'));

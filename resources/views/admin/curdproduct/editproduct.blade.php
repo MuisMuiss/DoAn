@@ -74,6 +74,23 @@
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
+                                <div class="form-group row">
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <label for="">Sản phẩm bestseller:</label>
+                                        <select name="sp_bestseller" class="form-control">
+                                            <option value="0"{{$product->sp_bestseller == 0 ? 'selected' : '' }}>Sản phẩm bình thường</option>
+                                            <option value="1"{{$product->sp_bestseller == 1 ? 'selected' : '' }}>Sản phẩm Bestseller</option>
+                                        </select>
+                                    </div>
+    
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <label for="">Sản phẩm mới:</label>
+                                        <select name="sp_moi" class="form-control">
+                                            <option value="0" {{$product->sp_moi == 0 ? 'selected' : '' }}>Sản phẩm bình thường</option>
+                                            <option value="1" {{$product->sp_moi == 1 ? 'selected' : '' }}>Sản phẩm New</option>
+                                        </select>
+                                    </div>
+                                </div>
                                 <div class="form-group mb-3">
                                     <label for="">Ảnh:</label>
                                     <input type="file" name="hinh_anh" class="form-control" id="">
@@ -109,36 +126,7 @@
                 </div>
             </div>
         </div>
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                ClassicEditor
-                    .create(document.querySelector('#editor'), {
-                        removeFormat: {
-                            elements: 'p',
-                            attributes: false,
-                            styles: false
-                        }
-                    })
-                    .then(editor => {
-                        // Lấy nội dung khi người dùng nhấn lưu
-                        document.getElementById('saveButton').addEventListener('click', function() {
-                            let content = editor.getData(); // Lấy dữ liệu từ CKEditor
-                            
-                            // Loại bỏ thẻ <p> khỏi nội dung
-                            content = content.replace(/<\/?p>/g, ''); // Loại bỏ thẻ <p>
-                            
-                            // Gửi dữ liệu đã xử lý đến máy chủ
-                            // Ví dụ sử dụng fetch hoặc AJAX để gửi dữ liệu
-                            console.log(content); // Kiểm tra kết quả
-
-                            // Tiến hành gửi content qua AJAX hoặc form submit
-                        });
-                    })
-                    .catch(error => {
-                        console.error(error);
-                    });
-            });
-        </script>
+        
     </body>
     
     </html>

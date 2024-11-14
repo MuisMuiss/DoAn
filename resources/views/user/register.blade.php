@@ -22,7 +22,12 @@
     <!-- Libraries Stylesheet -->
     <link href="{{ asset('assets/user/lib/lightbox/css/lightbox.min.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/user/lib/owlcarousel/assets/owl.carousel.min.css') }}" rel="stylesheet">
-
+    <link href="{{ asset('assets/admin/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+    <link href="{{ asset('assets/admin/css/sb-admin-2.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/admin/vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
     <!-- Customized Bootstrap Stylesheet -->
     <link href="{{ asset('assets/user/css/bootstrap.min.css') }}" rel="stylesheet">
 
@@ -43,7 +48,7 @@
 
     <!-- Navbar start -->
     <div class="container-fluid fixed-top">
-        <div class="container topbar bg-primary d-none d-lg-block">
+        <div class="container topbar bg-primary d-none d-lg-block" style="height: 0%">
             <div class="d-flex justify-content-between">
                 <div class="top-info ps-2">
                     <small class="me-3"><i class="fas fa-map-marker-alt me-2 text-secondary"></i> <a
@@ -59,7 +64,7 @@
             </div>
         </div>
         <div class="container px-0" style="max-width: 1400px;">
-            <nav class="navbar navbar-light bg-white navbar-expand-xl" style="padding: 8px 16px 8px 16px;">
+            <nav class="navbar navbar-light bg-white navbar-expand-xl">
                 <a href="{{ route('index') }}" class="navbar-brand">
                     <h1 class="text-primary display-6">Sữa & Tã</h1>
                 </a>
@@ -68,7 +73,7 @@
                     <span class="fa fa-bars text-primary"></span>
                 </button>
                 <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
-                    <div class="navbar-nav" style="margin-left: 10%">
+                    <div class="navbar-nav" style="margin-left: 20%">
                         <a href="{{ route('index') }}" class="nav-item nav-link active">Home</a>
                         <div class="nav-item dropdown">
                             <a href="{{ route('shopsua') }}" class="nav-link dropdown-toggle">Sữa</a>
@@ -112,30 +117,29 @@
                         <a href="cart.html" class="position-relative me-4 my-auto">
                             <i class="fa fa-shopping-bag fa-2x"></i>
                             <span
-                                class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1"
+                                class="position-absolute bg-secondary rounded-circle d-f    lex align-items-center justify-content-center text-dark px-1"
                                 style="top: -5px; left: 15px; height: 20px; min-width: 20px;">3</span>
                         </a>
                         <div class="nav-item dropdown">
                             @if (Auth::check())
-                                <a href="{{ route('accout.view', ['nguoi_dung_id' => Auth::id()]) }}" onclick="showContent(this)">
+                                <a href="">
                                     <span class="mr-2 d-none d-lg-inline text-gray-600 small">Hi,
-                                        {{ Auth::user()->ho_ten }}</span>
-                                    <img class="img-profile"
-                                        src="{{ Auth::user()->avatar ? asset('images/avatar/' . Auth::user()->avatar) : asset('assets/admin/img/undraw_profile.svg') }}"
+                                        {{ Auth::user()->ho_ten }} |</span>
+                                    {{-- <a class="mr-2 d-none d-lg-inline text-gray-600 small" href="{{ route('logout') }}">Logout</a> --}}
+                                    <img class="img-profile" src="assets/admin/img/undraw_profile.svg"
                                         style="width: 35px; height: 35px; border-radius: 50%;">
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                     aria-labelledby="userDropdown">
-                                    <a class="dropdown-item"
-                                        href="{{ route('accout.view', ['nguoi_dung_id' => Auth::id()]) }}">
+                                    <a class="dropdown-item" href="#">
                                         <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                        Tài khoản
+                                        Profile
                                     </a>
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="{{ route('user.logout') }}" data-toggle="modal"
                                         data-target="#logoutModal">
                                         <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                        Đăng xuất
+                                        Logout
                                     </a>
                                 </div>
                             @else
@@ -147,10 +151,93 @@
                                 </div>
                             @endif
                         </div>
-
                     </div>
-                </div>
             </nav>
         </div>
     </div>
     <!-- Navbar End -->
+    <div class="container-fluid page-header py-5">
+        <h1 class="text-center text-white display-6">Shop</h1>
+        <ol class="breadcrumb justify-content-center mb-0">
+            <li class="breadcrumb-item"><a href="#" style="color: black">Home</a></li>
+            <li class="breadcrumb-item"><a href="#" style="color: black">Đăng ký tài khoản</a></li>
+        </ol>
+    </div>
+    <div class="customer-form">
+        <div class="page_title">
+            <div class="page-title text-center">
+                <h1>Đăng ký tài khoản</h1>
+            </div>
+        </div>
+        @if (session('status'))
+            <h5 class="alert alert-success">{{ session('status') }}</h5>
+        @endif
+        <div class="col-lg-7 mx-auto">
+            <div class="p-5">
+                <div class="text-center">
+                    <h1 class="h6 text-gray-900 mb-4">Hãy đăng ký tài khoản!!!</h1>
+                </div>
+                <form class="user" method="POST" action="{{ route('user.register') }}">
+                    @csrf
+                    <div class="form-group">
+                        <input type="text" name="ho_ten" class="form-control form-control-user"
+                            id="exampleInputName" placeholder="Họ & tên" value="{{ old('ho_ten') }}" required>
+                        {{-- @error('ho_ten')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror --}}
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-6 mb-3 mb-sm-0">
+                            <input type="email" name="email" class="form-control form-control-user"
+                                id="exampleInputEmail" placeholder="Email" value="{{ old('email') }}" required>
+                            @error('email')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="col-sm-6 mb-3 mb-sm-0">
+                            <input type="text" name="so_dien_thoai" class="form-control form-control-user"
+                                id="exampleInputPhone" placeholder="Số điện thoại"
+                                value="{{ old('so_dien_thoai') }}" required>
+                            @error('so_dien_thoai')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-6 mb-3 mb-sm-0">
+                            <input type="password" name="mat_khau" class="form-control form-control-user"
+                                id="exampleInputPassword" placeholder="Mật khẩu" value="{{ old('mat_khau') }}"
+                                required>
+                            @error('mat_khau')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="col-sm-6">
+                            <input type="password" name="mat_khau_confirmation"
+                                class="form-control form-control-user" id="exampleRepeatPassword"
+                                placeholder="Lặp lại mật khẩu" required>
+                            @error('mat_khau_confirmation')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-user btn-block">
+                        Đăng ký tài khoản
+                    </button>
+                    <hr>
+                    <a href="#" class="btn btn-google btn-user btn-block">
+                        <i class="fab fa-google fa-fw"></i> Đăng ký với Google
+                    </a>
+                    <a href="#" class="btn btn-facebook btn-user btn-block">
+                        <i class="fab fa-facebook-f fa-fw"></i> Đăng ký với Facebook
+                    </a>
+                </form>
+
+                <hr>
+                <div class="text-center">
+                    <a class="small" href="{{ route('user.login') }}">Đã có tài khoản? Đăng nhập!</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    @include('user.layout.footer')

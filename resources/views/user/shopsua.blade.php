@@ -22,10 +22,9 @@
 <!-- Single Page Header start -->
 <div class="container-fluid page-header py-5">
     <h1 class="text-center text-white display-6">Shop</h1>
-    <ol class="breadcrumb justify-content-center ">
-        <li class="breadcrumb-item active text-white"><a style=" color: #fff;" href="#">Home</a></li>
-        <li class="breadcrumb-item active text-white"><a style=" color: #fff;" href="#">Pages</a></li>
-        <li class="breadcrumb-item active text-white">Shop</li>
+    <ol class="breadcrumb justify-content-center" style="background-color: #ffffff;">
+        <li class="breadcrumb-item active text-white"><a style=" color: black;" href="#">Home</a></li>
+        <li class="breadcrumb-item active text-white">Shop sữa</li>
     </ol>
 </div>
 <!-- Single Page Header End -->

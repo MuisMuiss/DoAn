@@ -44,7 +44,7 @@
                             <div class="form-group mb-3">
                                 <label for="">Mô tả:</label>
                                 {{-- <input type="text" name="mo_ta" id="" class="form-control" value="{{old('mo_ta')}}"> --}}
-                                <textarea name="mo_ta" id="ckeditor" class="form-control description" required placeholder="...">{{old('mo_ta')}}</textarea>  
+                                <textarea name="mo_ta" id="editor" class="form-control description" required placeholder="...">{{old('mo_ta')}}</textarea>  
                                 @error('mo_ta')
                                     <span class="text-danger">{{$message}}</span>
                                 @enderror
@@ -68,6 +68,23 @@
                                 @error('thuong_hieu_id')
                                     <span class="text-danger">{{$message}}</span>
                                 @enderror
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-6 mb-3 mb-sm-0">
+                                    <label for="">Sản phẩm bestseller:</label>
+                                    <select name="sp_bestseller" class="form-control">
+                                        <option value="0">Sản phẩm bình thường</option>
+                                        <option value="1">Sản phẩm Bestseller</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-sm-6 mb-3 mb-sm-0">
+                                    <label for="">Sản phẩm mới:</label>
+                                    <select name="sp_moi" class="form-control">
+                                        <option value="0">Sản phẩm bình thường</option>
+                                        <option value="1">Sản phẩm New</option>
+                                    </select>
+                                </div>
                             </div>
                             <div class="form-group mb-3">
                                 <label for="">Ảnh:</label>
