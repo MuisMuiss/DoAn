@@ -213,5 +213,38 @@ return [
     */
 
     'partitioned' => env('SESSION_PARTITIONED_COOKIE', false),
+    'session' => [
+        'cookie' => 'user_session', // Tên session cho người dùng
+    ],
+    'admin_session' => [
+        'cookie' => 'admin_session', // Tên session cho admin
+    ],
+    'defaults' => [
+        'guard' => 'web',
+        'passwords' => 'users',
+    ],
 
+    'guards' => [
+        'web' => [
+            'driver' => 'session',
+            'provider' => 'users',
+            'session' => 'user_session',  // Tên session riêng cho người dùng
+        ],
+        'admin' => [
+            'driver' => 'session',
+            'provider' => 'admins',
+            'session' => 'admin_session',  // Tên session riêng cho admin
+        ],
+    ],
+
+    'providers' => [
+        'users' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\nguoiDung::class,
+        ],
+        'admins' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\nguoiDung::class,
+        ],
+    ],
 ];

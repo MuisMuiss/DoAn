@@ -39,7 +39,7 @@
                             <div class="col-lg-6">
                                 <div class="p-5">
                                     <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
+                                        <h1 class="h4 text-gray-900 mb-4">Welcome to admin!</h1>
                                     </div>
                                     @if (session('msg'))
                                         <h6 class="alert alert-danger">{{session('msg')}}</h6>
@@ -65,13 +65,6 @@
                                         </div>
                                         {{-- <input class="btn btn-primary btn-user btn-block" type="submit" value="login" name="login"> --}}
                                         <button class="btn btn-primary btn-user btn-block" type="submit">Login</button>
-                                        <hr>
-                                        <a href="homeadmin" class="btn btn-google btn-user btn-block">
-                                            <i class="fab fa-google fa-fw"></i> Login with Google
-                                        </a>
-                                        <a href="homeadmin" class="btn btn-facebook btn-user btn-block">
-                                            <i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
-                                        </a>
                                     </form>
                                     <hr>
                                     <div class="text-center">

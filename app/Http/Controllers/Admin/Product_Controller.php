@@ -76,6 +76,8 @@ class Product_Controller extends Controller
             $file->move('images/product/', $filename);
             $product->hinh_anh=$filename;
         }
+        $product->sp_bestseller=$request->sp_bestseller ? 1 : 0;
+        $product->sp_moi=$request->sp_moi ? 1 : 0;
         $product->save();
         
         if ($request->has('album')) {
@@ -120,6 +122,8 @@ class Product_Controller extends Controller
         $product->mo_ta=$request->input('mo_ta');
         $product->so_luong_kho=$request->input('so_luong_kho');
         $product->thuong_hieu_id=$request->thuong_hieu_id ?? 1;
+        $product->sp_bestseller=$request->sp_bestseller ? 1 : 0;
+        $product->sp_moi=$request->sp_moi ? 1 : 0;
         if ($request->hasFile('hinh_anh')) {
             $anhcu = public_path('images/product/' . $product->hinh_anh);
     
@@ -134,6 +138,7 @@ class Product_Controller extends Controller
     
             $product->hinh_anh = $filename;
         }
+        
         $product->save();
         if ($request->has('album')) {
             foreach ($request->album as $img) {

@@ -26,20 +26,20 @@
             } else {
                 $('.fixed-top').removeClass('shadow').css('top', 0);
             }
-        } 
+        }
     });
-    
-    
-   // Back to top button
-   $(window).scroll(function () {
-    if ($(this).scrollTop() > 300) {
-        $('.back-to-top').fadeIn('slow');
-    } else {
-        $('.back-to-top').fadeOut('slow');
-    }
+
+
+    // Back to top button
+    $(window).scroll(function () {
+        if ($(this).scrollTop() > 300) {
+            $('.back-to-top').fadeIn('slow');
+        } else {
+            $('.back-to-top').fadeOut('slow');
+        }
     });
     $('.back-to-top').click(function () {
-        $('html, body').animate({scrollTop: 0}, 1500, 'easeInOutExpo');
+        $('html, body').animate({ scrollTop: 0 }, 1500, 'easeInOutExpo');
         return false;
     });
 
@@ -52,27 +52,27 @@
         dots: true,
         loop: true,
         margin: 25,
-        nav : true,
-        navText : [
+        nav: true,
+        navText: [
             '<i class="bi bi-arrow-left"></i>',
             '<i class="bi bi-arrow-right"></i>'
         ],
         responsiveClass: true,
         responsive: {
-            0:{
-                items:1
+            0: {
+                items: 1
             },
-            576:{
-                items:1
+            576: {
+                items: 1
             },
-            768:{
-                items:1
+            768: {
+                items: 1
             },
-            992:{
-                items:2
+            992: {
+                items: 2
             },
-            1200:{
-                items:2
+            1200: {
+                items: 2
             }
         }
     });
@@ -86,27 +86,27 @@
         dots: true,
         loop: true,
         margin: 25,
-        nav : true,
-        navText : [
+        nav: true,
+        navText: [
             '<i class="bi bi-arrow-left"></i>',
             '<i class="bi bi-arrow-right"></i>'
         ],
         responsiveClass: true,
         responsive: {
-            0:{
-                items:1
+            0: {
+                items: 1
             },
-            576:{
-                items:1
+            576: {
+                items: 1
             },
-            768:{
-                items:2
+            768: {
+                items: 2
             },
-            992:{
-                items:3
+            992: {
+                items: 3
             },
-            1200:{
-                items:4
+            1200: {
+                items: 4
             }
         }
     });
@@ -148,4 +148,61 @@
     });
 
 })(jQuery);
+// function showContent(type, element, event) {
 
+
+//     // Đổi màu liên kết hiện tại thành đỏ và các liên kết khác trở về màu mặc định
+//     document.querySelectorAll('.fruite-name a').forEach(link => {
+//         link.style.color = ''; // Màu mặc định
+//     });
+//     element.style.color = 'red'; // Đổi màu liên kết đang nhấn thành đỏ
+
+//     event.preventDefault();
+//     // Cập nhật URL trên thanh địa chỉ mà không tải lại trang
+//     let newUrl = `/account/profile/${type}`;
+//     history.pushState({ type: type }, null, newUrl); // Thay đổi URL mà không reload trang
+
+//     // Lưu trạng thái nội dung vào sessionStorage (hoặc localStorage)
+//     sessionStorage.setItem('currentTab', type);
+
+//     // Gửi yêu cầu AJAX để tải nội dung tương ứng
+//     $.ajax({
+//         url: `/account/profile/${type}`, // URL động cho AJAX
+//         type: 'GET',
+//         success: function(response) {
+//             $('#content-section').html(response); // Chỉ hiển thị nội dung của section
+//         },
+//         error: function(xhr, status, error) {
+//             $('#content-section').html('<p>Đã xảy ra lỗi. Chi tiết: ' + error + '</p>');
+//         }
+//     });
+// }
+function showContent(element) {
+    // Đặt màu mặc định cho tất cả các liên kết
+    document.querySelectorAll('.fruite-name a').forEach(link => {
+        link.style.color = ''; // Màu mặc định
+    });
+
+    // Lưu trạng thái vào sessionStorage
+    sessionStorage.setItem('activeTab', element.getAttribute('href'));
+
+    // Đổi màu liên kết đang nhấn thành màu đỏ
+    element.style.color = 'red';
+
+    // Thực hiện các thao tác cập nhật nội dung nếu có
+}
+
+// Thiết lập trạng thái mặc định khi nhấn vào Tài khoản trên header
+document.addEventListener("DOMContentLoaded", function() {
+    // Kiểm tra giá trị trong sessionStorage
+    const activeTab = sessionStorage.getItem('activeTab') || "{{ route('accout.view', ['nguoi_dung_id' => Auth::id()]) }}";
+    
+    // Đặt giá trị mặc định cho sessionStorage nếu chưa có
+    sessionStorage.setItem('activeTab', activeTab);
+
+    // Tìm liên kết của tab mặc định và thay đổi màu thành đỏ
+    const activeLink = document.querySelector(`.fruite-name a[href="${activeTab}"]`);
+    if (activeLink) {
+        activeLink.style.color = 'red';
+    }
+});

@@ -9,11 +9,10 @@ class AdminAuthentication
 {
     public function handle($request, Closure $next)
     {
-        if (session('user') && session('user')->vai_tro == 1) {
+        if (session('admin') && session('admin')->vai_tro == 1) {
             dd('Middleware passed');
             return $next($request);
         }
-
         return redirect()->route('login')->with('Bạn không có quyền truy cập.');
     }
 }
