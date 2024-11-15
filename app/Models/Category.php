@@ -24,4 +24,5 @@ class Category extends Model
             $user->danh_muc_id = $maxId + 1; // Tăng lên 1
         });
     }
+    
 }

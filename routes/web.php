@@ -5,15 +5,13 @@ use App\Http\Controllers\User\ProductController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Admin\ManageController;
-
+use App\Http\Controllers\HomeController;
+use App\Models\Product;
 
 // Route::get('/index', function () {
 //     return view('user.index');
 // });
 Route::get('/index',[ProductController::class,"index"]);
-
-Route::get('/shopsua', [ProductController::class,"shopsua"]);
-Route::get('/shopta', [ProductController::class,"shopta"]);
 
 Route::get('/cart', function () {
     return view('user.cart');
@@ -24,35 +22,6 @@ Route::get('/checkout', function () {
 Route::get('/detail', function () {
     return view('user.shopdetail');
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 Route::get('/register', function () {
     return view('admin.register');
@@ -67,16 +36,12 @@ Route::get('/type', function () {
     return view('admin.typeproduct');
 });
 
-
-
-
 Route::middleware('auth')->group(function(){
     Route::get('/homeadmin', function() {
          // Kiểm tra người dùng đã đăng nhập chưa
         return view('admin.home');
     })->name('admin.home');
     // Route::match(['get', 'post'], '/homeadmin', [AdminController::class, 'viewhome'])->name('admin.home');
-
     //User
     // Thêm User
     Route::get('/themuser', [AdminController::class, "themuser"])->name('admin.themuser');
@@ -132,8 +97,13 @@ Route::middleware('auth')->group(function(){
     Route::post( '/updatetype/{loai_sp_id}', [ManageController::class, "updatetype"])->name('admin.updatetype');
     // Xóa Loại sản phẩm
     Route::get('/deletetype/{loai_sp_id}', [ManageController::class, "deletetype"])->name('admin.deletetype');
+   
+
 });
 
+Route::get('/proid/{proid}',[ProductController::class,"productdetail"])->name('productdetail');
 Route::get('/login', [AdminController::class, "viewlogin"])->name('login');
 Route::post('/login', [AdminController::class, "login"])->name('admin.login');
+Route::get('/cate/{cate}', [ProductController::class, "category"])->name('go.shop');
+Route::get('/brand/{brand}', [ProductController::class, "brandshop"])->name('go.brand');
 

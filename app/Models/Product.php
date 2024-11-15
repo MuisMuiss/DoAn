@@ -15,7 +15,7 @@ class Product extends Authenticatable
     protected $fillable = [
         'san_pham_id',
         'ten_san_pham',
-        'loai_san_pham',
+        'loai_sp_id',
         'gia',
         'mo_ta',
         'so_luong_kho',

@@ -1,5 +1,5 @@
 @include('user.layout.header')
-div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-fullscreen">
         <div class="modal-content rounded-0">
             <div class="modal-header">
@@ -18,13 +18,12 @@ div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleMo
 </div>
 <!-- Modal Search End -->
 
-
 <!-- Single Page Header start -->
 <div class="container-fluid page-header py-5">
-    <h1 class="text-center text-white display-6">Shop</h1>
-    <ol class="breadcrumb justify-content-center mb-0">
-        <li class="breadcrumb-item"><a href="#">Home</a></li>
-        <li class="breadcrumb-item"><a href="#">Pages</a></li>
+    <h1 class="text-center text-white display-6">Shop Tả</h1>
+    <ol class="breadcrumb justify-content-center ">
+        <li class="breadcrumb-item active text-white"><a style=" color: #fff;" href="#">Home</a></li>
+        <li class="breadcrumb-item active text-white"><a style=" color: #fff;" href="#">Pages</a></li>
         <li class="breadcrumb-item active text-white">Shop</li>
     </ol>
 </div>
@@ -34,7 +33,9 @@ div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleMo
 <!-- Fruits Shop Start-->
 <div class="container-fluid fruite py-5">
     <div class="container py-5">
-        <h1 class="mb-4">Thế giới tã / bỉm</h1>
+        @foreach ($cate_shops as $cate)
+        <h1 class="mb-4">Thế giới tả.{{ $cate->ten_loaisp }}</h1>
+        @endforeach
         <div class="row g-4">
             <div class="col-lg-12">
                 <div class="row g-4">
@@ -64,18 +65,18 @@ div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleMo
                         <div class="row g-4">
                             <div class="col-lg-12">
                                 <div class="mb-3">
-                                    <h4>Loại tã</h4>
+
                                     <ul class="list-unstyled fruite-categorie">
                                         <li>
-                                            @foreach ($cate_product as $cate)
-                                                @if ($cate->danh_muc_id == 2)
-                                                    <div class="d-flex justify-content-between fruite-name">
-                                                        <a href="#"><i
-                                                                class="fas fa-apple-alt me-2"></i>{{ $cate->ten_loaisp }}</a>
-                                                        <span>//</span>
-                                                    </div>
-                                                @endif
-                                            @endforeach
+                                            <!-- @foreach ($cate_shops as $cate)
+
+                                            <div class="d-flex justify-content-between fruite-name">
+                                                <a href="#"><i
+                                                        class="fas fa-apple-alt me-2"></i>{{ $cate->ten_loaisp }}</a>
+                                                <span>//</span>
+                                            </div>
+
+                                            @endforeach -->
                                         </li>
 
                                     </ul>
@@ -85,29 +86,24 @@ div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleMo
                                 <div class="mb-3">
                                     <h4 class="mb-2">Giá</h4>
                                     <input type="range" class="form-range w-100" id="rangeInput" name="rangeInput"
-                                        min="0" max="1000" value="0"
+                                        min="0" max="500" value="0"
                                         oninput="amount.value=rangeInput.value">
-                                    <output id="amount" name="amount" min-velue="0" max-value="1000"
+                                    <output id="amount" name="amount" min-velue="0" max-value="500"
                                         for="rangeInput">0</output>
                                 </div>
                             </div>
                             <div class="col-lg-12">
                                 <div class="mb-3">
                                     <h4>Thương hiệu</h4>
-                                    @foreach ($brand_product as $cate)
-                                        <div class="mb-2">
-                                            <input type="radio" class="me-2" id="Categories-1" name="Categories-1"
-                                                value="Beverages">
-                                            <label for="Categories-1">{{ $cate->ten_thuong_hieu }}</label>
-                                        </div>
-                                    @endforeach
+
                                 </div>
                             </div>
                             <div class="col-lg-12">
                                 <h4 class="mb-3">Sản phẩm nổi bật</h4>
                                 <div class="d-flex align-items-center justify-content-start">
                                     <div class="rounded me-4" style="width: 100px; height: 100px;">
-                                        <img src="assets/user/img/featur-1.jpg" class="img-fluid rounded" alt="">
+                                        <img src="assets/user/img/featur-1.jpg" class="img-fluid rounded"
+                                            alt="">
                                     </div>
                                     <div>
                                         <h6 class="mb-2">Tên sản phẩm</h6>
@@ -127,7 +123,8 @@ div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleMo
                             </div>
                             <div class="col-lg-12">
                                 <div class="position-relative">
-                                    <img src="assets/user/img/banner-fruits.jpg" class="img-fluid w-100 rounded" alt="">
+                                    <img src="assets/user/img/banner-fruits.jpg" class="img-fluid w-100 rounded"
+                                        alt="">
                                     <div class="position-absolute"
                                         style="top: 50%; right: 10px; transform: translateY(-50%);">
                                         <h3 class="text-secondary fw-bold">Fresh <br> Fruits <br> Banner</h3>
@@ -138,19 +135,19 @@ div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleMo
                     </div>
                     <div class="col-lg-9">
                         <div class="row g-4 justify-content-center">
+                            @foreach ($product as $key => $pro)
+
                             <div class="col-md-6 col-lg-6 col-xl-4">
                                 <div class="rounded position-relative fruite-item">
                                     <div class="fruite-img">
-                                        <img src="assets/user/img/fruite-item-5.jpg" class="img-fluid w-100 rounded-top"
-                                            alt="">
+                                        <img src="{{asset('images/product/'.$pro->hinh_anh)}}"
+                                            class="img-fluid w-100 rounded-top" alt="">
                                     </div>
-                                    <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
-                                        style="top: 10px; left: 10px;">loại</div>
+
                                     <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                                        <h4>Tên sản phẩm</h4>
-                                        <p>thông tin cơ bản</p>
+                                        <h4>{{$pro->ten_san_pham}}</h4>
                                         <div class="d-flex justify-content-between flex-lg-wrap">
-                                            <p class="text-dark fs-5 fw-bold mb-0">Giá</p>
+                                            <p class="text-dark fs-5 fw-bold mb-0">{{$pro->gia}}đ</p>
                                             <a href="#"
                                                 class="btn border border-secondary rounded-pill px-3 text-primary"><i
                                                     class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
@@ -158,6 +155,11 @@ div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleMo
                                     </div>
                                 </div>
                             </div>
+
+
+
+                            @endforeach
+
                             <div class="col-12">
                                 <div class="pagination d-flex justify-content-center mt-5">
                                     <a href="#" class="rounded">&laquo;</a>
