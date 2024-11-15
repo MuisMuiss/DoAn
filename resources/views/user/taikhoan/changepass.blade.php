@@ -42,32 +42,38 @@
                     <div class="col-lg-9">
                         <div id="content-section">
                             <h4>Thay đổi mật khẩu</h4>
-                            <form action="" method="POST">
+                            @if (session('success'))
+                                <div class="alert alert-success">{{ session('success') }}</div>
+                            @endif
+                            <form action="{{ route('change_password') }}" method="POST">
                                 @csrf
                                 <div class="form-group">
                                     <label for="current_password">Mật khẩu hiện tại:</label>
-                                    <input type="password" id="current_password" name="mat_khau" class="form-control mb-3" required>
+                                    <input type="password" id="current_password" name="mat_khau"
+                                        class="form-control mb-3" required>
                                     @error('mat_khau')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 <div class="form-group">
                                     <label for="new_password">Mật khẩu mới:</label>
-                                    <input type="password" id="new_password" name="new_password" class="form-control mb-3" required>
+                                    <input type="password" id="new_password" name="new_password"
+                                        class="form-control mb-3" required>
                                     @error('new_password')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 <div class="form-group">
                                     <label for="new_password_confirmation">Xác nhận mật khẩu mới:</label>
-                                    <input type="password" id="new_password_confirmation" name="new_password_confirmation" class="form-control mb-3" required>
+                                    <input type="password" id="new_password_confirmation"
+                                        name="new_password_confirmation" class="form-control mb-3" required>
                                     @error('new_password_confirmation')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 <button type="submit" class="btn btn-primary">Đổi mật khẩu</button>
                             </form>
-                            
+
                         </div>
                     </div>
                 </div>
