@@ -7,7 +7,10 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Brand;
+use Illuminate\Support\Facades\Input;
 use App\Models\ProductType;
+use Symfony\Component\Console\Input\Input as InputInput;
+
 class ProductController extends Controller
 {
     public function index(){
@@ -28,16 +31,17 @@ class ProductController extends Controller
     }
    public function category($cate)
    {
+       $products= DB::table ('san_pham')->get();
        $product = Product::where('loai_sp_id', $cate)->get();
        $cate_product = DB::table('loai_sp')->get();
        $cate_shops = ProductType::where('loai_sp_id', $cate)->get();
        $brand_product = DB::table('thuong_hieu')->get();
        foreach ($cate_product as $cat) {
            if ($cat->danh_muc_id == 1 && $cat->loai_sp_id == $cate) {
-               return view('user.shopsua')->with('product', $product)->with('cate_product', $cate_product)->with('cate_shops', $cate_shops)->with('brand_product', $brand_product);
+               return view('user.shopsua')->with('products', $products)->with('product', $product)->with('cate_product', $cate_product)->with('cate_shops', $cate_shops)->with('brand_product', $brand_product);
            }
        }
-       return view('user.shopta')->with('product', $product)->with('cate_product', $cate_product)->with('cate_shops', $cate_shops)->with('brand_product', $brand_product);
+       return view('user.shopta')->with('products',$products)->with('product', $product)->with('cate_product', $cate_product)->with('cate_shops', $cate_shops)->with('brand_product', $brand_product);
   
    }
    public function brandshop($brand)
@@ -45,8 +49,20 @@ class ProductController extends Controller
         $brand_product = DB::table('thuong_hieu')->get();
         $cate_product = DB::table('loai_sp')->get();
         $product = Product::where('thuong_hieu_id', $brand)->get();
+        $products= DB::table ('san_pham')->get();
         $brand_shops = Brand::where('thuong_hieu_id', $brand)->get();
-        return view('user.brandshop')->with('product', $product)->with('cate_product', $cate_product)->with('brand_shops', $brand_shops)->with('brand_product', $brand_product);
+        return view('user.brandshop')->with('product', $product)->with('products', $products)->with('cate_product', $cate_product)->with('brand_shops', $brand_shops)->with('brand_product', $brand_product);
+    }
+    public function search()  {
+        $request=$_GET['key'];
+        $product=Product::where('ten_san_pham','like','%'.$request.'%')->get();
+        $products= DB::table ('san_pham')->get();
+        $brand_product = DB::table('thuong_hieu')->get();
+        $category = DB::table('danh_muc_san_pham')->get();
+        
+        $cate_product = DB::table('loai_sp')->get();
+        return view('key')->with('product',$product)->with('products',$products)->with('cate_product', $cate_product)->with('brand_product', $brand_product)->with('category',$category);
+
     }
 
    

@@ -20,7 +20,7 @@
 <!-- Modal Search End -->
 <!-- Single Page Header start -->
 <div class="container-fluid page-header py-5">
-    <h1 class="text-center text-white display-6">Shop Sữa</h1>
+    <h1 class="text-center text-white display-6">Thế Giới Sữa</h1>
     <ol class="breadcrumb justify-content-center ">
         <li class="breadcrumb-item active text-white"><a style=" color: #fff;" href="#">Home</a></li>
         <li class="breadcrumb-item active text-white"><a style=" color: #fff;" href="#">Pages</a></li>
@@ -31,7 +31,9 @@
 <!-- Milk Shop Start-->
 <div class="container-fluid fruite py-5">
     <div class="container py-5">
-        <h1 class="mb-4">Thế giới sữa</h1>
+        @foreach($cate_shops as $cate)
+        <h1 class="mb-4">Loại Sữa: {{$cate->ten_loaisp}}</h1>
+        @endforeach
         <div class="row g-4">
             <div class="col-lg-12">
                 <div class="row g-4">
@@ -64,13 +66,17 @@
 
                                     <ul class="list-unstyled fruite-categorie">
                                         <li>
-                                            @foreach ($cate_shops as $cate)
+                                            @foreach ($cate_product as $cate)
+                                            @if($cate->danh_muc_id==1)
 
                                             <div class="d-flex justify-content-between fruite-name">
-                                                <a href="#"><i
-                                                        class="fas fa-apple-alt me-2"></i>{{$cate->ten_loaisp}}</a>
+                                                <a href="{{route('go.shop',$cate->loai_sp_id)}}"><i
+                                                        class="fas fa-apple-alt me-2"></i>{{ $cate->ten_loaisp }}</a>
                                                 <span>//</span>
                                             </div>
+
+                                            @endif
+
 
                                             @endforeach
                                         </li>
@@ -91,30 +97,50 @@
                             <div class="col-lg-12">
                                 <div class="mb-3">
                                     <h4>Thương hiệu</h4>
+                                    @foreach ($brand_product as $brand)
+
+
+                                    <div class="d-flex justify-content-between fruite-name">
+                                        <a href="{{route('go.brand',$brand->thuong_hieu_id)}}"><i
+                                                class="fas fa-apple-alt me-2"></i>{{ $brand->ten_thuong_hieu }}</a>
+                                        <span>//</span>
+                                    </div>
+
+
+
+
+                                    @endforeach
 
                                 </div>
                             </div>
                             <div class="col-lg-12">
                                 <h4 class="mb-3">Sản phẩm nổi bật</h4>
                                 <div class="d-flex align-items-center justify-content-start">
-                                    <div class="rounded me-4" style="width: 100px; height: 100px;">
-                                        <img src="assets/user/img/featur-1.jpg" class="img-fluid rounded"
-                                            alt="">
-                                    </div>
-                                    <div>
-                                        <h6 class="mb-2">Tên sản phẩm</h6>
-                                        <div class="d-flex mb-2">
-                                            <i class="fa fa-star text-secondary"></i>
-                                            <i class="fa fa-star text-secondary"></i>
-                                            <i class="fa fa-star text-secondary"></i>
-                                            <i class="fa fa-star text-secondary"></i>
-                                            <i class="fa fa-star"></i>
+                                    @foreach($products as $pro)
+
+                                    @if($pro->sp_moi==1)
+                                    <a href="{{route('productdetail',$pro->san_pham_id)}}">
+                                        <div class="rounded me-4" style="width: 100px; height: 100px;">
+                                            <img src="{{asset('images/product/'.$pro->hinh_anh)}}" class="img-fluid rounded"
+                                                alt="">
                                         </div>
-                                        <div class="d-flex mb-2">
-                                            <h5 class="fw-bold me-2">Giá khuyến mãi</h5>
-                                            <h5 class="text-danger text-decoration-line-through">Giá</h5>
+                                        <div>
+                                            <h6 class="mb-2">{{$pro->ten_san_pham}}</h6>
+                                            <div class="d-flex mb-2">
+                                                <i class="fa fa-star text-secondary"></i>
+                                                <i class="fa fa-star text-secondary"></i>
+                                                <i class="fa fa-star text-secondary"></i>
+                                                <i class="fa fa-star text-secondary"></i>
+                                                <i class="fa fa-star"></i>
+                                            </div>
+                                            <div class="d-flex mb-2">
+                                                <h5 class="fw-bold me-2">{{$pro->gia}}</h5>
+                                                <h5 class="text-danger text-decoration-line-through"></h5>
+                                            </div>
                                         </div>
-                                    </div>
+                                    </a>
+                                    @endif
+                                    @endforeach
                                 </div>
                             </div>
                             <div class="col-lg-12">
@@ -133,27 +159,26 @@
                         <div class="row g-4 justify-content-center">
                             @foreach ($product as $key => $pro)
 
-                            <div  class="col-md-6 col-lg-6 col-xl-4">
-                                <div class="rounded position-relative fruite-item">
-                                    <div class="fruite-img">
-                                        <img src="{{asset('images/product/'.$pro->hinh_anh)}}"
-                                            class="img-fluid w-100 rounded-top" alt="">
-                                    </div>
+                            <div class="col-md-6 col-lg-6 col-xl-4">
+                                <a href="{{route('productdetail',$pro->san_pham_id)}}">
+                                    <div class="rounded position-relative fruite-item">
+                                        <div class="fruite-img">
+                                            <img src="{{asset('images/product/'.$pro->hinh_anh)}}"
+                                                class="img-fluid w-100 rounded-top" alt="">
+                                        </div>
 
-                                    <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                                        <h4>{{$pro->ten_san_pham}}</h4>
-                                        <div class="d-flex justify-content-between flex-lg-wrap">
-                                            <p class="text-dark fs-5 fw-bold mb-0">{{$pro->gia}}đ</p>
-                                            <a href="{{route('productdetail',$pro->san_pham_id)}}"
-                                                class="btn border border-secondary rounded-pill px-3 text-primary"><i
-                                                    class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                                        <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+                                            <h4>{{$pro->ten_san_pham}}</h4>
+                                            <div class="d-flex justify-content-between flex-lg-wrap">
+                                                <p class="text-dark fs-5 fw-bold mb-0">{{$pro->gia}}đ</p>
+                                                <a href="#"
+                                                    class="btn border border-secondary rounded-pill px-3 text-primary"><i
+                                                        class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                </a>
                             </div>
-
-
-
                             @endforeach
 
                             <div class="col-12">

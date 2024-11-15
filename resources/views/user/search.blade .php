@@ -1,4 +1,5 @@
 @include('user.layout.header')
+<!-- Modal Search Start -->
 <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-fullscreen">
         <div class="modal-content rounded-0">
@@ -17,10 +18,9 @@
     </div>
 </div>
 <!-- Modal Search End -->
-
 <!-- Single Page Header start -->
 <div class="container-fluid page-header py-5">
-    <h1 class="text-center text-white display-6">Thế Giới Tả </h1>
+    <h1 class="text-center text-white display-6">Thế Giới Sữa</h1>
     <ol class="breadcrumb justify-content-center ">
         <li class="breadcrumb-item active text-white"><a style=" color: #fff;" href="#">Home</a></li>
         <li class="breadcrumb-item active text-white"><a style=" color: #fff;" href="#">Pages</a></li>
@@ -28,14 +28,9 @@
     </ol>
 </div>
 <!-- Single Page Header End -->
-
-
-<!-- Fruits Shop Start-->
+<!-- Milk Shop Start-->
 <div class="container-fluid fruite py-5">
     <div class="container py-5">
-        @foreach($cate_shops as $cate)
-        <h1 class="mb-4">Loại Tả: {{$cate->ten_loaisp}}</h1>
-        @endforeach
         <div class="row g-4">
             <div class="col-lg-12">
                 <div class="row g-4">
@@ -69,7 +64,7 @@
                                     <ul class="list-unstyled fruite-categorie">
                                         <li>
                                             @foreach ($cate_product as $cate)
-                                            @if($cate->danh_muc_id==2)
+                                            @if($cate->danh_muc_id==1)
 
                                             <div class="d-flex justify-content-between fruite-name">
                                                 <a href="{{route('go.shop',$cate->loai_sp_id)}}"><i
@@ -117,36 +112,34 @@
                             </div>
                             <div class="col-lg-12">
                                 <h4 class="mb-3">Sản phẩm nổi bật</h4>
-
                                 <div class="d-flex align-items-center justify-content-start">
                                     @foreach($products as $pro)
 
                                     @if($pro->sp_moi==1)
                                     <a href="{{route('productdetail',$pro->san_pham_id)}}">
-                                    <div class="rounded me-4" style="width: 100px; height: 100px;">
-                                        <img src="{{asset('images/product/'.$pro->hinh_anh)}}" class="img-fluid rounded"
-                                            alt="">
-                                    </div>
-                                    <div>
-                                        <h6 class="mb-2">{{$pro->ten_san_pham}}</h6>
-                                        <div class="d-flex mb-2">
-                                            <i class="fa fa-star text-secondary"></i>
-                                            <i class="fa fa-star text-secondary"></i>
-                                            <i class="fa fa-star text-secondary"></i>
-                                            <i class="fa fa-star text-secondary"></i>
-                                            <i class="fa fa-star"></i>
+                                        <div class="rounded me-4" style="width: 100px; height: 100px;">
+                                            <img src="{{asset('images/product/'.$pro->hinh_anh)}}" class="img-fluid rounded"
+                                                alt="">
                                         </div>
-                                        <div class="d-flex mb-2">
-                                            <h5 class="fw-bold me-2">{{$pro->gia}}</h5>
-                                            <h5 class="text-danger text-decoration-line-through"></h5>
+                                        <div>
+                                            <h6 class="mb-2">{{$pro->ten_san_pham}}</h6>
+                                            <div class="d-flex mb-2">
+                                                <i class="fa fa-star text-secondary"></i>
+                                                <i class="fa fa-star text-secondary"></i>
+                                                <i class="fa fa-star text-secondary"></i>
+                                                <i class="fa fa-star text-secondary"></i>
+                                                <i class="fa fa-star"></i>
+                                            </div>
+                                            <div class="d-flex mb-2">
+                                                <h5 class="fw-bold me-2">{{$pro->gia}}</h5>
+                                                <h5 class="text-danger text-decoration-line-through"></h5>
+                                            </div>
                                         </div>
-                                    </div></a>
+                                    </a>
                                     @endif
                                     @endforeach
-
                                 </div>
                             </div>
-
                             <div class="col-lg-12">
                                 <div class="position-relative">
                                     <img src="assets/user/img/banner-fruits.jpg" class="img-fluid w-100 rounded"
@@ -183,9 +176,6 @@
                                     </div>
                                 </a>
                             </div>
-
-
-
                             @endforeach
 
                             <div class="col-12">
@@ -207,5 +197,4 @@
         </div>
     </div>
 </div>
-<!-- Fruits Shop End-->
 @include('user.layout.footer')

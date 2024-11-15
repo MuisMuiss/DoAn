@@ -43,6 +43,7 @@ Route::prefix('account')->group(function () {
     Route::get('/proid/{proid}',[ProductController::class,"productdetail"])->name('productdetail');
 Route::get('/cate/{cate}', [ProductController::class, "category"])->name('go.shop');
 Route::get('/brand/{brand}', [ProductController::class, "brandshop"])->name('go.brand');
+Route::get('/find', 'ProductController@search');
 });
 
 
