@@ -190,50 +190,26 @@ class HomeController extends Controller
         $brand_product = DB::table('thuong_hieu')->get();
         return view('user.taikhoan.changepass')->with('category', $category)->with('cate_product', $cate_product)->with('brand_product', $brand_product);
     }
-    // public function changePassword(Request $request)
-    // {
-    //     // Xác thực dữ liệu
-    //     $validated = $request->validate([   
-    //         'mat_khau' => 'required|string|min:6|current_password', // Kiểm tra mật khẩu hiện tại
-    //         'new_mau_khau' => 'required|string|min:6|different:mat_khau', // Kiểm tra mật khẩu mới khác mật khẩu hiện tại
-    //         'confirm_mat_khau' => 'required|string|same:new_mau_khau', // Kiểm tra mật khẩu xác nhận khớp với mật khẩu mới
-    //     ]);
 
-    //     $user =  Auth::user(); // Lấy người dùng hiện tại
+    public function changePassword(Request $request)
+    {
 
-    //     // Kiểm tra mật khẩu hiện tại có đúng không
-    //     if (!Hash::check($request->mat_khau, $user->mat_khau)) {
-    //         return back()->withErrors(['mat_khau' => 'Mật khẩu hiện tại không đúng.']);
-    //     }
-    //     $user->mat_khau = Hash::make($request->new_password);
-    //     $user->save();
+        $request->validate([
+            'mat_khau' => 'required',
+            'new_password' => 'required|min:6|confirmed',
+        ], [
+            'mat_khau.required' => 'Vui lòng nhập mật khẩu hiện tại.',
+            'new_password.required' => 'Vui lòng nhập mật khẩu mới.',
+            'new_password.min' => 'Mật khẩu mới phải có ít nhất 6 ký tự.',
+            'new_password.confirmed' => 'Xác nhận mật khẩu không khớp.',
+        ]);
+        $user = Auth::user();
+        if (!Hash::check($request->mat_khau, $user->mat_khau)) {
+            return back()->withErrors(['mat_khau' => 'Mật khẩu hiện tại không đúng.']);
+        }
+        $user->mat_khau = Hash::make($request->new_password);
+        $user->save();
 
-    //     // Thông báo thành công và chuyển hướng
-    //     return redirect()->route('chpass.view')->with('success', 'Mật khẩu đã được thay đổi thành công.');
-    // }
-    // public function changePassword(Request $request)
-    // {
-    //     $messages = [
-    //         'mat_khau.required' => 'Mật khẩu hiện tại không được để trống.',
-    //         'new_password.required' => 'Mật khẩu mới không được để trống.',
-    //         'new_password.min' => 'Mật khẩu mới phải có ít nhất 6 ký tự.',
-    //         'new_password.confirmed' => 'Mật khẩu xác nhận không khớp với mật khẩu mới.',
-    //         'new_password_confirmation.required' => 'Xác nhận mật khẩu không được để trống.',
-    //     ];
-
-    //     $validatedData = $request->validate([
-    //         'mat_khau' => 'required',
-    //         'new_password' => 'required|min:6|confirmed',
-    //         'new_password_confirmation' => 'required',
-    //     ], $messages);
-
-    //     // Kiểm tra mật khẩu hiện tại
-    //     if (!Hash::check($request->mat_khau, Auth::user()->mat_khau)) {
-    //         return back()->with(['mk', 'Mật khẩu hiện tại không đúng.']);
-    //     }
-
-    //     // Cập nhật mật khẩu mới
-    //     Auth::user()->update(['mat_khau' => Hash::make($request->new_password)]);
-    //     return redirect()->route('change_password')->with('ok', 'Đổi mật khẩu thành công!');
-    // }
+        return back()->with('ok', 'Đổi mật khẩu thành công!');
+    }
 }
