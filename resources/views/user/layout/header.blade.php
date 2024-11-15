@@ -74,11 +74,11 @@
                             <a href="{{ route('shopsua') }}" class="nav-link dropdown-toggle">Sữa</a>
                             <div class="dropdown-menu m-0 bg-secondary rounded-0">
                                 @foreach ($cate_product as $cate)
-                                    @if ($cate->danh_muc_id == 1)
-                                        <a href="" class="dropdown-item">
-                                            <option value="{{ $cate->loai_sp_id }}">{{ $cate->ten_loaisp }}</option>
-                                        </a>
-                                    @endif
+                                @if ($cate->danh_muc_id == 1)
+                                <a href="{{route('go.shop',$cate->loai_sp_id)}}" class="dropdown-item">
+                                    <option value=" ">{{ $cate->ten_loaisp }}</option>
+                                </a>
+                                @endif
                                 @endforeach
                             </div>
                         </div>
@@ -86,11 +86,11 @@
                             <a href="{{ route('shopta') }}" class="nav-link dropdown-toggle">Tã</a>
                             <div class="dropdown-menu m-0 bg-secondary rounded-0">
                                 @foreach ($cate_product as $cate)
-                                    @if ($cate->danh_muc_id == 2)
-                                        <a href="" class="dropdown-item">
-                                            <option value="{{ $cate->loai_sp_id }}">{{ $cate->ten_loaisp }}</option>
-                                        </a>
-                                    @endif
+                                @if ($cate->danh_muc_id == 2)
+                                <a href="{{route('go.shop',$cate->loai_sp_id)}}" class="dropdown-item">
+                                    <option value=" ">{{ $cate->ten_loaisp }}</option>
+                                </a>
+                                @endif
                                 @endforeach
                             </div>
                         </div>

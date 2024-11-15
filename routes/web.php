@@ -40,6 +40,9 @@ Route::prefix('account')->group(function () {
     Route::get('profile/order', [HomeController::class, "viewOrder"])->name('order.view');
     Route::get('profile/changepassword', [HomeController::class, "viewChangepassword"])->name('chpass.view');
     Route::post('/change_password', [HomeController::class, 'changePassword'])->name('change_password');
+    Route::get('/proid/{proid}',[ProductController::class,"productdetail"])->name('productdetail');
+Route::get('/cate/{cate}', [ProductController::class, "category"])->name('go.shop');
+Route::get('/brand/{brand}', [ProductController::class, "brandshop"])->name('go.brand');
 });
 
 
