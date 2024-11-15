@@ -6,7 +6,10 @@
     transition: opacity .8s ease-out, visibility 0s linear .5s;
     z-index: 99999;
  }
-
+ .fruite-name a.active {
+    color: red !important; /* Thêm !important để ưu tiên màu đỏ */
+    font-weight: bold; /* Để dễ nhận thấy sự thay đổi */
+}
  #spinner.show {
      transition: opacity .8s ease-out, visibility 0s linear .0s;
      visibility: visible;

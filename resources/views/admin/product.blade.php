@@ -58,6 +58,7 @@
                                         <th rowspan="1" colspan="1">Số lượng kho</th>
                                         <th rowspan="1" colspan="1">Thương hiệu</th>
                                         <th rowspan="1" colspan="1">Hình ảnh</th>
+                                        <th rowspan="1" colspan="1">Album ảnh</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -101,7 +102,6 @@
                                                 </div>
 
                                             </td>
-
                                         </tr>
                                     @endforeach
                                 </tbody>

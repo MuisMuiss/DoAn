@@ -18,11 +18,10 @@ class Category extends Model
     {
         parent::boot();
 
-        static::creating(function ($user) {
+        static::creating(function ($cate) {
             // Tìm giá trị lớn nhất của nguoi_dung_id và ép kiểu về int
             $maxId = (int) Category::max('danh_muc_id'); // Ép kiểu về int
-            $user->danh_muc_id = $maxId + 1; // Tăng lên 1
+            $cate->danh_muc_id = $maxId > 0 ? $maxId + 1 : 1; // Tăng lên 1
         });
     }
-    
 }

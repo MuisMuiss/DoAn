@@ -27,7 +27,7 @@ class AdminController extends Controller
         // Tìm người dùng theo email
         $nguoiDung = nguoiDung::where('email', $request->email)->where('vai_tro', 1)->first();
         if ($nguoiDung && Hash::check($mat_khau, $nguoiDung->mat_khau)) {
-            Auth::login($nguoiDung);
+            Auth::guard('admin')->login($nguoiDung);
             $request->session()->regenerate();
             return redirect()->route('admin.home');
             
@@ -35,7 +35,13 @@ class AdminController extends Controller
         // dd($request->all());
         return back()->with('msg','Email hoặc mật khẩu không chính xác');  
     }
-
+    public function adminLogout(Request $request)
+    {
+        Auth::guard('admin')->logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect()->route('admin.login');
+    }
     //CRUD 
     //Thêm user
     public function themuser(){
@@ -44,7 +50,6 @@ class AdminController extends Controller
     public function addUser(Request $request){
         $messages = [
             'ho_ten.required' => 'Họ và Tên không được để trống.',
-            'ten_dang_nhap.required' => 'Tên đăng nhập không được để trống.',
             'email.required' => 'Email không được để trống.',
             'email.email' => 'Email không hợp lệ.',
             'mat_khau.required' => 'Mật khẩu không được để trống.',
@@ -57,7 +62,6 @@ class AdminController extends Controller
     
         $validatedData = $request->validate([
             'ho_ten' => 'required',
-            'ten_dang_nhap' => 'required',
             'email' => 'required|email',
             'mat_khau' => 'required|min:6',
             'so_dien_thoai' => 'required|min:10',
@@ -71,7 +75,6 @@ class AdminController extends Controller
         }
         $user = new nguoiDung();
         $user->ho_ten=$request->input('ho_ten');
-        $user->ten_dang_nhap=$request->input('ten_dang_nhap');
         $user->mat_khau=bcrypt($request->input('mat_khau'));
         $user->email=$request->input('email');
         $user->so_dien_thoai=$request->input('so_dien_thoai');
@@ -102,7 +105,6 @@ class AdminController extends Controller
     public function updateuser(Request $request, $nguoi_dung_id) {
         $messages = [
             'ho_ten.required' => 'Họ và Tên không được để trống.',
-            'ten_dang_nhap.required' => 'Tên đăng nhập không được để trống.',
             'email.required' => 'Email không được để trống.',
             'email.email' => 'Email không hợp lệ.',
             'mat_khau.required' => 'Mật khẩu không được để trống.',
@@ -113,7 +115,6 @@ class AdminController extends Controller
         ];
         $validatedData = $request->validate([
             'ho_ten' => 'required',
-            'ten_dang_nhap' => 'required',
             'email' => 'required|email',
             'so_dien_thoai' => 'required|min:10',
             'dia_chi'=> 'required',
@@ -129,7 +130,6 @@ class AdminController extends Controller
         }
         $nguoiDung = nguoiDung::find($nguoi_dung_id);
         $nguoiDung->ho_ten = $request->input('ho_ten');
-        $nguoiDung->ten_dang_nhap = $request->input('ten_dang_nhap');
         // Cập nhật mật khẩu nếu có
         if ($request->filled('mat_khau')) {
             $nguoiDung->mat_khau = bcrypt($request->input('mat_khau'));

@@ -2,16 +2,19 @@
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\Product_Controller;
 use App\Http\Controllers\User\ProductController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Admin\ManageController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\Admin\ManageController;
-use App\Http\Controllers\HomeController;
-use App\Models\Product;
+
 
 // Route::get('/index', function () {
 //     return view('user.index');
 // });
-Route::get('/index',[ProductController::class,"index"]);
+Route::get('/index',[HomeController::class,"index"])->name('index');;
+
+Route::get('/shopsua', [ProductController::class,"shopsua"])->name('shopsua');
+Route::get('/shopta', [ProductController::class,"shopta"])->name('shopta');
 
 Route::get('/cart', function () {
     return view('user.cart');
@@ -22,10 +25,54 @@ Route::get('/checkout', function () {
 Route::get('/detail', function () {
     return view('user.shopdetail');
 });
-
-Route::get('/register', function () {
-    return view('admin.register');
+//Route::get('/account/profile/{type}', [HomeController::class, 'getInfo'])->middleware('auth');
+Route::prefix('account')->group(function () {
+    Route::get('login', [HomeController::class, 'showLogin'])->name('login');
+    Route::post('login', [HomeController::class, 'checklogin'])->name('user.login');
+    Route::get('logout', [HomeController::class, 'logout'])->name('user.logout');
+    
+    Route::get('register', [HomeController::class, 'showRegister'])->name('register');
+    Route::post('register', [HomeController::class, 'checkregister'])->name('user.register');
+    Route::get('profile', [HomeController::class, 'showProfile'])->name('profile');
+    
+    Route::get('profile/account/{nguoi_dung_id}', [HomeController::class, "viewAccout"])->name('accout.view');
+    Route::post('profile/account/{nguoi_dung_id}/update', [HomeController::class, "updateAccout"])->name('accout.update');
+    Route::get('profile/order', [HomeController::class, "viewOrder"])->name('order.view');
+    Route::get('profile/changepassword', [HomeController::class, "viewChangepassword"])->name('chpass.view');
+    Route::post('/change_password', [HomeController::class, 'changePassword'])->name('change_password');
+    Route::get('/proid/{proid}',[ProductController::class,"productdetail"])->name('productdetail');
+Route::get('/cate/{cate}', [ProductController::class, "category"])->name('go.shop');
+Route::get('/brand/{brand}', [ProductController::class, "brandshop"])->name('go.brand');
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 Route::get('/adproduct', function () {
     return view('admin.product');
 });
@@ -36,12 +83,13 @@ Route::get('/type', function () {
     return view('admin.typeproduct');
 });
 
-Route::middleware('auth')->group(function(){
+Route::middleware('auth:admin')->group(function(){
     Route::get('/homeadmin', function() {
          // Kiểm tra người dùng đã đăng nhập chưa
         return view('admin.home');
     })->name('admin.home');
     // Route::match(['get', 'post'], '/homeadmin', [AdminController::class, 'viewhome'])->name('admin.home');
+
     //User
     // Thêm User
     Route::get('/themuser', [AdminController::class, "themuser"])->name('admin.themuser');
@@ -63,6 +111,7 @@ Route::middleware('auth')->group(function(){
     Route::get( '/editsp/{san_pham_id}', [Product_Controller::class, "editsp"])->name('admin.editsp');
     Route::post( '/updatesp/{san_pham_id}', [Product_Controller::class, "updatesp"])->name('admin.updatesp');
     // Xóa sản phẩm
+    Route::get('deleteimage/{image}', [Product_Controller::class,'deleteImage'])->name('product.deleteImage');
     Route::get('/deletesp/{san_pham_id}', [Product_Controller::class, "deletesp"])->name('admin.deletesp');
 
     //Danh mục
@@ -97,13 +146,9 @@ Route::middleware('auth')->group(function(){
     Route::post( '/updatetype/{loai_sp_id}', [ManageController::class, "updatetype"])->name('admin.updatetype');
     // Xóa Loại sản phẩm
     Route::get('/deletetype/{loai_sp_id}', [ManageController::class, "deletetype"])->name('admin.deletetype');
-   
-
 });
 
-Route::get('/proid/{proid}',[ProductController::class,"productdetail"])->name('productdetail');
-Route::get('/login', [AdminController::class, "viewlogin"])->name('login');
-Route::post('/login', [AdminController::class, "login"])->name('admin.login');
-Route::get('/cate/{cate}', [ProductController::class, "category"])->name('go.shop');
-Route::get('/brand/{brand}', [ProductController::class, "brandshop"])->name('go.brand');
+Route::get('/login_admin', [AdminController::class, "viewlogin"])->name('login');
+Route::post('/login_admin', [AdminController::class, "login"])->name('admin.login');
+Route::get('/logout', [AdminController::class, 'logout'])->name('admin.logout');
 

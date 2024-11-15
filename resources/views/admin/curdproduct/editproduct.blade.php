@@ -46,7 +46,7 @@
                                 <div class="form-group mb-3">
                                     <label for="">Mô tả:</label>
                                     {{-- <input type="text" name="mo_ta" id="" class="form-control" value="{{$product->mo_ta,old('mo_ta')}}"> --}}
-                                    <textarea name="mo_ta" class="form-control description" placeholder="Product content">{{$product->mo_ta,old('mo_ta')}}</textarea>
+                                    <textarea name="mo_ta" id="editor" class="form-control description" placeholder="Product content">{{$product->mo_ta,old('mo_ta')}}</textarea>
                                     @error('mo_ta')
                                         <span class="text-danger">{{$message}}</span>
                                     @enderror
@@ -59,7 +59,7 @@
                                         <span class="text-danger">{{$message}}</span>
                                     @enderror
                                 </div>
-    
+                                
                                 <div class="form-group mb-3">
                                     <label for="">Thương hiệu:</label> 
                                     <select name="thuong_hieu_id" id="" class="form-control">
@@ -74,10 +74,47 @@
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
+                                <div class="form-group row">
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <label for="">Sản phẩm bestseller:</label>
+                                        <select name="sp_bestseller" class="form-control">
+                                            <option value="0"{{$product->sp_bestseller == 0 ? 'selected' : '' }}>Sản phẩm bình thường</option>
+                                            <option value="1"{{$product->sp_bestseller == 1 ? 'selected' : '' }}>Sản phẩm Bestseller</option>
+                                        </select>
+                                    </div>
+    
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <label for="">Sản phẩm mới:</label>
+                                        <select name="sp_moi" class="form-control">
+                                            <option value="0" {{$product->sp_moi == 0 ? 'selected' : '' }}>Sản phẩm bình thường</option>
+                                            <option value="1" {{$product->sp_moi == 1 ? 'selected' : '' }}>Sản phẩm New</option>
+                                        </select>
+                                    </div>
+                                </div>
                                 <div class="form-group mb-3">
                                     <label for="">Ảnh:</label>
                                     <input type="file" name="hinh_anh" class="form-control" id="">
                                 <img src="{{asset('images/product/'.$product->hinh_anh)}}" width="100px" height="100px" >
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label for="">Album ảnh:</label>
+                                    <input type="file" name="album[]" class="form-control" multiple onchange="showOtherImage(this)">
+                                    <hr>
+                                    <div class="row" style="margin-right: 10.25rem;">
+                                        @foreach ($product->images as $img)
+                                        <div class="col-md-3" style="position: relative">
+                                            <a href="" class="thumbnail">
+                                                <img src="{{asset('images/product/'.$img->album_sp)}}" alt="" style="width: 100px">
+                                            </a>
+                                            <a onclick="return confirm('Bạn có chắc chắn muốn xóa ảnh không')" href="{{ route('product.deleteImage', $img->album_anh_id) }}" style="position: absolute; right:85px" class="btn btn-sm btn-danger">
+                                                <i class="fa fa-trash"></i>
+                                            </a>
+                                                {{-- <a onclick="return confirm('Are you sure delete it?')" href="{{ route('product.destroyImage', $img->san_pham_id) }}" style="position: absolute; top:5px; right:20px" class="btn btn-sm btn-danger">
+                                                    <i class="fa fa-trash"></i>
+                                                </a> --}}
+                                        </div>
+                                        @endforeach
+                                    </div>
                                 </div>
                                 <div class="form-group mb-3">
                                     <button type="submit" class="btn btn-primary">Cập nhật</button>
@@ -89,6 +126,7 @@
                 </div>
             </div>
         </div>
+        
     </body>
     
     </html>
