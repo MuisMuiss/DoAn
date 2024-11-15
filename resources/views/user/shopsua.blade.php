@@ -1,4 +1,5 @@
 @include('user.layout.header')
+<!-- Modal Search Start -->
 <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-fullscreen">
         <div class="modal-content rounded-0">
@@ -17,20 +18,17 @@
     </div>
 </div>
 <!-- Modal Search End -->
-
-
 <!-- Single Page Header start -->
 <div class="container-fluid page-header py-5">
-    <h1 class="text-center text-white display-6">Shop</h1>
-    <ol class="breadcrumb justify-content-center" style="background-color: #ffffff;">
-        <li class="breadcrumb-item active text-white"><a style=" color: black;" href="#">Home</a></li>
-        <li class="breadcrumb-item active text-white">Shop sữa</li>
+    <h1 class="text-center text-white display-6">Shop Sữa</h1>
+    <ol class="breadcrumb justify-content-center ">
+        <li class="breadcrumb-item active text-white"><a style=" color: #fff;" href="#">Home</a></li>
+        <li class="breadcrumb-item active text-white"><a style=" color: #fff;" href="#">Pages</a></li>
+        <li class="breadcrumb-item active text-white">Shop</li>
     </ol>
 </div>
 <!-- Single Page Header End -->
-
-
-<!-- Fruits Shop Start-->
+<!-- Milk Shop Start-->
 <div class="container-fluid fruite py-5">
     <div class="container py-5">
         <h1 class="mb-4">Thế giới sữa</h1>
@@ -63,17 +61,17 @@
                         <div class="row g-4">
                             <div class="col-lg-12">
                                 <div class="mb-3">
-                                    <h4>Loại sữa</h4>
+
                                     <ul class="list-unstyled fruite-categorie">
                                         <li>
-                                            @foreach ($cate_product as $cate)
-                                                @if ($cate->danh_muc_id == 1)
-                                                    <div class="d-flex justify-content-between fruite-name">
-                                                        <a href="#"><i
-                                                                class="fas fa-apple-alt me-2"></i>{{ $cate->ten_loaisp }}</a>
-                                                        <span>//</span>
-                                                    </div>
-                                                @endif
+                                            @foreach ($cate_shops as $cate)
+
+                                            <div class="d-flex justify-content-between fruite-name">
+                                                <a href="#"><i
+                                                        class="fas fa-apple-alt me-2"></i>{{$cate->ten_loaisp}}</a>
+                                                <span>//</span>
+                                            </div>
+
                                             @endforeach
                                         </li>
 
@@ -93,13 +91,7 @@
                             <div class="col-lg-12">
                                 <div class="mb-3">
                                     <h4>Thương hiệu</h4>
-                                    @foreach ($brand_product as $cate)
-                                        <div class="mb-2">
-                                            <input type="radio" class="me-2" id="Categories-1" name="Categories-1"
-                                                value="Beverages">
-                                            <label for="Categories-1">{{ $cate->ten_thuong_hieu }}</label>
-                                        </div>
-                                    @endforeach
+
                                 </div>
                             </div>
                             <div class="col-lg-12">
@@ -140,34 +132,32 @@
                     <div class="col-lg-9">
                         <div class="row g-4 justify-content-center">
                             @foreach ($product as $key => $pro)
-                                @if (($cate_product->danh_muc_id)==1)
-                                <div class="col-md-6 col-lg-6 col-xl-4">
+
+                            <div  class="col-md-6 col-lg-6 col-xl-4">
+                                <a href="{{route('productdetail',$pro->san_pham_id)}}">
                                     <div class="rounded position-relative fruite-item">
+                                    
                                         <div class="fruite-img">
                                             <img src="{{asset('images/product/'.$pro->hinh_anh)}}"
                                                 class="img-fluid w-100 rounded-top" alt="">
                                         </div>
-                                            @foreach($brand_product as $keybrand => $brand)
-                                                        @if ($pro->thuong_hieu_id == $brand->thuong_hieu_id)
-                                                        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">{{$brand->ten_thuong_hieu}}</div>
-                                                        @endif
-                                                    @endforeach
                                         <div class="p-4 border border-secondary border-top-0 rounded-bottom">
                                             <h4>{{$pro->ten_san_pham}}</h4>
                                             <div class="d-flex justify-content-between flex-lg-wrap">
                                                 <p class="text-dark fs-5 fw-bold mb-0">{{$pro->gia}}đ</p>
-                                                <a href="#"
+                                                <a href="{{route('productdetail',$pro->san_pham_id)}}"
                                                     class="btn border border-secondary rounded-pill px-3 text-primary"><i
                                                         class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                @endif
-                                
-                                
+                                </a>
+                            </div>
+
+
+
                             @endforeach
-                            
+
                             <div class="col-12">
                                 <div class="pagination d-flex justify-content-center mt-5">
                                     <a href="#" class="rounded">&laquo;</a>
@@ -187,5 +177,4 @@
         </div>
     </div>
 </div>
-<!-- Fruits Shop End-->
 @include('user.layout.footer')

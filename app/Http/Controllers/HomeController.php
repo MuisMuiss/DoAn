@@ -66,7 +66,7 @@ class HomeController extends Controller
             'mat_khau.min' => 'Mật khẩu phải có ít nhất 6 ký tự.',
             'mat_khau.confirmed' => 'Mật khẩu không trùng khớp.',
             'so_dien_thoai.required' => 'Số điện thoại không được để trống.',
-            'so_dien_thoai.min' => 'Mật khẩu phải có ít nhất 10 ký tự.',
+            'so_dien_thoai.min' => 'Số điện thoại phải có ít nhất 10 ký tự.',
         ];
 
         $validatedData = $request->validate([
