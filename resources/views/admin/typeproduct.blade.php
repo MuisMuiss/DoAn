@@ -4,7 +4,7 @@
 
     <!-- Page Heading -->
     <h1 class="h3 mb-2 text-gray-800">Quản lý loại sản phẩm</h1>
-    <a href="{{route('admin.themuser')}}" class="btn btn-success btn-icon-split">
+    <a href="{{route('type.add')}}" class="btn btn-success btn-icon-split">
         <span class="icon text-white-50">
             <i class="fas fa-plus"></i>
         </span>
@@ -51,25 +51,35 @@
                                     <tr>
                                         <th rowspan="1" colspan="1">Id</th>
                                         <th rowspan="1" colspan="1">Tên loại sản phẩm</th>
+                                        <th rowspan="1" colspan="1">Tên danh mục</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {{-- @foreach ( $nguoiDung as $nd )
-                                    <tr class="odd">
-                                        <td class="sorting_1">{{$nd->nguoi_dung_id}}</td>
-                                        <td>{{$nd->ho_ten}}</td>
-                                    </tr>
-                                    @endforeach --}}
-                                    <td class="sorting_1"></td>
-                                    <td></td>
-                                    <td>
-                                        <a href="#" class="btn btn-warning btn-circle btn-sm">
-                                            <i class="fas fa-fw fa-wrench"></i>
-                                        </a>
-                                        <a href="#" class="btn btn-danger btn-circle btn-sm">
-                                            <i class="fas fa-trash"></i>
-                                        </a>
-                                    </td>
+                                    @foreach ($typeproduct as $key=>$type)
+                                        <tr>
+                                            <td>{{$type->loai_sp_id}}</td>
+                                            <td>{{$type->ten_loaisp}}</td>
+                                            @foreach($category as $key => $cate)
+                                                @if ($cate->danh_muc_id == $type->danh_muc_id)
+                                                    <td>{{ $cate->ten_danh_muc }}</td>
+                                                @endif
+                                            @endforeach    
+                                            <td>
+                                                <div style="display: flex; justify-content: center; align-items: center;">
+                                                    <a href="{{ route('admin.edittype', ['loai_sp_id' => $type->loai_sp_id]) }}" class="btn btn-warning btn-circle btn-sm" style=" margin-right: 10px;">
+                                                        <i class="fas fa-fw fa-wrench"></i>
+                                                    </a>
+                                                    <a href="{{ route('admin.deletetype', ['loai_sp_id' => $type->loai_sp_id]) }}"
+                                                        class="btn btn-danger btn-circle btn-sm"data-toggle="modal"
+                                                        data-target="#deleteModal">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <i class="fas fa-trash"></i>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -95,6 +105,26 @@
         </div>
     </div>
 
+</div>
+<!-- Delete Modal-->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" style="color: red;" id="exampleModalLabel">Thông báo!!!</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">Bạn chắc chắn có muốn xóa không</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                <a class="btn btn-danger"
+                    href="{{ route('admin.deletetype', ['loai_sp_id' => $type->loai_sp_id]) }}">Detele</a>
+            </div>
+        </div>
+    </div>
 </div>
 <!-- End of Main Content -->
 @include("admin.autth.footer")

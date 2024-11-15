@@ -62,8 +62,30 @@
                     <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
                         <div class="navbar-nav mx-auto">
                             <a href="index" class="nav-item nav-link active">Home</a>
-                            <a href="shopsua" class="nav-item nav-link">Sữa</a>
-                            <a href="shopta" class="nav-item nav-link">Tã</a>
+                            <div class="nav-item dropdown">
+                                <a href="shopsua" class="nav-link dropdown-toggle">Sữa</a>
+                                <div class="dropdown-menu m-0 bg-secondary rounded-0">
+                                        @foreach ($cate_product as $cate)
+                                            @if ($cate->danh_muc_id == 1)
+                                            <a href="" class="dropdown-item">
+                                                <option value="{{ $cate->loai_sp_id }}">{{ $cate->ten_loaisp }}</option>
+                                            </a>
+                                            @endif
+                                        @endforeach
+                                </div>
+                            </div>
+                            <div class="nav-item dropdown">
+                                <a href="shopta" class="nav-link dropdown-toggle">Tã</a>
+                                <div class="dropdown-menu m-0 bg-secondary rounded-0">
+                                    @foreach ($cate_product as $cate)
+                                            @if ($cate->danh_muc_id == 2)
+                                            <a href="" class="dropdown-item">
+                                                <option value="{{ $cate->loai_sp_id }}">{{ $cate->ten_loaisp }}</option>
+                                            </a>
+                                            @endif
+                                        @endforeach
+                                </div>
+                            </div>
                             <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
                                 <div class="dropdown-menu m-0 bg-secondary rounded-0">

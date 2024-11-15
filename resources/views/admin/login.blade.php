@@ -41,7 +41,10 @@
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
                                     </div>
-                                    <form action="homeadmin" class="user" for="login" method="post">
+                                    @if (session('msg'))
+                                        <h6 class="alert alert-danger">{{session('msg')}}</h6>
+                                    @endif
+                                    <form action="{{route('admin.login')}}" class="user" for="login" method="POST">
                                         @csrf
                                         <div class="form-group">
                                             <input type="email" class="form-control form-control-user"
@@ -49,8 +52,9 @@
                                                 placeholder="Enter Email Address..."  id="email" name="email" required>
                                         </div>
                                         <div class="form-group">
-                                            <input type="password" class="form-control form-control-user"
-                                                id="exampleInputPassword" placeholder="Password" id="password" name="password" required>
+                                            <input type="password" class="form-control form-control-user" placeholder="Password" name="mat_khau" required>
+                                            {{-- <input type="password" class="form-control form-control-user"
+                                                id="exampleInputPassword" placeholder="Password" id="mat_khau" name="mau_khau" required> --}}
                                         </div>
                                         <div class="form-group">
                                             <div class="custom-control custom-checkbox small">
@@ -59,10 +63,8 @@
                                                     Me</label>
                                             </div>
                                         </div>
-                                        <input class="btn btn-primary btn-user btn-block" type="submit" value="Login" name="login">
-                                        <!-- <a href="homeadmin" class="btn btn-primary btn-user btn-block">
-                                            Login
-                                        </a> -->
+                                        {{-- <input class="btn btn-primary btn-user btn-block" type="submit" value="login" name="login"> --}}
+                                        <button class="btn btn-primary btn-user btn-block" type="submit">Login</button>
                                         <hr>
                                         <a href="homeadmin" class="btn btn-google btn-user btn-block">
                                             <i class="fab fa-google fa-fw"></i> Login with Google

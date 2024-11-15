@@ -5,14 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Category extends Model
+class ProductType extends Model
 {
     use HasFactory;
-    protected $table = 'danh_muc_san_pham';
-    protected $primaryKey = 'danh_muc_id';
+    protected $table = 'loai_sp';
+    protected $primaryKey = 'loai_sp_id';
     protected $fillable = [
+        'loai_sp_id',
+        'ten_loaisp',
         'danh_muc_id',
-        'ten_danh_muc',
     ];
     protected static function boot()
     {
@@ -20,8 +21,9 @@ class Category extends Model
 
         static::creating(function ($user) {
             // Tìm giá trị lớn nhất của nguoi_dung_id và ép kiểu về int
-            $maxId = (int) Category::max('danh_muc_id'); // Ép kiểu về int
-            $user->danh_muc_id = $maxId + 1; // Tăng lên 1
+            $maxId = (int) ProductType::max('loai_sp_id'); // Ép kiểu về int
+            $user->loai_sp_id = $maxId + 1; // Tăng lên 1
         });
     }
+
 }
