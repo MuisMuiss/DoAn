@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class ProductImage extends Model
 {
     use HasFactory;
-    use HasFactory;
     protected $table = 'album_anh';
     protected $primaryKey = 'album_anh_id';
     protected $fillable = [
