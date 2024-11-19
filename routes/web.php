@@ -146,6 +146,32 @@ Route::middleware('auth:admin')->group(function(){
     Route::post( '/updatetype/{loai_sp_id}', [ManageController::class, "updatetype"])->name('admin.updatetype');
     // Xóa Loại sản phẩm
     Route::get('/deletetype/{loai_sp_id}', [ManageController::class, "deletetype"])->name('admin.deletetype');
+
+    //Đơn hàng
+    Route::get('/alloder',[ManageController::class,"vieworder"])->name('order.all');
+
+    
+    //Nhập hàng 
+    Route::get('/allnhap',[ManageController::class,"viewnhap"])->name('inport.all');
+    Route::get('/addnhap',[ManageController::class,"themnhap"])->name('inport.add');
+    Route::post('/addnhap', [ManageController::class, "addnhap"])->name('admin.addnhap');
+    // Cập nhật nhập hàng
+    Route::get( '/editnhap/{nhap_hang_id}', [ManageController::class, "editnhap"])->name('admin.editnhap');
+    Route::post( '/updatenhap/{nhap_hang_id}', [ManageController::class, "updatenhap"])->name('admin.updatenhap');
+    //Xóa nhập hàng
+    Route::get('/deletenhap/{nhap_hang_id}', [ManageController::class, "deletenhap"])->name('admin.deletenhap');
+    
+
+    //Chi tiết
+    Route::get('/allnhap/{nhap_hang_id}',[ManageController::class,"viewctnhap"])->name('ctimport.all');
+    Route::get('/addctnhap/{nhap_hang_id}',[ManageController::class,"themctnhap"])->name('ctimport.add');
+    Route::post('/addctnhap/{nhap_hang_id}', [ManageController::class, "addctnhap"])->name('admin.addctnhap');
+    //
+    Route::get( '/editctnhap/{id}', [ManageController::class, "editctnhap"])->name('admin.editctnhap');
+    Route::post( '/updatectnhap/{id}', [ManageController::class, "updatectnhap"])->name('admin.updatectnhap');
+    //
+    Route::get('/deletectnhap/{id}', [ManageController::class, "deletectnhap"])->name('admin.deletectnhap');
+    
 });
 
 Route::get('/login_admin', [AdminController::class, "viewlogin"])->name('login');

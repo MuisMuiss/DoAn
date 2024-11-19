@@ -12,14 +12,14 @@
     <title>MandD Admin 2 - Dashboard</title>
 
     <!-- Custom fonts for this template-->
-    <link href="assets/admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="{{asset('assets/admin/vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
 
     <!-- Custom styles for this template-->
-    <link href="assets/admin/css/sb-admin-2.min.css" rel="stylesheet">
-    <link href="assets/admin/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <link href="{{asset('assets/admin/css/sb-admin-2.min.css')}}" rel="stylesheet">
+    <link href="{{asset('assets/admin/vendor/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
     <script type="text/javascript" src="{{asset('public/ckeditor/ckeditor.js')}}"></script>
 
 </head>
@@ -81,28 +81,8 @@
                     </div>
                 </div>
             </li>
-            <!-- Quản lý danh mục -->
-            <!-- <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-                    aria-expanded="true" aria-controls="collapseUtilities">
-                    <i class="fas fa-fw fa-folder"></i>
-                    <span>Quản lý danh mục</span>
-                </a>
-                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
-                    data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Category:</h6>
-                        <a class="collapse-item" href="adcat">Sữa bột</a>
-                        <a class="collapse-item" href="adcat">Sữa tươi</a>
-                        <a class="collapse-item" href="adcat">Tả dán</a>
-                        <a class="collapse-item" href="adcat">Tả quần</a>
-                        <a class="collapse-item" href="adcat">Miếng lót</a>
-                    </div>
-                </div>
-            </li> -->
-
             <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
                     aria-expanded="true" aria-controls="collapsePages">
                     <i class="fas fa-fw fa-folder"></i>
@@ -110,7 +90,6 @@
                 </a>
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Login Screens:</h6>
                         <a class="collapse-item" href="login.html">Login</a>
                         <a class="collapse-item" href="register.html">Register</a>
                         <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
@@ -120,22 +99,31 @@
                         <a class="collapse-item" href="404.html">404 Page</a>
                     </div>
                 </div>
-            </li>
-
+            </li> --}}
+            {{-- <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
+                    aria-expanded="true" aria-controls="collapsePages">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>Quản lý nhập hàng</span>
+                </a>
+                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="{{route('inport.all')}}">Nhập hàng</a>
+                        <a class="collapse-item" href="register.html">Chi tiết nhập hàng</a>
+                    </div>
+                </div>
+            </li> --}}
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="charts.html">
-                    <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Charts</span></a>
+                <a class="nav-link" href="{{route('order.all')}}">
+                    <i class="fab fa-reddit-alien"></i>
+                    <span>Quản lý đơn hàng</span></a>
             </li>
-
-            <!-- Nav Item - Tables -->
             <li class="nav-item">
-                <a class="nav-link" href="tables.html">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>Tables</span></a>
+                <a class="nav-link" href="{{route('inport.all')}}">
+                    <i class="fab fa-reddit-alien"></i>
+                    <span>Quản lý nhập hàng</span></a>
             </li>
-
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 
