@@ -101,7 +101,7 @@
 
                        
                         <div class="position-relative" style="margin-right: 10em">
-                            <form method="GET" action="{{url('find')}}">
+                            <form method="GET" action="{{route('find')}}">
                             <input class="form-control border-2 border-secondary rounded-pill" style="width: 140%"
                                 type="text" name="key" placeholder="Nhập tên sản phẩm cần tìm" fdprocessedid="wkib7">
                             <button  type="submit"
@@ -109,7 +109,7 @@
                                 style="top: 0; left:140%"><i class="fas fa-search text-primary"></i></button>
                             </form>
                         </div>
-                        <a href="cart.html" class="position-relative me-4 my-auto">
+                        <a href="{{route('cart')}}" class="position-relative me-4 my-auto">
                             <i class="fa fa-shopping-bag fa-2x"></i>
                             <span
                                 class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1"

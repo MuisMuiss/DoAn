@@ -2,8 +2,10 @@
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\Product_Controller;
 use App\Http\Controllers\User\ProductController;
+use App\Http\Controllers\User\CartController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\ManageController;
+use App\Http\Controllers\CartController as ControllersCartController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -11,7 +13,7 @@ use Illuminate\Support\Facades\Auth;
 // Route::get('/index', function () {
 //     return view('user.index');
 // });
-Route::get('/index',[HomeController::class,"index"])->name('index');;
+Route::get('/index',[HomeController::class,"index"])->name('index');
 
 Route::get('/shopsua', [ProductController::class,"shopsua"])->name('shopsua');
 Route::get('/shopta', [ProductController::class,"shopta"])->name('shopta');
@@ -25,6 +27,7 @@ Route::get('/checkout', function () {
 Route::get('/detail', function () {
     return view('user.shopdetail');
 });
+Route::get('/save-cart', [CartController::class, "save_cart"])->name('save.cart');
 //Route::get('/account/profile/{type}', [HomeController::class, 'getInfo'])->middleware('auth');
 Route::prefix('account')->group(function () {
     Route::get('login', [HomeController::class, 'showLogin'])->name('login');
@@ -43,7 +46,8 @@ Route::prefix('account')->group(function () {
     Route::get('/proid/{proid}',[ProductController::class,"productdetail"])->name('productdetail');
 Route::get('/cate/{cate}', [ProductController::class, "category"])->name('go.shop');
 Route::get('/brand/{brand}', [ProductController::class, "brandshop"])->name('go.brand');
-Route::get('/find', 'ProductController@search');
+Route::get('/search', [ProductController::class, "search"])->name('find');
+Route::get('/cart',[CartController::class,"index"])->name('cart');
 });
 
 

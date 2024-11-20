@@ -157,6 +157,7 @@
                             @foreach ($product as $key => $pro)
 
                             <div class="col-md-6 col-lg-6 col-xl-4">
+                   
                                 <a href="{{route('productdetail',$pro->san_pham_id)}}">
                                     <div class="rounded position-relative fruite-item">
                                         <div class="fruite-img">
@@ -176,6 +177,7 @@
                                     </div>
                                 </a>
                             </div>
+                 
                             @endforeach
 
                             <div class="col-12">

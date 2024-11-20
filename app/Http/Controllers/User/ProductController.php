@@ -21,13 +21,13 @@ class ProductController extends Controller
        return view('user.index')->with('product',$product)->with('category',$category)->with('cate_product',$cate_product)->with('brand_product',$brand_product);
     }
     public function productdetail($proid){
-        $product=Product::where('san_pham_id',$proid)->get();
+        $detail_product=DB::table('san_pham')->join('loai_sp','loai_sp.loai_sp_id','=','san_pham.loai_sp_id')->join('thuong_hieu','thuong_hieu.thuong_hieu_id','=','san_pham.thuong_hieu_id')->where('san_pham.san_pham_id',$proid)->get();
         $products= DB::table ('san_pham')->get();
         $brand_product = DB::table('thuong_hieu')->get();
         $category = DB::table('danh_muc_san_pham')->get();
         
         $cate_product = DB::table('loai_sp')->get();
-        return view('user.shopdetail')->with('product',$product)->with('products',$products)->with('cate_product', $cate_product)->with('brand_product', $brand_product)->with('category',$category);
+        return view('user.shopdetail')->with('detail_product',$detail_product)->with('products',$products)->with('cate_product', $cate_product)->with('brand_product', $brand_product)->with('category',$category);
     }
    public function category($cate)
    {
@@ -53,16 +53,15 @@ class ProductController extends Controller
         $brand_shops = Brand::where('thuong_hieu_id', $brand)->get();
         return view('user.brandshop')->with('product', $product)->with('products', $products)->with('cate_product', $cate_product)->with('brand_shops', $brand_shops)->with('brand_product', $brand_product);
     }
-    public function search()  {
-        $request=$_GET['key'];
-        $product=Product::where('ten_san_pham','like','%'.$request.'%')->get();
+    public function search(Request $request)  {
+     
+        $product=Product::where('ten_san_pham','like','%'.$request->input('key').'%')->get();
         $products= DB::table ('san_pham')->get();
         $brand_product = DB::table('thuong_hieu')->get();
         $category = DB::table('danh_muc_san_pham')->get();
-        
         $cate_product = DB::table('loai_sp')->get();
-        return view('key')->with('product',$product)->with('products',$products)->with('cate_product', $cate_product)->with('brand_product', $brand_product)->with('category',$category);
 
+        return view('user.search')->with('product',$product)->with('products',$products)->with('cate_product', $cate_product)->with('brand_product', $brand_product)->with('category',$category);
     }
 
    
