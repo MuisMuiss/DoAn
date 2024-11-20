@@ -22,6 +22,7 @@ Route::get('/cart', function () {
 Route::get('/checkout', function () {
     return view('user.checkout');
 });
+
 Route::get('/detail', function () {
     return view('user.shopdetail');
 });
@@ -30,6 +31,11 @@ Route::prefix('account')->group(function () {
     Route::get('login', [HomeController::class, 'showLogin'])->name('login');
     Route::post('login', [HomeController::class, 'checklogin'])->name('user.login');
     Route::get('logout', [HomeController::class, 'logout'])->name('user.logout');
+
+    Route::get('forgotpassword', [HomeController::class, 'showfp'])->name('forgotpass');
+    Route::post('forgotpassword', [HomeController::class, 'checkfp'])->name('user.forgotpass');
+    Route::get('resetpassword/{email}', [HomeController::class, 'showResetForm'])->name('reset.password');
+    Route::post('resetpassword', [HomeController::class, 'resetPassword'])->name('reset.password.post');
     
     Route::get('register', [HomeController::class, 'showRegister'])->name('register');
     Route::post('register', [HomeController::class, 'checkregister'])->name('user.register');
@@ -41,9 +47,12 @@ Route::prefix('account')->group(function () {
     Route::get('profile/changepassword', [HomeController::class, "viewChangepassword"])->name('chpass.view');
     Route::post('/change_password', [HomeController::class, 'changePassword'])->name('change_password');
     Route::get('/proid/{proid}',[ProductController::class,"productdetail"])->name('productdetail');
-Route::get('/cate/{cate}', [ProductController::class, "category"])->name('go.shop');
-Route::get('/brand/{brand}', [ProductController::class, "brandshop"])->name('go.brand');
+    Route::get('/cate/{cate}', [ProductController::class, "category"])->name('go.shop');
+    Route::get('/brand/{brand}', [ProductController::class, "brandshop"])->name('go.brand');
+
 });
+Route::get('contact', [HomeController::class, 'contact'])->name('contact');
+Route::get('info', [HomeController::class, 'info'])->name('info');
 
 
 

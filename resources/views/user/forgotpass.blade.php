@@ -79,11 +79,11 @@
                             <a href="{{ route('shopsua') }}" class="nav-link dropdown-toggle">Sữa</a>
                             <div class="dropdown-menu m-0 bg-secondary rounded-0">
                                 @foreach ($cate_product as $cate)
-                                @if ($cate->danh_muc_id == 1)
-                                <a href="{{route('go.shop',$cate->loai_sp_id)}}" class="dropdown-item">
-                                    <option value=" ">{{ $cate->ten_loaisp }}</option>
-                                </a>
-                                @endif
+                                    @if ($cate->danh_muc_id == 1)
+                                        <a href="{{ route('go.shop', $cate->loai_sp_id) }}" class="dropdown-item">
+                                            <option value=" ">{{ $cate->ten_loaisp }}</option>
+                                        </a>
+                                    @endif
                                 @endforeach
                             </div>
                         </div>
@@ -91,11 +91,11 @@
                             <a href="{{ route('shopta') }}" class="nav-link dropdown-toggle">Tã</a>
                             <div class="dropdown-menu m-0 bg-secondary rounded-0">
                                 @foreach ($cate_product as $cate)
-                                @if ($cate->danh_muc_id == 2)
-                                <a href="{{route('go.shop',$cate->loai_sp_id)}}" class="dropdown-item">
-                                    <option value=" ">{{ $cate->ten_loaisp }}</option>
-                                </a>
-                                @endif
+                                    @if ($cate->danh_muc_id == 2)
+                                        <a href="{{ route('go.shop', $cate->loai_sp_id) }}" class="dropdown-item">
+                                            <option value=" ">{{ $cate->ten_loaisp }}</option>
+                                        </a>
+                                    @endif
                                 @endforeach
                             </div>
                         </div>
@@ -122,7 +122,8 @@
                         </a>
                         <div class="nav-item dropdown">
                             @if (Auth::check())
-                                <a href="{{ route('accout.view', ['nguoi_dung_id' => Auth::id()]) }}" onclick="showContent(this)">
+                                <a href="{{ route('accout.view', ['nguoi_dung_id' => Auth::id()]) }}"
+                                    onclick="showContent(this)">
                                     <span class="mr-2 d-none d-lg-inline text-gray-600 small">Hi,
                                         {{ Auth::user()->ho_ten }}</span>
                                     <img class="img-profile"
@@ -163,82 +164,39 @@
         <h1 class="text-center text-white display-6">Shop</h1>
         <ol class="breadcrumb justify-content-center mb-0">
             <li class="breadcrumb-item"><a href="#" style="color: black">Home</a></li>
-            <li class="breadcrumb-item"><a href="#" style="color: black">Đăng ký tài khoản</a></li>
+            <li class="breadcrumb-item"><a href="#" style="color: black">Quên mật khẩu</a></li>
         </ol>
     </div>
     <div class="customer-form">
         <div class="page_title">
             <div class="page-title text-center">
-                <h1>Đăng ký tài khoản</h1>
+                <h1>Quên mật khẩu</h1>
             </div>
         </div>
-        @if (session('status'))
-            <h5 class="alert alert-success">{{ session('status') }}</h5>
-        @endif
-        <div class="col-lg-7 mx-auto">
+        <div class="col-lg-6 mx-auto">
             <div class="p-5">
                 <div class="text-center">
-                    <h1 class="h6 text-gray-900 mb-4">Hãy đăng ký tài khoản!!!</h1>
+                    <p class="h6 text-gray-900 mb-4">Vui lòng nhập email để xác nhận</p>
                 </div>
-                <form class="user" method="POST" action="{{ route('user.register') }}">
+                <form action="{{ route('user.forgotpass') }}" class="user" for="login" method="POST">
                     @csrf
                     <div class="form-group">
-                        <input type="text" name="ho_ten" class="form-control form-control-user"
-                            id="exampleInputName" placeholder="Họ & tên" value="{{ old('ho_ten') }}" required>
-                        {{-- @error('ho_ten')
+                        <label for="">Email:</label>
+                        <input type="email" class="form-control form-control-user" id="exampleInputEmail"
+                            aria-describedby="emailHelp" placeholder="Enter Email Address..."
+                            name="email" value="{{ old('email') }}" required>
+                        @error('email')
                             <span class="text-danger">{{ $message }}</span>
-                        @enderror --}}
+                        @enderror
                     </div>
-                    <div class="form-group row">
-                        <div class="col-sm-6 mb-3 mb-sm-0">
-                            <input type="email" name="email" class="form-control form-control-user"
-                                id="exampleInputEmail" placeholder="Email" value="{{ old('email') }}" required>
-                            @error('email')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <div class="col-sm-6 mb-3 mb-sm-0">
-                            <input type="text" name="so_dien_thoai" class="form-control form-control-user"
-                                id="exampleInputPhone" placeholder="Số điện thoại"
-                                value="{{ old('so_dien_thoai') }}" required>
-                            @error('so_dien_thoai')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-sm-6 mb-3 mb-sm-0">
-                            <input type="password" name="mat_khau" class="form-control form-control-user"
-                                id="exampleInputPassword" placeholder="Mật khẩu" value="{{ old('mat_khau') }}"
-                                required>
-                            @error('mat_khau')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <div class="col-sm-6">
-                            <input type="password" name="mat_khau_confirmation"
-                                class="form-control form-control-user" id="exampleRepeatPassword"
-                                placeholder="Lặp lại mật khẩu" required>
-                            @error('mat_khau_confirmation')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                    </div>
-                    <button type="submit" class="btn btn-primary btn-user btn-block">
-                        Đăng ký tài khoản
-                    </button>
-                    <hr>
-                    <a href="#" class="btn btn-google btn-user btn-block">
-                        <i class="fab fa-google fa-fw"></i> Đăng ký với Google
-                    </a>
-                    <a href="#" class="btn btn-facebook btn-user btn-block">
-                        <i class="fab fa-facebook-f fa-fw"></i> Đăng ký với Facebook
-                    </a>
+                    <button class="btn btn-primary btn-user btn-block" type="submit">Xác nhận</button>
                 </form>
-
                 <hr>
                 <div class="text-center">
-                    <a class="small" href="{{ route('user.login') }}">Đã có tài khoản? Đăng nhập!</a>
+                    <a class="small" href="{{ route('user.login') }}">Đăng nhập tài khoản!</a>
+                </div>
+                <div class="text-center">
+                    <a class="small" href="{{ route('user.register') }}">Đăng ký tài khoản!</a>
                 </div>
             </div>
         </div>
