@@ -41,6 +41,52 @@ class HomeController extends Controller
         // dd($request->all());
         return back()->with('no', 'Email hoặc mật khẩu không chính xác');
     }
+    public function showfp()
+    {
+        $category = DB::table('danh_muc_san_pham')->get();
+        $cate_product = DB::table('loai_sp')->get();
+        $brand_product = DB::table('thuong_hieu')->get();
+        return view('user.forgotpass')->with('category', $category)->with('cate_product', $cate_product)->with('brand_product', $brand_product);
+    }
+    public function checkfp(Request $request){
+        $messages = [
+            'email.required' => 'Vui lòng nhập email.',
+            'email.email' => 'Email không đúng định dạng.',
+            'email.exists' => 'Email không tồn tại trong hệ thống.',
+        ];
+        $validatedData = $request->validate([
+            'email' => 'required|email|exists:nguoi_dungs,email',
+        ], $messages);
+        return redirect()->route('reset.password', ['email' => $request->email])->with('ok','Đã xác nhận email');
+    }
+    public function showResetForm($email)
+    {
+        $category = DB::table('danh_muc_san_pham')->get();
+        $cate_product = DB::table('loai_sp')->get();
+        $brand_product = DB::table('thuong_hieu')->get();
+        return view('user.resetpassword', ['email' => $email])->with('category', $category)->with('cate_product', $cate_product)->with('brand_product', $brand_product);
+    }
+    public function resetPassword(Request $request)
+    {
+        $messages = [
+            'email.required' => 'Vui lòng nhập email.',
+            'email.email' => 'Email không đúng định dạng.',
+            'email.exists' => 'Email không tồn tại trong hệ thống.',
+            'password.required' => 'Vui lòng nhập mật khẩu.',
+            'password.min' => 'Mật khẩu phải có ít nhất 6 ký tự.',
+            'password.confirmed' => 'Xác nhận mật khẩu không khớp.',
+        ];
+    
+        $validatedData = $request->validate([
+            'email' => 'required|email|exists:nguoi_dungs,email',
+            'password' => 'required|string|min:6|confirmed',
+        ], $messages);
+        NguoiDung::where('email', $request->email)
+            ->update(['mat_khau' => bcrypt($request->password)]);
+
+        return redirect()->route('user.login')->with('ok', 'Mật khẩu đã được đặt lại thành công!');
+    }
+
     public function logout(Request $request)
     {
         Auth::guard('web')->logout();
@@ -211,5 +257,19 @@ class HomeController extends Controller
         $user->save();
 
         return back()->with('ok', 'Đổi mật khẩu thành công!');
+    }
+    public function contact(){
+        $product = DB::table('san_pham')->get();
+        $category = DB::table('danh_muc_san_pham')->get();
+        $cate_product = DB::table('loai_sp')->get();
+        $brand_product = DB::table('thuong_hieu')->get();
+        return view('user.contact')->with('product', $product)->with('category', $category)->with('cate_product', $cate_product)->with('brand_product', $brand_product);
+    }
+    public function info(){
+        $product = DB::table('san_pham')->get();
+        $category = DB::table('danh_muc_san_pham')->get();
+        $cate_product = DB::table('loai_sp')->get();
+        $brand_product = DB::table('thuong_hieu')->get();
+        return view('user.info')->with('product', $product)->with('category', $category)->with('cate_product', $cate_product)->with('brand_product', $brand_product);
     }
 }
