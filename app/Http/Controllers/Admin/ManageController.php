@@ -18,7 +18,7 @@ class ManageController extends Controller
     //Danh mục
     public function viewCate()
     {
-        $category = Category::all();
+        $category = Category::paginate(5);
         return view('admin.category', compact('category'));
     }
     public function themcate()
@@ -73,7 +73,7 @@ class ManageController extends Controller
     //Thương hiệu
     public function viewbrand()
     {
-        $brand = Brand::all();
+        $brand = Brand::paginate(5);
         return view('admin.brand', compact('brand'));
     }
     public function thembrand()
@@ -132,7 +132,7 @@ class ManageController extends Controller
     //Loai sản phẩm
     public function viewtype()
     {
-        $typeproduct = ProductType::all();
+        $typeproduct = ProductType::paginate(5);
         $category = Category::all();
         return view('admin.typeproduct', compact('typeproduct', 'category'));
     }
@@ -195,7 +195,7 @@ class ManageController extends Controller
     //Quản lý nhập hàng
     public function viewnhap()
     {
-        $nhaphang = Import::all();
+        $nhaphang = Import::paginate(5);
         $brand = Brand::all();
         return view('admin.nhaphang.import', compact('nhaphang', 'brand'));
     }
@@ -284,7 +284,7 @@ class ManageController extends Controller
         }
         $ct_nhap = DB::table('chi_tiet_nhap_hang')
             ->where('nhap_hang_id', $nhap_hang_id)
-            ->get();
+            ->paginate(5);
         // Trả về view với dữ liệu
         return view('admin.nhaphang.detailnh', compact('nhaphang','ct_nhap','product','brand'));
     }

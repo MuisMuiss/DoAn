@@ -20,10 +20,10 @@ class Product_Controller extends Controller
      */
     public function viewProduct()
     {
-        $product= DB::table ('san_pham')->get();
+        $product= Product::paginate(5);
         $cate_product= DB::table ('loai_sp')->get();
         $brand_product= DB::table ('thuong_hieu')->get();
-       return view('admin.product')->with('product',$product)->with('cate_product',$cate_product)->with('brand_product',$brand_product);
+       return view('admin.product',compact('product','cate_product','brand_product'));
     }
 
     /**
@@ -60,11 +60,7 @@ class Product_Controller extends Controller
         $product->ten_san_pham=$request->input('ten_san_pham');
         $product->loai_sp_id=$request->loai_sp_id ?? 1;
         $product->gia=$request->input('gia');
-        $editorData = $request->input('mo_ta');  // Dữ liệu nhận được từ CKEditor
-
-        // Loại bỏ tất cả thẻ <p> (bao gồm thẻ <p> có thuộc tính và thẻ đóng <p>)
-        $editorData = preg_replace('/<\/?p[^>]*>/i', '', $editorData);
-        
+        $editorData = $request->input('mo_ta');  // Dữ liệu nhận được từ CKEditor        
         // Lưu vào cơ sở dữ liệu
         $product->mo_ta = $editorData;
         $product->so_luong_kho=$request->input('so_luong_kho');

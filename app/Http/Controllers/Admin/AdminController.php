@@ -93,7 +93,7 @@ class AdminController extends Controller
         return redirect()->back()->with('status','Thêm user thành công');
     }
     public function viewuser(){
-        $nguoiDung = nguoiDung::all();
+        $nguoiDung = nguoiDung::paginate(5);
         return view('admin.user',compact('nguoiDung'));
     }
     //Edit
