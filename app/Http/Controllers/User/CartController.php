@@ -17,14 +17,19 @@ class CartController extends Controller
     public function index()
     {
         $userId = Auth::id(); // ID người dùng
+        $cate_product = DB::table('loai_sp')->get();
+        $brand_product = DB::table('thuong_hieu')->get();
+        $category = DB::table('danh_muc_san_pham')->get();
+        if (!Auth::check()) {
+             return view('user.loginuser')->with('category', $category)->with('cate_product', $cate_product)->with('brand_product', $brand_product);
+        }else{
         $cartItems = Cart::where('nguoi_dung_id', $userId)->get();
 
         $product = DB::table('san_pham')->get();
-        $category = DB::table('danh_muc_san_pham')->get();
-        $cate_product = DB::table('loai_sp')->get();
-        $brand_product = DB::table('thuong_hieu')->get();
+   
+       
         return view('user.cart')->with('cartItems', $cartItems)->with('product', $product)->with('category', $category)->with('cate_product', $cate_product)->with('brand_product', $brand_product);
-    }
+    }}
 
     /**
      * Thêm sản phẩm vào giỏ hàng
@@ -32,7 +37,12 @@ class CartController extends Controller
     public function addToCart(Request $request, $id)
     {
         $userId = Auth::id(); // Lấy ID người dùng đã đăng nhập (nếu có)
-
+        $cate_product = DB::table('loai_sp')->get();
+        $brand_product = DB::table('thuong_hieu')->get();
+        $category = DB::table('danh_muc_san_pham')->get();
+        if (!Auth::check()) {
+             return view('user.loginuser')->with('category', $category)->with('cate_product', $cate_product)->with('brand_product', $brand_product);
+        }else{
         // Kiểm tra xem sản phẩm đã có trong giỏ hàng hay chưa
         $cartItem = Cart::where('nguoi_dung_id', $userId)
             ->where('san_pham_id', $id)
@@ -57,11 +67,16 @@ class CartController extends Controller
         }
 
         return redirect()->route('cart.index')->with('success', 'Sản phẩm đã được thêm vào giỏ hàng.');
-    }
+    }}
     public function addToCart1( $id)
     {
         $userId = Auth::id(); // Lấy ID người dùng đã đăng nhập (nếu có)
-
+        $cate_product = DB::table('loai_sp')->get();
+        $brand_product = DB::table('thuong_hieu')->get();
+        $category = DB::table('danh_muc_san_pham')->get();
+        if (!Auth::check()) {
+             return view('user.loginuser')->with('category', $category)->with('cate_product', $cate_product)->with('brand_product', $brand_product);
+        }else{
         // Kiểm tra xem sản phẩm đã có trong giỏ hàng hay chưa
         $cartItem = Cart::where('nguoi_dung_id', $userId)
             ->where('san_pham_id', $id)
@@ -86,7 +101,7 @@ class CartController extends Controller
         }
 
         return redirect()->route('cart.index')->with('success', 'Sản phẩm đã được thêm vào giỏ hàng.');
-    }
+    }}
     public function delete($cartId)
     {
 
