@@ -1,30 +1,32 @@
-@include("admin.autth.head")
+@include('admin.autth.head')
 <!-- Begin Page Content -->
 <div class="container-fluid">
 
     <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800">Quản lý loại sản phẩm</h1>
-    <a href="{{route('type.add')}}" class="btn btn-success btn-icon-split">
+    <h1 class="h3 mb-2 text-gray-800">Chi tiết nhập hàng</h1>
+    <a href="{{ route('ctimport.add', ['nhap_hang_id' => $nhaphang->nhap_hang_id]) }}" 
+        class="btn btn-success btn-icon-split"> 
         <span class="icon text-white-50">
             <i class="fas fa-plus"></i>
         </span>
-        <span class="text">Thêm loại sản phẩm</span>
-    </a>
+        <span class="text">Thêm sản phẩm nhập</span>
+     </a>
     <hr>
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Bảng dữ liệu loại sản phẩm / Product type datatable</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Bảng dữ liệu sản phẩm nhập hàng / Product import datatable</h6>
         </div>
         @if (session('status'))
-                        <h5 class="alert alert-success">{{session('status')}}</h5>
-                    @endif
+            <h5 class="alert alert-success">{{ session('status') }}</h5>
+        @endif
         <div class="card-body">
             <div class="table-responsive">
                 <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
                     <div class="row">
                         <div class="col-sm-12">
-                            <table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+                            <table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0"
+                                role="grid" aria-describedby="dataTable_info" style="width: 100%;">
                                 <thead>
                                     <!-- <tr role="row">
                                         <th class="sorting sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 190.775px;">Name</th>
@@ -36,35 +38,49 @@
                                     </tr> -->
                                     <tr>
                                         <th rowspan="1" colspan="1">Id</th>
-                                        <th rowspan="1" colspan="1">Tên loại sản phẩm</th>
-                                        <th rowspan="1" colspan="1">Tên danh mục</th>
+                                        <th rowspan="1" colspan="1">Mã nhập hàng</th>
+                                        <th rowspan="1" colspan="1">Tên sản phẩm</th>
+                                        <th rowspan="1" colspan="1">Tên thương hiệu</th>
+                                        <th rowspan="1" colspan="1">Số lượng</th>
+                                        <th rowspan="1" colspan="1">Giá nhập</th>
+                                        <th rowspan="1" colspan="1">Tổng thành tiền</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($typeproduct as $key=>$type)
-                                        <tr>
-                                            <td>{{$type->loai_sp_id}}</td>
-                                            <td>{{$type->ten_loaisp}}</td>
-                                            @foreach($category as $key => $cate)
-                                                @if ($cate->danh_muc_id == $type->danh_muc_id)
-                                                    <td>{{ $cate->ten_danh_muc }}</td>
+                                    @foreach ($ct_nhap as $ctn)
+                                    <tr class="odd">
+                                        <td>{{$ctn->id}}</td>
+                                        <td>{{$ctn->nhap_hang_id}}</td>
+                                        @foreach ($product as $keybrand => $pro)
+                                                @if ($ctn->san_pham_id == $pro->san_pham_id)
+                                                    <td>{{ $pro->ten_san_pham }}</td>
                                                 @endif
-                                            @endforeach    
-                                            <td>
-                                                <div style="display: flex; justify-content: center; align-items: center;">
-                                                    <a href="{{ route('admin.edittype', ['loai_sp_id' => $type->loai_sp_id]) }}" class="btn btn-warning btn-circle btn-sm" style=" margin-right: 10px;">
-                                                        <i class="fas fa-fw fa-wrench"></i>
-                                                    </a>
-                                                    <a href="{{ route('admin.deletetype', ['loai_sp_id' => $type->loai_sp_id]) }}"
-                                                        class="btn btn-danger btn-circle btn-sm"data-toggle="modal"
-                                                        data-target="#deleteModal">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <i class="fas fa-trash"></i>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                            @endforeach
+                                        @foreach ($brand as $keybrand => $br)
+                                                @if ($ctn->thuong_hieu_id == $br->thuong_hieu_id)
+                                                    <td>{{ $br->ten_thuong_hieu }}</td>
+                                                @endif
+                                            @endforeach
+                                        <td>{{$ctn->so_luong}}</td>
+                                        <td>{{number_format($ctn->gia_nhap, 0, ',', '.')}} VNĐ</td>
+                                        <td>{{number_format($ctn->thanh_tien, 0, ',', '.')}} VNĐ</td>
+                                        <td>
+                                            <div style="display: flex; justify-content: center; align-items: center;">
+                                                <a href="{{ route('admin.editctnhap', ['id' => $ctn->id]) }}"
+                                                    class="btn btn-warning btn-circle btn-sm"
+                                                    style=" margin-right: 10px;">
+                                                    <i class="fas fa-fw fa-wrench"></i>
+                                                </a>
+                                                <a href="{{ route('admin.deletectnhap', ['id' => $ctn->id]) }}"
+                                                    class="btn btn-danger btn-circle btn-sm"data-toggle="modal"
+                                                    data-target="#deleteModal">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <i class="fas fa-trash"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
                                     @endforeach
                                 </tbody>
                             </table>
@@ -77,8 +93,8 @@
                         </div>
                         <div class="col-sm-12 col-md-7">
                             <div class="dataTables_paginate paging_simple_numbers">
-                                @if ($typeproduct->hasPages())
-                                    {{ $typeproduct->links() }}
+                                @if ($ct_nhap->hasPages())
+                                    {{ $ct_nhap->links() }}
                                 @else
                                     <ul class="pagination">
                                         <li class="paginate_button page-item previous disabled"
@@ -114,10 +130,10 @@
             <div class="modal-footer">
                 <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
                 <a class="btn btn-danger"
-                    href="{{ route('admin.deletetype', ['loai_sp_id' => $type->loai_sp_id]) }}">Detele</a>
+                    href="{{ route('admin.deletectnhap', ['id' => $ctn->id]) }}">Detele</a>
             </div>
         </div>
     </div>
 </div>
 <!-- End of Main Content -->
-@include("admin.autth.footer")
+@include('admin.autth.footer')

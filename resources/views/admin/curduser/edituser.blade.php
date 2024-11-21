@@ -15,14 +15,14 @@
                             @csrf
                             <div class="form-group mb-3">
                                 <label for="">Họ và tên:</label>
-                                <input type="text" name="ho_ten" id="" class="form-control" value="{{$nguoiDung->ho_ten,old('ho_ten')}}">
+                                <input type="text" name="ho_ten" id="" class="form-control" value="{{$nguoiDung->ho_ten,old('ho_ten')}}" readonly>
                                 @error('ho_ten')
                                     <span class="text-danger">{{$message}}</span>
                                 @enderror
                             </div>
                             <div class="form-group mb-3">
                                 <label for="">Mật khẩu:</label>
-                                <input type="password" name="mat_khau" id="" class="form-control" value="{{$nguoiDung->mat_khau,old('mat_khau')}}">
+                                <input type="password" name="mat_khau" id="" class="form-control" value="{{$nguoiDung->mat_khau,old('mat_khau')}}" readonly>
                                 @error('mat_khau')
                                     <span class="text-danger">{{$message}}</span>
                                 @enderror
@@ -30,7 +30,7 @@
 
                             <div class="form-group mb-3">
                                 <label for="">Email:</label>
-                                <input type="email" name="email" id="" class="form-control" value="{{$nguoiDung->email,old('email')}}">
+                                <input type="email" name="email" id="" class="form-control" value="{{$nguoiDung->email,old('email')}}" readonly>
                                 @error('email')
                                     <span class="text-danger">{{$message}}</span>
                                 @enderror
@@ -38,7 +38,7 @@
 
                             <div class="form-group mb-3">
                                 <label for="">Số điện thoại:</label>
-                                <input type="text" name="so_dien_thoai" id="" class="form-control" value="{{$nguoiDung->so_dien_thoai,old('so_dien_thoai')}}">
+                                <input type="text" name="so_dien_thoai" id="" class="form-control" value="{{$nguoiDung->so_dien_thoai,old('so_dien_thoai')}}"readonly>
                                 @error('so_dien_thoai')
                                     <span class="text-danger">{{$message}}</span>
                                 @enderror

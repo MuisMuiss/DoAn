@@ -79,11 +79,11 @@
                             <a href="{{ route('shopsua') }}" class="nav-link dropdown-toggle">Sữa</a>
                             <div class="dropdown-menu m-0 bg-secondary rounded-0">
                                 @foreach ($cate_product as $cate)
-                                @if ($cate->danh_muc_id == 1)
-                                <a href="{{route('go.shop',$cate->loai_sp_id)}}" class="dropdown-item">
-                                    <option value=" ">{{ $cate->ten_loaisp }}</option>
-                                </a>
-                                @endif
+                                    @if ($cate->danh_muc_id == 1)
+                                        <a href="{{ route('go.shop', $cate->loai_sp_id) }}" class="dropdown-item">
+                                            <option value=" ">{{ $cate->ten_loaisp }}</option>
+                                        </a>
+                                    @endif
                                 @endforeach
                             </div>
                         </div>
@@ -91,16 +91,16 @@
                             <a href="{{ route('shopta') }}" class="nav-link dropdown-toggle">Tã</a>
                             <div class="dropdown-menu m-0 bg-secondary rounded-0">
                                 @foreach ($cate_product as $cate)
-                                @if ($cate->danh_muc_id == 2)
-                                <a href="{{route('go.shop',$cate->loai_sp_id)}}" class="dropdown-item">
-                                    <option value=" ">{{ $cate->ten_loaisp }}</option>
-                                </a>
-                                @endif
+                                    @if ($cate->danh_muc_id == 2)
+                                        <a href="{{ route('go.shop', $cate->loai_sp_id) }}" class="dropdown-item">
+                                            <option value=" ">{{ $cate->ten_loaisp }}</option>
+                                        </a>
+                                    @endif
                                 @endforeach
                             </div>
                         </div>
-                        <a href="{{route('info')}}" class="nav-item nav-link">Thông tin</a>
-                        <a href="{{route('contact')}}" class="nav-item nav-link">Liên hệ</a>
+                        <a href="contact.html" class="nav-item nav-link">Thông tin</a>
+                        <a href="contact.html" class="nav-item nav-link">Contact</a>
                     </div>
                     <div class="d-flex m-3 me-0">
 
@@ -114,7 +114,7 @@
                                 style="top: 0; left:140%"><i class="fas fa-search text-primary"></i></button>
 
                         </div>
-                        <a href="cart.html" class="position-relative me-4">
+                        <a href="cart.html" class="position-relative me-4 my-auto">
                             <i class="fa fa-shopping-bag fa-2x"></i>
                             <span
                                 class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1"
@@ -122,7 +122,8 @@
                         </a>
                         <div class="nav-item dropdown">
                             @if (Auth::check())
-                                <a href="{{ route('accout.view', ['nguoi_dung_id' => Auth::id()]) }}" onclick="showContent(this)">
+                                <a href="{{ route('accout.view', ['nguoi_dung_id' => Auth::id()]) }}"
+                                    onclick="showContent(this)">
                                     <span class="mr-2 d-none d-lg-inline text-gray-600 small">Hi,
                                         {{ Auth::user()->ho_ten }}</span>
                                     <img class="img-profile"
@@ -163,54 +164,36 @@
         <h1 class="text-center text-white display-6">Shop</h1>
         <ol class="breadcrumb justify-content-center mb-0">
             <li class="breadcrumb-item"><a href="#" style="color: black">Home</a></li>
-            <li class="breadcrumb-item"><a href="#" style="color: black">Đăng nhập tài khoản</a></li>
+            <li class="breadcrumb-item"><a href="#" style="color: black">Quên mật khẩu</a></li>
         </ol>
     </div>
     <div class="customer-form">
         <div class="page_title">
             <div class="page-title text-center">
-                <h1>Đăng nhập tài khoản</h1>
+                <h1>Quên mật khẩu</h1>
             </div>
         </div>
         <div class="col-lg-6 mx-auto">
             <div class="p-5">
                 <div class="text-center">
-                    <p class="h6 text-gray-900 mb-4">Nếu bạn có một tài khoản, xin vui lòng đăng nhập</p>
+                    <p class="h6 text-gray-900 mb-4">Vui lòng nhập email để xác nhận</p>
                 </div>
-                @if (session('msg'))
-                    <h6 class="alert alert-danger">{{session('msg')}}</h6>
-                @endif
-                <form action="{{route('user.login')}}" class="user" for="login" method="POST">
+                <form action="{{ route('user.forgotpass') }}" class="user" for="login" method="POST">
                     @csrf
                     <div class="form-group">
                         <label for="">Email:</label>
-                        <input type="email" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp"
-                        placeholder="Enter Email Address..."  id="email" name="email" required>
+                        <input type="email" class="form-control form-control-user" id="exampleInputEmail"
+                            aria-describedby="emailHelp" placeholder="Enter Email Address..."
+                            name="email" value="{{ old('email') }}" required>
+                        @error('email')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
                     </div>
-                    <div class="form-group">
-                        <label for="">Mật khẩu:</label>
-                        <input type="password" class="form-control form-control-user" placeholder="Mật khẩu"
-                            name="mat_khau" required>
-                    </div>
-                    <div class="form-group">
-                        <div class="custom-control custom-checkbox small">
-                            <input type="checkbox" class="custom-control-input" id="customCheck">
-                            <label class="custom-control-label" for="customCheck">Remember Me</label>
-                        </div>
-                    </div>
-
-                    <button class="btn btn-primary btn-user btn-block" type="submit">Đăng nhập</button>
-                    <hr>
-                    <a href="homeadmin" class="btn btn-google btn-user btn-block">
-                        <i class="fab fa-google fa-fw"></i> Login with Google
-                    </a>
-                    <a href="homeadmin" class="btn btn-facebook btn-user btn-block">
-                        <i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
-                    </a>
+                    <button class="btn btn-primary btn-user btn-block" type="submit">Xác nhận</button>
                 </form>
                 <hr>
                 <div class="text-center">
-                    <a class="small" href="{{route('forgotpass')}}">Quên mật khẩu?</a>
+                    <a class="small" href="{{ route('user.login') }}">Đăng nhập tài khoản!</a>
                 </div>
                 <div class="text-center">
                     <a class="small" href="{{ route('user.register') }}">Đăng ký tài khoản!</a>

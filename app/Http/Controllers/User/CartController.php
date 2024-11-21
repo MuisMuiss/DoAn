@@ -117,4 +117,17 @@ class CartController extends Controller
 
         return redirect()->route('cart.index')->with('success', 'Cập nhật giỏ hàng thành công');
     }
+    public function clear()
+    {
+        
+
+   
+        $userId = Auth::id(); // Lấy ID người dùng đã đăng nhập (nếu có)
+
+
+        // Xóa tất cả sản phẩm trong giỏ hàng của người dùng
+        Cart::where('nguoi_dung_id', $userId)->delete();
+
+        return redirect()->route('cart.index')->with('success', 'Giỏ hàng đã được xóa thành công');
+    }
 }
