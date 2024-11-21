@@ -49,7 +49,9 @@ Route::prefix('account')->group(function () {
     Route::get('/cart/add1/{id}', [CartController::class, 'addToCart1'])->name('cart.add1');
     Route::post('/cart/update/{id}', [CartController::class, 'update'])->name('cart.update');
     Route::get('/cart/remove/{id}', [CartController::class, 'delete'])->name('cart.delete');
-    // Route::delete('/cart/clear', [CartController::class, 'clear'])->name('cart.clear');
+    Route::get('/cart/clear', [CartController::class, 'clear'])->name('cart.clear');
+    Route::post('/cart/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
+
 });
 
 

@@ -54,17 +54,17 @@
                              <p class="mb-0 mt-4">{{ number_format ($item->product->gia * $item->so_luong, 0, ',', '.') }}đ</p>
                          </td>
                          <td>
-                         <form class="mb-0 mt-4" action="{{ route('cart.update', $item->gio_hang_id) }}" method="POST">
-    @csrf
-    @method('POST') <!-- Xác định phương thức là POST -->
-    <label for="so_luong">Số lượng:</label>
-    <input type="number" id="so_luong" name="so_luong" value="{{ $item->so_luong }}" min="1" max="{{ $item->product->so_luong_kho }}" required>
-    <button type="submit">Cập nhật</button>
-</form>
+                             <form class="mb-0 mt-4" action="{{ route('cart.update', $item->gio_hang_id) }}" method="POST">
+                                 @csrf
+                                 @method('POST') <!-- Xác định phương thức là POST -->
+                                 <label for="so_luong">Số lượng:</label>
+                                 <input type="number" id="so_luong" name="so_luong" value="{{ $item->so_luong }}" min="1" max="{{ $item->product->so_luong_kho }}" required>
+                                 <button type="submit">Cập nhật</button>
+                             </form>
                          </td>
 
                          <td>
-                             <form action="{{ route('cart.delete', $item->gio_hang_id) }}" method="GET" onsubmit="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này?')">
+                             <form class="mb-0 mt-4" action="{{ route('cart.delete', $item->gio_hang_id) }}" method="GET" onsubmit="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này?')">
                                  @csrf
                                  <button type="submit">Xóa</button>
                              </form>
@@ -72,6 +72,19 @@
 
                      </tr>
                      @endforeach
+                     <tr>
+                         <td>
+                             <form action="{{ route('cart.clear')}}" onsubmit="return confirm('Bạn có chắc chắn muốn dọn dẹp giỏ hàng?')">
+                                 @csrf
+                                 <button type="submit">Dọn dẹp giỏ hàng</button>
+
+                             </form>
+                         </td>
+                         <td><form action="{{ route('cart.checkout') }}" method="POST">
+    @csrf
+    <button type="submit" class="btn btn-primary">Thanh toán</button>
+</form></td>
+                     </tr>
                  </tbody>
 
              </table>
