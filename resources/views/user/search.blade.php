@@ -1,4 +1,5 @@
 @include('user.layout.header')
+<!-- Modal Search Start -->
 <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-fullscreen">
         <div class="modal-content rounded-0">
@@ -17,25 +18,21 @@
     </div>
 </div>
 <!-- Modal Search End -->
-
 <!-- Single Page Header start -->
 <div class="container-fluid page-header py-5">
-    <h1 class="text-center text-white display-6">Thế Giới Tả </h1>
-
+    <h1 class="text-center text-white display-6">Kết quả tìm kiếm</h1>
 </div>
 <!-- Single Page Header End -->
-
-
-<!-- Fruits Shop Start-->
+<!-- Milk Shop Start-->
 <div class="container-fluid fruite py-5">
     <div class="container py-5">
-    @foreach($cate_shops as $cate)
-        <h1 class="mb-4"><a  href="{{ route('index') }}" >Home . </a>{{$cate->ten_loaisp}}</h1>
-        @endforeach
+      
+        <h1 class="mb-4"><a  href="{{ route('index') }}" >Home . </a>Tìm kiếm</h1>
+    
         <div class="row g-4">
             <div class="col-lg-12">
                 <div class="row g-4">
-                  
+                    
                     <div class="col-6"></div>
                     <div class="col-xl-3">
                         <div class="bg-light ps-3 py-3 rounded d-flex justify-content-between mb-4">
@@ -59,7 +56,7 @@
                                     <ul class="list-unstyled fruite-categorie">
                                         <li>
                                             @foreach ($cate_product as $cate)
-                                            @if($cate->danh_muc_id==2)
+                                            @if($cate->danh_muc_id==1)
 
                                             <div class="d-flex justify-content-between fruite-name">
                                                 <a href="{{route('go.shop',$cate->loai_sp_id)}}"><i
@@ -141,5 +138,4 @@
         </div>
     </div>
 </div>
-<!-- Fruits Shop End-->
 @include('user.layout.footer')

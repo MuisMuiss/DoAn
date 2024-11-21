@@ -1,8 +1,10 @@
 <?php
+
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\Product_Controller;
 use App\Http\Controllers\User\ProductController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\User\CartController;
 use App\Http\Controllers\Admin\ManageController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -49,8 +51,14 @@ Route::prefix('account')->group(function () {
     Route::get('/proid/{proid}',[ProductController::class,"productdetail"])->name('productdetail');
     Route::get('/cate/{cate}', [ProductController::class, "category"])->name('go.shop');
     Route::get('/brand/{brand}', [ProductController::class, "brandshop"])->name('go.brand');
-    
-
+    Route::get('/search', [ProductController::class, "search"])->name('find');
+    Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+    Route::post('/cart/add/{id}', [CartController::class, 'addToCart'])->name('cart.add');
+    Route::get('/cart/add1/{id}', [CartController::class, 'addToCart1'])->name('cart.add1');
+    Route::post('/cart/update/{id}', [CartController::class, 'update'])->name('cart.update');
+    Route::get('/cart/remove/{id}', [CartController::class, 'delete'])->name('cart.delete');
+    Route::get('/cart/clear', [CartController::class, 'clear'])->name('cart.clear');
+    Route::post('/cart/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
 });
 Route::get('contact', [HomeController::class, 'contact'])->name('contact');
 Route::get('info', [HomeController::class, 'info'])->name('info');

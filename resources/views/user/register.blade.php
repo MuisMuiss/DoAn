@@ -99,8 +99,8 @@
                                 @endforeach
                             </div>
                         </div>
-                        <a href="contact.html" class="nav-item nav-link">Thông tin</a>
-                        <a href="contact.html" class="nav-item nav-link">Contact</a>
+                        <a href="{{route('info')}}" class="nav-item nav-link">Thông tin</a>
+                        <a href="{{route('contact')}}" class="nav-item nav-link">Liên hệ</a>
                     </div>
                     <div class="d-flex m-3 me-0">
 
@@ -114,7 +114,7 @@
                                 style="top: 0; left:140%"><i class="fas fa-search text-primary"></i></button>
 
                         </div>
-                        <a href="cart.html" class="position-relative me-4 my-auto">
+                        <a href="cart.html" class="position-relative me-4">
                             <i class="fa fa-shopping-bag fa-2x"></i>
                             <span
                                 class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1"
