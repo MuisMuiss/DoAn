@@ -144,7 +144,7 @@
                                                         <h6 style="font-family: 'Arial', sans-serif;">{{$pro->ten_san_pham}}</h6>
                                                         <div class="d-flex justify-content-between flex-lg-wrap">
                                                             <p class="text-dark fs-5 fw-bold mb-0">{{$pro->gia}}đ</p>
-                                                            <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                                                            <a href="{{ route('cart.add1', $pro->san_pham_id) }}" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
                                                         </div>
                                                     </div>
                                                 </div>

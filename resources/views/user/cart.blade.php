@@ -54,25 +54,20 @@
                              <p class="mb-0 mt-4">{{ number_format ($item->product->gia * $item->so_luong, 0, ',', '.') }}đ</p>
                          </td>
                          <td>
-                             <div class="input-group quantity mt-4" style="width: 100px;">
-                                 <div class="input-group-btn">
-                                     <button class="btn btn-sm btn-minus rounded-circle bg-light border">
-                                         <i class="fa fa-minus"></i>
-                                     </button>
-                                 </div>
-                                 <input type="text" class="form-control form-control-sm text-center border-0" value="{{$item->so_luong}}">
-                                 <div class="input-group-btn">
-                                     <button class="btn btn-sm btn-plus rounded-circle bg-light border">
-                                         <i class="fa fa-plus"></i>
-                                     </button>
-                                 </div>
-                             </div>
+                         <form class="mb-0 mt-4" action="{{ route('cart.update', $item->gio_hang_id) }}" method="POST">
+    @csrf
+    @method('POST') <!-- Xác định phương thức là POST -->
+    <label for="so_luong">Số lượng:</label>
+    <input type="number" id="so_luong" name="so_luong" value="{{ $item->so_luong }}" min="1" max="{{ $item->product->so_luong_kho }}" required>
+    <button type="submit">Cập nhật</button>
+</form>
                          </td>
 
                          <td>
-                             <button class="btn btn-md rounded-circle bg-light border mt-4">
-                                 <i class="fa fa-times text-danger"></i>
-                             </button>
+                             <form action="{{ route('cart.delete', $item->gio_hang_id) }}" method="GET" onsubmit="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này?')">
+                                 @csrf
+                                 <button type="submit">Xóa</button>
+                             </form>
                          </td>
 
                      </tr>
