@@ -2,13 +2,10 @@
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\Product_Controller;
 use App\Http\Controllers\User\ProductController;
-use App\Http\Controllers\User\CartController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\ManageController;
-use App\Http\Controllers\CartController as ControllersCartController;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Auth;
-
+use App\Http\Controllers\User\CartController;
 
 // Route::get('/index', function () {
 //     return view('user.index');
@@ -27,7 +24,6 @@ Route::get('/checkout', function () {
 Route::get('/detail', function () {
     return view('user.shopdetail');
 });
-Route::get('/save-cart', [CartController::class, "save_cart"])->name('save.cart');
 //Route::get('/account/profile/{type}', [HomeController::class, 'getInfo'])->middleware('auth');
 Route::prefix('account')->group(function () {
     Route::get('login', [HomeController::class, 'showLogin'])->name('login');
@@ -47,7 +43,11 @@ Route::prefix('account')->group(function () {
 Route::get('/cate/{cate}', [ProductController::class, "category"])->name('go.shop');
 Route::get('/brand/{brand}', [ProductController::class, "brandshop"])->name('go.brand');
 Route::get('/search', [ProductController::class, "search"])->name('find');
-Route::get('/cart',[CartController::class,"index"])->name('cart');
+Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+Route::post('/cart/add/{id}', [CartController::class, 'addToCart'])->name('cart.add');
+Route::post('/cart/update/{id}', [CartController::class, 'updateCart'])->name('cart.update');
+Route::delete('/cart/remove/{id}', [CartController::class, 'removeFromCart'])->name('cart.remove');
+Route::delete('/cart/clear', [CartController::class, 'clearCart'])->name('cart.clear');
 });
 
 

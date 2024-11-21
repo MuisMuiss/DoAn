@@ -64,29 +64,15 @@
 
                         <p class="mb-4">{{$pro->mo_ta}}</p>
                         <!-- //   <p class="mb-4">Susp endisse ultricies nisi vel quam suscipit. Sabertooth peacock flounder; chain pickerel hatchetfish, pencilfish snailfish</p> -->
-                        <form action="{{route('save.cart')}}" method="GET">
-
-                             @csrf_field()
-
-                            <span>
-
-
-
-                                <label>Số lượng: </label>
-
-                                <input name="qty" type="number" min="1" max="{{$pro->so_luong_kho}}" value="1" />
-
-                                <input name="productid" type="hidden" min="1"   value="{{$pro->san_pham_id}}" />
-
-                                <button type="submit" class="btn btn-fefault cart"> <i class="fa fa-shopping-cart"></i>
-
-                                    Thêm vào giỏ hàng
-
-                                </button>
-
-                            </span>
-
-                        </form>
+                        {{-- Form thêm vào giỏ hàng --}}
+            <form action="{{ route('cart.add', $pro->san_pham_id) }}" method="POST">
+                @csrf
+                <div class="mb-3">
+                    <label for="quantity" class="form-label">Số lượng:</label>
+                    <input type="number" id="quantity" name="quantity" value="1" min="1" class="form-control w-25">
+                </div>
+                <button type="submit" class="btn btn-primary">Thêm Vào Giỏ Hàng</button>
+            </form>
                     </div>
 
                     <div class="col-lg-12">
@@ -243,5 +229,6 @@
 </div>
 
 @endforeach
+
 <!-- Single Product End -->
 @include('user.layout.footer')

@@ -1,191 +1,82 @@
-@include('user.layout.header')
-<!-- Modal Search Start -->
-<div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-fullscreen">
-        <div class="modal-content rounded-0">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Search by keyword</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body d-flex align-items-center">
-                <div class="input-group w-75 mx-auto d-flex">
-                    <input type="search" class="form-control p-3" placeholder="keywords" aria-describedby="search-icon-1">
-                    <span id="search-icon-1" class="input-group-text p-3"><i class="fa fa-search"></i></span>
-                </div>
-            </div>
+ @include('user.layout.header')
+
+<div class="container">
+    <h1 class="my-4">Giỏ Hàng</h1>
+
+    {{-- Thông báo --}}
+    @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
         </div>
-    </div>
-</div>
-<!-- Modal Search End -->
+    @endif
 
+    @if(session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
 
-<!-- Single Page Header start -->
-<div class="container-fluid page-header py-5">
-    <h1 class="text-center text-white display-6">Cart</h1>
-
-</div>
-<!-- Single Page Header End -->
-
-
-<!-- Cart Page Start -->
-<div class="container-fluid py-5">
-    <div class="container py-5">
-        <div class="table-responsive">
-            <table class="table">
-                <thead>
-                  <tr>
-                    <th scope="col">Products</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Price</th>
-                    <th scope="col">Quantity</th>
-                    <th scope="col">Total</th>
-                    <th scope="col">Handle</th>
-                  </tr>
-                </thead>
-                <tbody>
+    {{-- Kiểm tra nếu giỏ hàng có sản phẩm --}}
+    @if(count($cart) > 0)
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Hình Ảnh</th>
+                    <th>Tên Sản Phẩm</th>
+                    <th>Đơn Giá</th>
+                    <th>Số Lượng</th>
+                    <th>Thành Tiền</th>
+                    <th>Hành Động</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($cart as $id => $item)
                     <tr>
-                        <th scope="row">
-                            <div class="d-flex align-items-center">
-                                <img src="img/vegetable-item-3.png" class="img-fluid me-5 rounded-circle" style="width: 80px; height: 80px;" alt="">
-                            </div>
-                        </th>
                         <td>
-                            <p class="mb-0 mt-4">Big Banana</p>
+                            <img src="{{ $item['image'] }}" alt="{{ $item['name'] }}" style="width: 80px;">
                         </td>
+                        <td>{{ $item['name'] }}</td>
+                        <td>{{ number_format($item['price'], 0, ',', '.') }} đ</td>
                         <td>
-                            <p class="mb-0 mt-4">2.99 $</p>
+                            <form action="{{ route('cart.update', $id) }}" method="POST" class="d-flex">
+                                @csrf
+                                <input type="number" name="quantity" value="{{ $item['quantity'] }}" min="1" class="form-control w-50">
+                                <button type="submit" class="btn btn-primary btn-sm ms-2">Cập Nhật</button>
+                            </form>
                         </td>
+                        <td>{{ number_format($item['price'] * $item['quantity'], 0, ',', '.') }} đ</td>
                         <td>
-                            <div class="input-group quantity mt-4" style="width: 100px;">
-                                <div class="input-group-btn">
-                                    <button class="btn btn-sm btn-minus rounded-circle bg-light border" >
-                                    <i class="fa fa-minus"></i>
-                                    </button>
-                                </div>
-                                <input type="text" class="form-control form-control-sm text-center border-0" value="1">
-                                <div class="input-group-btn">
-                                    <button class="btn btn-sm btn-plus rounded-circle bg-light border">
-                                        <i class="fa fa-plus"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                            <p class="mb-0 mt-4">2.99 $</p>
-                        </td>
-                        <td>
-                            <button class="btn btn-md rounded-circle bg-light border mt-4" >
-                                <i class="fa fa-times text-danger"></i>
-                            </button>
-                        </td>
-                    
-                    </tr>
-                    <tr>
-                        <th scope="row">
-                            <div class="d-flex align-items-center">
-                                <img src="img/vegetable-item-5.jpg" class="img-fluid me-5 rounded-circle" style="width: 80px; height: 80px;" alt="" alt="">
-                            </div>
-                        </th>
-                        <td>
-                            <p class="mb-0 mt-4">Potatoes</p>
-                        </td>
-                        <td>
-                            <p class="mb-0 mt-4">2.99 $</p>
-                        </td>
-                        <td>
-                            <div class="input-group quantity mt-4" style="width: 100px;">
-                                <div class="input-group-btn">
-                                    <button class="btn btn-sm btn-minus rounded-circle bg-light border" >
-                                    <i class="fa fa-minus"></i>
-                                    </button>
-                                </div>
-                                <input type="text" class="form-control form-control-sm text-center border-0" value="1">
-                                <div class="input-group-btn">
-                                    <button class="btn btn-sm btn-plus rounded-circle bg-light border">
-                                        <i class="fa fa-plus"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                            <p class="mb-0 mt-4">2.99 $</p>
-                        </td>
-                        <td>
-                            <button class="btn btn-md rounded-circle bg-light border mt-4" >
-                                <i class="fa fa-times text-danger"></i>
-                            </button>
+                            <form action="{{ route('cart.remove', $id) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm">Xóa</button>
+                            </form>
                         </td>
                     </tr>
-                    <tr>
-                        <th scope="row">
-                            <div class="d-flex align-items-center">
-                                <img src="img/vegetable-item-2.jpg" class="img-fluid me-5 rounded-circle" style="width: 80px; height: 80px;" alt="" alt="">
-                            </div>
-                        </th>
-                        <td>
-                            <p class="mb-0 mt-4">Awesome Brocoli</p>
-                        </td>
-                        <td>
-                            <p class="mb-0 mt-4">2.99 $</p>
-                        </td>
-                        <td>
-                            <div class="input-group quantity mt-4" style="width: 100px;">
-                                <div class="input-group-btn">
-                                    <button class="btn btn-sm btn-minus rounded-circle bg-light border" >
-                                    <i class="fa fa-minus"></i>
-                                    </button>
-                                </div>
-                                <input type="text" class="form-control form-control-sm text-center border-0" value="1">
-                                <div class="input-group-btn">
-                                    <button class="btn btn-sm btn-plus rounded-circle bg-light border">
-                                        <i class="fa fa-plus"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                            <p class="mb-0 mt-4">2.99 $</p>
-                        </td>
-                        <td>
-                            <button class="btn btn-md rounded-circle bg-light border mt-4" >
-                                <i class="fa fa-times text-danger"></i>
-                            </button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+                @endforeach
+            </tbody>
+        </table>
+
+        {{-- Tổng tiền --}}
+        <div class="d-flex justify-content-between align-items-center my-4">
+            <h4>Tổng Cộng: <strong>{{ number_format($total, 0, ',', '.') }} đ</strong></h4>
+            <form action="{{ route('cart.clear') }}" method="POST">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn btn-warning">Xóa Toàn Bộ Giỏ Hàng</button>
+            </form>
         </div>
-        <div class="mt-5">
-            <input type="text" class="border-0 border-bottom rounded me-5 py-3 mb-4" placeholder="Coupon Code">
-            <button class="btn border-secondary rounded-pill px-4 py-3 text-primary" type="button">Apply Coupon</button>
+
+        {{-- Nút Thanh Toán --}}
+        <div class="text-end">
+            <a href="" class="btn btn-success">Tiến Hành Thanh Toán</a>
         </div>
-        <div class="row g-4 justify-content-end">
-            <div class="col-8"></div>
-            <div class="col-sm-8 col-md-7 col-lg-6 col-xl-4">
-                <div class="bg-light rounded">
-                    <div class="p-4">
-                        <h1 class="display-6 mb-4">Cart <span class="fw-normal">Total</span></h1>
-                        <div class="d-flex justify-content-between mb-4">
-                            <h5 class="mb-0 me-4">Subtotal:</h5>
-                            <p class="mb-0">$96.00</p>
-                        </div>
-                        <div class="d-flex justify-content-between">
-                            <h5 class="mb-0 me-4">Shipping</h5>
-                            <div class="">
-                                <p class="mb-0">Flat rate: $3.00</p>
-                            </div>
-                        </div>
-                        <p class="mb-0 text-end">Shipping to Ukraine.</p>
-                    </div>
-                    <div class="py-4 mb-4 border-top border-bottom d-flex justify-content-between">
-                        <h5 class="mb-0 ps-4 me-4">Total</h5>
-                        <p class="mb-0 pe-4">$99.00</p>
-                    </div>
-                    <button class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4" type="button">Proceed Checkout</button>
-                </div>
-            </div>
+    @else
+        <div class="alert alert-info">
+            Giỏ hàng của bạn đang trống.
         </div>
-    </div>
+        <a href="" class="btn btn-primary">Tiếp Tục Mua Sắm</a>
+    @endif
 </div>
-<!-- Cart Page End -->
+
 @include('user.layout.footer')

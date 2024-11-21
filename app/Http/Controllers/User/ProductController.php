@@ -7,9 +7,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Brand;
-use Illuminate\Support\Facades\Input;
 use App\Models\ProductType;
-use Symfony\Component\Console\Input\Input as InputInput;
+
 
 class ProductController extends Controller
 {
