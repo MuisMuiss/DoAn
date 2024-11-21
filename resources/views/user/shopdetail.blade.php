@@ -58,7 +58,7 @@
                         @endforeach
                         <h5 class="fw-bold mb-3">{{number_format($pro->gia)}} VND</h5>
 
-                        <p class="mb-4">{{$pro->mo_ta}}</p>
+                       
                         <!-- //   <p class="mb-4">Susp endisse ultricies nisi vel quam suscipit. Sabertooth peacock flounder; chain pickerel hatchetfish, pencilfish snailfish</p> -->
                         <form action="{{ route('cart.add', $pro->san_pham_id) }}" method="POST">
                             @csrf
@@ -81,10 +81,7 @@
                         </nav>
                         <div class="tab-content mb-5">
                             <div class="tab-pane active" id="nav-about" role="tabpanel" aria-labelledby="nav-about-tab">
-                                <p>The generated Lorem Ipsum is therefore always free from repetition injected humour, or non-characteristic words etc.
-                                    Susp endisse ultricies nisi vel quam suscipit </p>
-                                <p>Sabertooth peacock flounder; chain pickerel hatchetfish, pencilfish snailfish filefish Antarctic
-                                    icefish goldeye aholehole trumpetfish pilot fish airbreathing catfish, electric ray sweeper.</p>
+                                <p>{{$pro->mo_ta}}</p>
                                 <div class="px-2">
                                     <div class="row g-4">
                                         <div class="col-6">

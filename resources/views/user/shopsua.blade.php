@@ -27,12 +27,12 @@
 <div class="container-fluid fruite py-5">
     <div class="container py-5">
         @foreach($cate_shops as $cate)
-        <h1 class="mb-4"><a  href="{{ route('index') }}" >Home . </a>{{$cate->ten_loaisp}}</h1>
+        <h1 class="mb-4"><a href="{{ route('index') }}">Home . </a>{{$cate->ten_loaisp}}</h1>
         @endforeach
         <div class="row g-4">
             <div class="col-lg-12">
                 <div class="row g-4">
-               
+
                     <div class="col-6"></div>
                     <div class="col-xl-3">
                         <div class="bg-light ps-3 py-3 rounded d-flex justify-content-between mb-4">
@@ -102,22 +102,12 @@
 
                                 </div>
                             </div>
-                            @include('user.productmoi')
-                            <div class="col-lg-12">
-                                <div class="position-relative">
-                                    <img src="assets/user/img/banner-fruits.jpg" class="img-fluid w-100 rounded"
-                                        alt="">
-                                    <div class="position-absolute"
-                                        style="top: 50%; right: 10px; transform: translateY(-50%);">
-                                        <h3 class="text-secondary fw-bold">Fresh <br> Fruits <br> Banner</h3>
-                                    </div>
-                                </div>
-                            </div>
+
                         </div>
                     </div>
                     <div class="col-lg-9">
                         <div class="row g-4 justify-content-center">
-                        @include('user.product')
+                            @include('user.product')
 
                             <div class="col-12">
                                 <div class="pagination d-flex justify-content-center mt-5">
@@ -136,6 +126,7 @@
                 </div>
             </div>
         </div>
+        @include('user.productmoi')
     </div>
 </div>
 @include('user.layout.footer')
