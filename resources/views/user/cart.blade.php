@@ -1,82 +1,86 @@
  @include('user.layout.header')
 
-<div class="container">
-    <h1 class="my-4">Giỏ Hàng</h1>
+ <div class="container-fluid py-5">
+     <div class="container py-5">
+         <div class="table-responsive" style="margin-top:100px">
+             <table class="table">
+                 <thead>
+                     <tr>
+                         <th scope="col">Products</th>
+                         <th scope="col">Name</th>
+                         <th scope="col">Price</th>
+                         <th scope="col">Quantity</th>
+                         <th scope="col">Total</th>
+                         <th scope="col">Handle</th>
+                     </tr>
+                 </thead>
+                 <tbody>
+                     @foreach($cartItems as $item)
+                     <!-- <tr>
+         <td>
+             <img src=" {{asset('images/product/' .$item->product->hinh_anh) }}" style="width: 80px;">
+         </td>
+         <td>{{ $item->product->ten_san_pham }}</td>
+         <td>{{ number_format($item->price) }} đ</td>
+         <td>
+             <form action="" method="POST">
+                 @csrf
+                 <input type="number" name="quantity" value="{{ $item->so_luong }}" min="1" class="form-control w-50">
+                 <button type="submit" class="btn btn-primary btn-sm mt-2">Cập Nhật</button>
+             </form>
+         </td>
+         <td>{{ number_format($item->price * $item->quantity, 0, ',', '.') }} đ</td>
+         <td>
+             <form action="" method="POST">
+                 @csrf
+                 @method('DELETE')
+                 <button type="submit" class="btn btn-danger btn-sm">Xóa</button>
+             </form>
+         </td>
+     </tr> -->
+                     <tr>
+                         <th scope="row">
+                             <div class="d-flex align-items-center">
+                                 <img src=" {{asset('images/product/' .$item->product->hinh_anh) }}" style="width: 80px; height: 80px;" alt="">
+                             </div>
+                         </th>
+                         <td>
+                             <p class="mb-0 mt-4">{{ $item->product->ten_san_pham }}</p>
+                         </td>
+                         <td>
+                             <p class="mb-0 mt-4">{{ number_format ($item->product->gia, 0, ',', '.') }} đ</p>
+                         </td>
+                         <td>
+                             <p class="mb-0 mt-4">{{ number_format ($item->product->gia * $item->so_luong, 0, ',', '.') }}đ</p>
+                         </td>
+                         <td>
+                             <div class="input-group quantity mt-4" style="width: 100px;">
+                                 <div class="input-group-btn">
+                                     <button class="btn btn-sm btn-minus rounded-circle bg-light border">
+                                         <i class="fa fa-minus"></i>
+                                     </button>
+                                 </div>
+                                 <input type="text" class="form-control form-control-sm text-center border-0" value="{{$item->so_luong}}">
+                                 <div class="input-group-btn">
+                                     <button class="btn btn-sm btn-plus rounded-circle bg-light border">
+                                         <i class="fa fa-plus"></i>
+                                     </button>
+                                 </div>
+                             </div>
+                         </td>
 
-    {{-- Thông báo --}}
-    @if(session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
-        </div>
-    @endif
+                         <td>
+                             <button class="btn btn-md rounded-circle bg-light border mt-4">
+                                 <i class="fa fa-times text-danger"></i>
+                             </button>
+                         </td>
 
-    @if(session('error'))
-        <div class="alert alert-danger">
-            {{ session('error') }}
-        </div>
-    @endif
+                     </tr>
+                     @endforeach
+                 </tbody>
 
-    {{-- Kiểm tra nếu giỏ hàng có sản phẩm --}}
-    @if(count($cart) > 0)
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>Hình Ảnh</th>
-                    <th>Tên Sản Phẩm</th>
-                    <th>Đơn Giá</th>
-                    <th>Số Lượng</th>
-                    <th>Thành Tiền</th>
-                    <th>Hành Động</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($cart as $id => $item)
-                    <tr>
-                        <td>
-                            <img src="{{ $item['image'] }}" alt="{{ $item['name'] }}" style="width: 80px;">
-                        </td>
-                        <td>{{ $item['name'] }}</td>
-                        <td>{{ number_format($item['price'], 0, ',', '.') }} đ</td>
-                        <td>
-                            <form action="{{ route('cart.update', $id) }}" method="POST" class="d-flex">
-                                @csrf
-                                <input type="number" name="quantity" value="{{ $item['quantity'] }}" min="1" class="form-control w-50">
-                                <button type="submit" class="btn btn-primary btn-sm ms-2">Cập Nhật</button>
-                            </form>
-                        </td>
-                        <td>{{ number_format($item['price'] * $item['quantity'], 0, ',', '.') }} đ</td>
-                        <td>
-                            <form action="{{ route('cart.remove', $id) }}" method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm">Xóa</button>
-                            </form>
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-
-        {{-- Tổng tiền --}}
-        <div class="d-flex justify-content-between align-items-center my-4">
-            <h4>Tổng Cộng: <strong>{{ number_format($total, 0, ',', '.') }} đ</strong></h4>
-            <form action="{{ route('cart.clear') }}" method="POST">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="btn btn-warning">Xóa Toàn Bộ Giỏ Hàng</button>
-            </form>
-        </div>
-
-        {{-- Nút Thanh Toán --}}
-        <div class="text-end">
-            <a href="" class="btn btn-success">Tiến Hành Thanh Toán</a>
-        </div>
-    @else
-        <div class="alert alert-info">
-            Giỏ hàng của bạn đang trống.
-        </div>
-        <a href="" class="btn btn-primary">Tiếp Tục Mua Sắm</a>
-    @endif
-</div>
-
-@include('user.layout.footer')
+             </table>
+         </div>
+     </div>
+ </div>
+ @include('user.layout.footer')

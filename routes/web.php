@@ -45,9 +45,9 @@ Route::get('/brand/{brand}', [ProductController::class, "brandshop"])->name('go.
 Route::get('/search', [ProductController::class, "search"])->name('find');
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 Route::post('/cart/add/{id}', [CartController::class, 'addToCart'])->name('cart.add');
-Route::post('/cart/update/{id}', [CartController::class, 'updateCart'])->name('cart.update');
-Route::delete('/cart/remove/{id}', [CartController::class, 'removeFromCart'])->name('cart.remove');
-Route::delete('/cart/clear', [CartController::class, 'clearCart'])->name('cart.clear');
+// Route::post('/cart/update/{id}', [CartController::class, 'updateCart'])->name('cart.update');
+// Route::delete('/cart/remove/{id}', [CartController::class, 'removeFromCart'])->name('cart.remove');
+// Route::delete('/cart/clear', [CartController::class, 'clearCart'])->name('cart.clear');
 });
 
 

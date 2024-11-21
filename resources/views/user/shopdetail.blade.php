@@ -64,15 +64,12 @@
 
                         <p class="mb-4">{{$pro->mo_ta}}</p>
                         <!-- //   <p class="mb-4">Susp endisse ultricies nisi vel quam suscipit. Sabertooth peacock flounder; chain pickerel hatchetfish, pencilfish snailfish</p> -->
-                        {{-- Form thêm vào giỏ hàng --}}
-            <form action="{{ route('cart.add', $pro->san_pham_id) }}" method="POST">
-                @csrf
-                <div class="mb-3">
-                    <label for="quantity" class="form-label">Số lượng:</label>
-                    <input type="number" id="quantity" name="quantity" value="1" min="1" class="form-control w-25">
-                </div>
-                <button type="submit" class="btn btn-primary">Thêm Vào Giỏ Hàng</button>
-            </form>
+                        <form action="{{ route('cart.add', $pro->san_pham_id) }}" method="POST">
+    @csrf
+    <label for="so_luong">Số lượng:</label>
+    <input type="number" id="so_luong" name="so_luong" value="1" min="1" max="{{ $pro->so_luong_kho }}" required>
+    <button type="submit">Thêm vào giỏ hàng</button>
+</form>
                     </div>
 
                     <div class="col-lg-12">
