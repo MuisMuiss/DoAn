@@ -51,25 +51,21 @@
 
 
                         <p class="mb-3">Loại sản phẩm: {{$pro->ten_loaisp}}</p>
-                        <p class="mb-3">Brand: {{$pro->ten_thuong_hieu}}</p>
-                        <h5 class="fw-bold mb-3">{{$pro->gia}} VND</h5>
-                        <div class="d-flex mb-4">
-                            <i class="fa fa-star text-secondary"></i>
-                            <i class="fa fa-star text-secondary"></i>
-                            <i class="fa fa-star text-secondary"></i>
-                            <i class="fa fa-star text-secondary"></i>
-                            <i class="fa fa-star"></i>
-                        </div>
-
+                        @foreach($brand_product as $keybrand => $brand)
+                        @if ($pro->thuong_hieu_id == $brand->thuong_hieu_id)
+                        <p class="mb-3">Brand: {{$brand->ten_thuong_hieu}}</p>
+                        @endif
+                        @endforeach
+                        <h5 class="fw-bold mb-3">{{number_format($pro->gia)}} VND</h5>
 
                         <p class="mb-4">{{$pro->mo_ta}}</p>
                         <!-- //   <p class="mb-4">Susp endisse ultricies nisi vel quam suscipit. Sabertooth peacock flounder; chain pickerel hatchetfish, pencilfish snailfish</p> -->
                         <form action="{{ route('cart.add', $pro->san_pham_id) }}" method="POST">
-    @csrf
-    <label for="so_luong">Số lượng:</label>
-    <input type="number" id="so_luong" name="so_luong" value="1" min="1" max="{{ $pro->so_luong_kho }}" required>
-    <button type="submit">Thêm vào giỏ hàng</button>
-</form>
+                            @csrf
+                            <label for="so_luong">Số lượng:</label>
+                            <input type="number" id="so_luong" name="so_luong" value="1" min="1" max="{{ $pro->so_luong_kho }}" required>
+                            <button type="submit">Thêm vào giỏ hàng</button>
+                        </form>
                     </div>
 
                     <div class="col-lg-12">
