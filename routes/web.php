@@ -49,6 +49,7 @@ Route::prefix('account')->group(function () {
     Route::get('/proid/{proid}',[ProductController::class,"productdetail"])->name('productdetail');
     Route::get('/cate/{cate}', [ProductController::class, "category"])->name('go.shop');
     Route::get('/brand/{brand}', [ProductController::class, "brandshop"])->name('go.brand');
+    
 
 });
 Route::get('contact', [HomeController::class, 'contact'])->name('contact');
@@ -180,6 +181,14 @@ Route::middleware('auth:admin')->group(function(){
     Route::post( '/updatectnhap/{id}', [ManageController::class, "updatectnhap"])->name('admin.updatectnhap');
     //
     Route::get('/deletectnhap/{id}', [ManageController::class, "deletectnhap"])->name('admin.deletectnhap');
+    //
+
+
+
+    Route::get('/nguoidung/search', [AdminController::class, 'searchND'])->name('nguoidung.search');
+    Route::get('/product/search', [Product_Controller::class, 'searchSP'])->name('product.search');
+    Route::get('/brand/search', [ManageController::class, 'searchTH'])->name('brand.search');
+    Route::get('/nhaphang/search', [ManageController::class, 'searchNH'])->name('import.search');
     
 });
 

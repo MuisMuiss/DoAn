@@ -19,4 +19,8 @@ class Import extends Model
     ];
     public $incrementing = false;
     protected $keyType = 'string';
+    public function brand()
+    {
+        return $this->belongsTo(Brand::class, 'thuong_hieu_nhap', 'thuong_hieu_id');
+    }
 }
