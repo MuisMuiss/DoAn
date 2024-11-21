@@ -29,4 +29,12 @@ class Detailimport extends Model
             $type->id = $maxId > 0 ? $maxId + 1 : 1;  // Tăng lên 1
         });
     }
+    public function sanPham()
+    {
+        return $this->belongsTo(Product::class, 'san_pham_id', 'san_pham_id');
+    }
+    public function brand()
+    {
+        return $this->belongsTo(Brand::class, 'thuong_hieu_id', 'thuong_hieu_id');
+    }
 }

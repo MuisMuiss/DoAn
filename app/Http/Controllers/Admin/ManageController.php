@@ -361,5 +361,25 @@ class ManageController extends Controller
         $ct_nhap->delete();
         return redirect()->back()->with('success', 'Xóa loại chi tiết nhập hàng thành công');
     }
+    public function searchTH(Request $request)
+    {
+        $keyword = $request->input('keyword');
+        $brand = Brand::where('ten_thuong_hieu', 'LIKE', "%$keyword%")
+            ->orWhere('mo_ta', 'LIKE', "%$keyword%")
+            ->paginate(5);
 
+        return view('admin.brand', compact('brand', 'keyword'));
+    }
+    public function searchNH(Request $request)
+    {
+        $keyword = $request->input('keyword');
+        $nhaphang = Import::with(['brand'])
+        ->where('nhap_hang_id', 'LIKE', "%$keyword%")
+        ->orWhereHas('brand', function ($query) use ($keyword) {
+            $query->where('ten_thuong_hieu', 'LIKE', "%$keyword%");
+        })
+        ->paginate(5);
+
+        return view('admin.nhaphang.import', compact('keyword','nhaphang'));
+    }
 }

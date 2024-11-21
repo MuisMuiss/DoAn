@@ -185,4 +185,15 @@ class Product_Controller extends Controller
         return redirect()->back()->with('no','Đã xảy ra lỗi, vui lòng thử lại');
 
     }
+    public function searchSP(Request $request)
+    {
+        $keyword = $request->input('keyword');
+        $cate_product= DB::table ('loai_sp')->get();
+        $brand_product= DB::table ('thuong_hieu')->get();
+        $product = Product::where('ten_san_pham', 'LIKE', "%$keyword%")
+            ->orWhere('gia', 'LIKE', "%$keyword%")
+            ->paginate(5);
+
+        return view('admin.product', compact('product', 'keyword','cate_product','brand_product'));
+    }
 }

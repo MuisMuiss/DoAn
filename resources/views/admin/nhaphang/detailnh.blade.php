@@ -23,11 +23,6 @@
         <div class="card-body">
             <div class="table-responsive">
                 <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
-                    <div class="col-sm-12 col-md-6" style="max-width: 15%">
-                        <div id="dataTable_filter" class="dataTables_filter"><label>Search:<input type="search"
-                                    class="form-control form-control-sm" placeholder=""
-                                    aria-controls="dataTable"></label></div>
-                    </div>
                     <div class="row">
                         <div class="col-sm-12">
                             <table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0"
