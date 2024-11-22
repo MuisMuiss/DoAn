@@ -69,7 +69,7 @@
                 </button>
                 <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
                     <div class="navbar-nav" style="margin-left: 10%">
-                        <a href="{{ route('index') }}" class="nav-item nav-link active">Home</a>
+                        <a href="{{ route('index') }}" class="nav-item nav-link">Home</a>
                         <div class="nav-item dropdown">
                             <a href="{{ route('shopsua') }}" class="nav-link dropdown-toggle">Sữa</a>
                             <div class="dropdown-menu m-0 bg-secondary rounded-0">
