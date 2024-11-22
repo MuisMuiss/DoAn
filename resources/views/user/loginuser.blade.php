@@ -103,16 +103,14 @@
                         <a href="{{route('contact')}}" class="nav-item nav-link">Liên hệ</a>
                     </div>
                     <div class="d-flex m-3 me-0">
-
-                        {{-- <input class="form-control border-2 border-secondary w-75 py-3 px-4 rounded-pill" type="text" placeholder="Search" fdprocessedid="2yz9ui">
-                                <button class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fas fa-search text-primary"></i></button> --}}
                         <div class="position-relative" style="margin-right: 10em">
+                            <form method="GET" action="{{route('find')}}">
                             <input class="form-control border-2 border-secondary rounded-pill" style="width: 140%"
-                                type="text" placeholder="Search" fdprocessedid="wkib7">
-                            <button type="submit"
+                                type="text" name="key" placeholder="Nhập tên sản phẩm cần tìm" fdprocessedid="wkib7">
+                            <button  type="submit"
                                 class="btn btn-search border-2 border-secondary position-absolute rounded-pill text-white h-100"
                                 style="top: 0; left:140%"><i class="fas fa-search text-primary"></i></button>
-
+                            </form>
                         </div>
                         <a href="cart.html" class="position-relative me-4 my-auto">
                             <i class="fa fa-shopping-bag fa-2x"></i>
@@ -188,17 +186,27 @@
                         placeholder="Enter Email Address..."  id="email" name="email" required>
                     </div>
                     <div class="form-group">
-                        <label for="">Mật khẩu:</label>
+                        <label for="mat_khau">Mật khẩu:</label>
                         <input type="password" class="form-control form-control-user" placeholder="Mật khẩu"
-                            name="mat_khau" required>
+                            name="mat_khau" id="mat_khau" required>
                     </div>
                     <div class="form-group">
                         <div class="custom-control custom-checkbox small">
-                            <input type="checkbox" class="custom-control-input" id="customCheck">
-                            <label class="custom-control-label" for="customCheck">Remember Me</label>
+                            <input type="checkbox" class="custom-control-input" id="customCheck" onclick="togglePassword()">
+                            <label class="custom-control-label" for="customCheck">Hiện mật khẩu</label>
                         </div>
                     </div>
-
+                    <script>
+                        function togglePassword() {
+                            const passwordInput = document.getElementById('mat_khau');
+                            const checkBox = document.getElementById('customCheck');
+                            if (checkBox.checked) {
+                                passwordInput.type = "text";
+                            } else {
+                                passwordInput.type = "password";
+                            }
+                        }
+                    </script>
                     <button class="btn btn-primary btn-user btn-block" type="submit">Đăng nhập</button>
                     <hr>
                     <a href="homeadmin" class="btn btn-google btn-user btn-block">

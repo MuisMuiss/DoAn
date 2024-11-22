@@ -43,8 +43,9 @@
 
                             <div class="form-group mb-3">
                                 <label for="">Mô tả:</label>
+                                <textarea name="mo_ta" id="editor" class="form-control" placeholder="Nhập mô tả..."></textarea>
                                 {{-- <input type="text" name="mo_ta" id="" class="form-control" value="{{old('mo_ta')}}"> --}}
-                                <textarea name="mo_ta" id="editor" class="form-control description" required placeholder="...">{{old('mo_ta')}}</textarea>  
+                                {{-- <textarea name="mo_ta" id="editor" class="form-control description" required placeholder="...">{{old('mo_ta')}}</textarea>   --}}
                                 @error('mo_ta')
                                     <span class="text-danger">{{$message}}</span>
                                 @enderror

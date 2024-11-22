@@ -4,7 +4,7 @@
 
     <!-- Page Heading -->
     <h1 class="h3 mb-2 text-gray-800">Quản lý nhập hàng</h1>
-    <a href="{{route('inport.add')}}" class="btn btn-success btn-icon-split">
+    <a href="{{ route('inport.add') }}" class="btn btn-success btn-icon-split">
         <span class="icon text-white-50">
             <i class="fas fa-plus"></i>
         </span>
@@ -58,60 +58,64 @@
                                             <td colspan="5">Không tìm thấy.</td>
                                         </tr>
                                     @else
-                                    @foreach ($nhaphang as $item)
-                                    <tr class="odd">
-                                        <td>{{$item->nhap_hang_id}}</td>
-                                        {{-- @foreach ($brand as $keybrand => $br)
+                                        @foreach ($nhaphang as $item)
+                                            <tr class="odd">
+                                                <td>{{ $item->nhap_hang_id }}</td>
+                                                {{-- @foreach ($brand as $keybrand => $br)
                                                 @if ($item->thuong_hieu_nhap == $br->thuong_hieu_id)
                                                     <td>{{ $br->ten_thuong_hieu }}</td>
                                                 @endif
                                             @endforeach --}}
-                                        <td>{{$item->brand->ten_thuong_hieu ?? 'Không xác định'}}</td>
-                                        <td>{{$item->ngay_nhap}}</td>
-                                        <td>{{number_format($item->tong_tien, 0, ',', '.')}} VNĐ</td>
-                                        <td>
-                                            <div style="display: flex; justify-content: center; align-items: center;">
-                                                <a href="{{ route('admin.editnhap', ['nhap_hang_id' => $item->nhap_hang_id]) }}"
-                                                    class="btn btn-warning btn-circle btn-sm"
-                                                    style=" margin-right: 10px;">
-                                                    <i class="fas fa-fw fa-wrench"></i>
-                                                </a>
-                                                <a href="{{ route('ctimport.all', ['nhap_hang_id' => $item->nhap_hang_id]) }}"
-                                                    class="btn btn-success btn-circle btn-sm"
-                                                    style=" margin-right: 10px;">
-                                                    <i class="fas fa-fw fa-pen"></i>
-                                                </a>
-                                                <a href="{{ route('admin.deletenhap', ['nhap_hang_id' => $item->nhap_hang_id]) }}"
-                                                    class="btn btn-danger btn-circle btn-sm"data-toggle="modal"
-                                                    data-target="#deleteModal">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <i class="fas fa-trash"></i>
-                                                </a>
+                                                <td>{{ $item->brand->ten_thuong_hieu ?? 'Không xác định' }}</td>
+                                                <td>{{ $item->ngay_nhap }}</td>
+                                                <td>{{ number_format($item->tong_tien, 0, ',', '.') }} VNĐ</td>
+                                                <td>
+                                                    <div
+                                                        style="display: flex; justify-content: center; align-items: center;">
+                                                        <a href="{{ route('admin.editnhap', ['nhap_hang_id' => $item->nhap_hang_id]) }}"
+                                                            class="btn btn-warning btn-circle btn-sm"
+                                                            style=" margin-right: 10px;">
+                                                            <i class="fas fa-fw fa-wrench"></i>
+                                                        </a>
+                                                        <a href="{{ route('ctimport.all', ['nhap_hang_id' => $item->nhap_hang_id]) }}"
+                                                            class="btn btn-success btn-circle btn-sm"
+                                                            style=" margin-right: 10px;">
+                                                            <i class="fas fa-fw fa-pen"></i>
+                                                        </a>
+                                                        <a href="{{ route('admin.deletenhap', ['nhap_hang_id' => $item->nhap_hang_id]) }}"
+                                                            class="btn btn-danger btn-circle btn-sm"data-toggle="modal"
+                                                            data-target="#deleteModal">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <i class="fas fa-trash"></i>
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <!-- Delete Modal-->
+                                            <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog"
+                                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" style="color: red;"
+                                                                id="exampleModalLabel">Thông báo!!!</h5>
+                                                            <button class="close" type="button"
+                                                                data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">×</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">Bạn chắc chắn có muốn xóa không</div>
+                                                        <div class="modal-footer">
+                                                            <button class="btn btn-secondary" type="button"
+                                                                data-dismiss="modal">Cancel</button>
+                                                            <a class="btn btn-danger"
+                                                                href="{{ route('admin.deletenhap', ['nhap_hang_id' => $item->nhap_hang_id]) }}">Detele</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </td>
-                                    </tr>
-                                    <!-- Delete Modal-->
-<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-aria-hidden="true">
-<div class="modal-dialog" role="document">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" style="color: red;" id="exampleModalLabel">Thông báo!!!</h5>
-            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">×</span>
-            </button>
-        </div>
-        <div class="modal-body">Bạn chắc chắn có muốn xóa không</div>
-        <div class="modal-footer">
-            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-            <a class="btn btn-danger"
-                href="{{ route('admin.deletenhap', ['nhap_hang_id' => $item->nhap_hang_id]) }}">Detele</a>
-        </div>
-    </div>
-</div>
-</div>
-                                    @endforeach
+                                        @endforeach
                                     @endif
                                 </tbody>
                             </table>
@@ -125,7 +129,7 @@ aria-hidden="true">
                         <div class="col-sm-12 col-md-7">
                             <div class="dataTables_paginate paging_simple_numbers">
                                 @if ($nhaphang->hasPages())
-                                {{ $nhaphang->appends(['keyword' => request('keyword')])->links() }}
+                                    {{ $nhaphang->appends(['keyword' => request('keyword')])->links() }}
                                 @else
                                     <ul class="pagination">
                                         <li class="paginate_button page-item previous disabled"

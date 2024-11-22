@@ -74,11 +74,11 @@
                             <a href="{{ route('shopsua') }}" class="nav-link dropdown-toggle">Sữa</a>
                             <div class="dropdown-menu m-0 bg-secondary rounded-0">
                                 @foreach ($cate_product as $cate)
-                                @if ($cate->danh_muc_id == 1)
-                                <a href="{{route('go.shop',$cate->loai_sp_id)}}" class="dropdown-item">
-                                    <option value=" ">{{ $cate->ten_loaisp }}</option>
-                                </a>
-                                @endif
+                                    @if ($cate->danh_muc_id == 1)
+                                        <a href="{{ route('go.shop', $cate->loai_sp_id) }}" class="dropdown-item">
+                                            <option value=" ">{{ $cate->ten_loaisp }}</option>
+                                        </a>
+                                    @endif
                                 @endforeach
                             </div>
                         </div>
@@ -86,38 +86,42 @@
                             <a href="{{ route('shopta') }}" class="nav-link dropdown-toggle">Tã</a>
                             <div class="dropdown-menu m-0 bg-secondary rounded-0">
                                 @foreach ($cate_product as $cate)
-                                @if ($cate->danh_muc_id == 2)
-                                <a href="{{route('go.shop',$cate->loai_sp_id)}}" class="dropdown-item">
-                                    <option value=" ">{{ $cate->ten_loaisp }}</option>
-                                </a>
-                                @endif
+                                    @if ($cate->danh_muc_id == 2)
+                                        <a href="{{ route('go.shop', $cate->loai_sp_id) }}" class="dropdown-item">
+                                            <option value=" ">{{ $cate->ten_loaisp }}</option>
+                                        </a>
+                                    @endif
                                 @endforeach
                             </div>
                         </div>
-                        <a href="{{route('info')}}" class="nav-item nav-link">Thông tin</a>
-                        <a href="{{route('contact')}}" class="nav-item nav-link">Liên hệ</a>
+                        <a href="{{ route('info') }}" class="nav-item nav-link">Thông tin</a>
+                        <a href="{{ route('contact') }}" class="nav-item nav-link">Liên hệ</a>
                     </div>
                     <div class="d-flex m-3 me-0">
-
-                        {{-- <input class="form-control border-2 border-secondary w-75 py-3 px-4 rounded-pill" type="text" placeholder="Search" fdprocessedid="2yz9ui">
-                                <button class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fas fa-search text-primary"></i></button> --}}
                         <div class="position-relative" style="margin-right: 10em">
-                            <input class="form-control border-2 border-secondary rounded-pill" style="width: 140%"
-                                type="text" placeholder="Search" fdprocessedid="wkib7">
-                            <button type="submit"
-                                class="btn btn-search border-2 border-secondary position-absolute rounded-pill text-white h-100"
-                                style="top: 0; left:140%"><i class="fas fa-search text-primary"></i></button>
-
+                            <form method="GET" action="{{ route('find') }}">
+                                <input class="form-control border-2 border-secondary rounded-pill" style="width: 140%"
+                                    type="text" name="key" placeholder="Nhập tên sản phẩm cần tìm"
+                                    fdprocessedid="wkib7">
+                                <button type="submit"
+                                    class="btn btn-search border-2 border-secondary position-absolute rounded-pill text-white h-100"
+                                    style="top: 0; left:140%"><i class="fas fa-search text-primary"></i></button>
+                            </form>
                         </div>
-                        <a href="cart.html" class="position-relative me-4 my-auto">
+                        <a href="{{ route('cart.index') }}" class="position-relative me-4">
                             <i class="fa fa-shopping-bag fa-2x"></i>
-                            <span
-                                class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1"
-                                style="top: -5px; left: 15px; height: 20px; min-width: 20px;">3</span>
+                            {{-- @if ($cartCount > 0)
+                                <span
+                                    class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1"
+                                    style="top: -5px; left: 15px; height: 20px; min-width: 20px;">
+                                    {{ $cartCount }}
+                                </span>
+                            @endif --}}
                         </a>
                         <div class="nav-item dropdown">
                             @if (Auth::check())
-                                <a href="{{ route('accout.view', ['nguoi_dung_id' => Auth::id()]) }}" onclick="showContent(this)">
+                                <a href="{{ route('accout.view', ['nguoi_dung_id' => Auth::id()]) }}"
+                                    onclick="showContent(this)">
                                     <span class="mr-2 d-none d-lg-inline text-gray-600 small">Hi,
                                         {{ Auth::user()->ho_ten }}</span>
                                     <img class="img-profile"

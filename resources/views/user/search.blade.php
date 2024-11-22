@@ -20,23 +20,15 @@
 <!-- Modal Search End -->
 <!-- Single Page Header start -->
 <div class="container-fluid page-header py-5">
-
-    <h1 class="text-center text-white display-6">Thương hiệu </h1>
-
-    <ol class="breadcrumb justify-content-center ">
-        <li class="breadcrumb-item active text-white"><a style=" color: #fff;" href="#">Home</a></li>
-        <li class="breadcrumb-item active text-white"><a style=" color: #fff;" href="#">Pages</a></li>
-        <li class="breadcrumb-item active text-white">Shop</li>
-    </ol>
+    <h1 class="text-center text-white display-6">Kết quả tìm kiếm</h1>
 </div>
-
 <!-- Single Page Header End -->
 <!-- Milk Shop Start-->
 <div class="container-fluid fruite py-5">
     <div class="container py-5">
-        @foreach($brand_shops as $brand)
-        <h1 class="mb-4">Thương Hiệu: {{$brand->ten_thuong_hieu}}</h1>
-        @endforeach
+      
+        <h1 class="mb-4"><a  href="{{ route('index') }}" >Home . </a>Tìm kiếm</h1>
+    
         <div class="row g-4">
             <div class="col-lg-12">
                 <div class="row g-4">
@@ -60,16 +52,24 @@
                         <div class="row g-4">
                             <div class="col-lg-12">
                                 <div class="mb-3">
+
                                     <ul class="list-unstyled fruite-categorie">
                                         <li>
                                             @foreach ($cate_product as $cate)
+                                            @if($cate->danh_muc_id==1)
+
                                             <div class="d-flex justify-content-between fruite-name">
                                                 <a href="{{route('go.shop',$cate->loai_sp_id)}}"><i
                                                         class="fas fa-apple-alt me-2"></i>{{ $cate->ten_loaisp }}</a>
                                                 <span>//</span>
                                             </div>
+
+                                            @endif
+
+
                                             @endforeach
                                         </li>
+
                                     </ul>
                                 </div>
                             </div>
@@ -87,31 +87,28 @@
                                 <div class="mb-3">
                                     <h4>Thương hiệu</h4>
                                     @foreach ($brand_product as $brand)
+
+
                                     <div class="d-flex justify-content-between fruite-name">
                                         <a href="{{route('go.brand',$brand->thuong_hieu_id)}}"><i
                                                 class="fas fa-apple-alt me-2"></i>{{ $brand->ten_thuong_hieu }}</a>
                                         <span>//</span>
                                     </div>
+
+
+
+
                                     @endforeach
 
                                 </div>
                             </div>
-                            @include('user.productmoi')
-                            <div class="col-lg-12">
-                                <div class="position-relative">
-                                    <img src="assets/user/img/banner-fruits.jpg" class="img-fluid w-100 rounded"
-                                        alt="">
-                                    <div class="position-absolute"
-                                        style="top: 50%; right: 10px; transform: translateY(-50%);">
-                                        <h3 class="text-secondary fw-bold">Fresh <br> Fruits <br> Banner</h3>
-                                    </div>
-                                </div>
-                            </div>
+                       
                         </div>
                     </div>
                     <div class="col-lg-9">
                         <div class="row g-4 justify-content-center">
                         @include('user.product')
+
                             <div class="col-12">
                                 <div class="pagination d-flex justify-content-center mt-5">
                                     <a href="#" class="rounded">&laquo;</a>
@@ -129,6 +126,7 @@
                 </div>
             </div>
         </div>
+        @include('user.productmoi')
     </div>
 </div>
 @include('user.layout.footer')

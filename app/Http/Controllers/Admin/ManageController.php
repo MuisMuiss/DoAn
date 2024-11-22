@@ -9,7 +9,10 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Brand;
 use App\Models\Detailimport;
 use App\Models\Import;
+use App\Models\nguoiDung;
 use App\Models\NhapHang;
+use App\Models\Order;
+use App\Models\OrderItem;
 use App\Models\Product;
 use App\Models\ProductType;
 
@@ -190,8 +193,75 @@ class ManageController extends Controller
     //Quản lý đơn hàng
     public function vieworder()
     {
-        return view('admin.order');
+        $order = Order::paginate(5);
+        
+        $user = nguoiDung::all();
+        $order_item = OrderItem::all();
+        return view('admin.donhang.order', compact('order', 'user', 'order_item'));
     }
+    public function editorder($don_hang_id)
+    {
+        $order = Order::find($don_hang_id);
+        $user = nguoiDung::all();
+        $order_item = OrderItem::all();
+        return view('admin.donhang.editorder', compact('order', 'user', 'order_item'));;
+    }
+    public function updateorder(Request $request, $don_hang_id)
+    {
+        $messages = [
+            'nguoi_dung_id.required' => 'Vui lòng chọn người dùng.',
+            'nguoi_dung_id.exists' => 'Người dùng không tồn tại.',
+            'trang_thai_don_hang.required' => 'Vui lòng chọn trạng thái đơn hàng.',
+            'phuong_thuc_thanh_toan.required' => 'Vui lòng chọn phương thức thanh toán.',
+        ];
+        $validatedData = $request->validate([
+            'nguoi_dung_id' => 'required|exists:nguoi_dungs,nguoi_dung_id',
+            'trang_thai_don_hang' => 'required',
+            'phuong_thuc_thanh_toan' => 'required',
+        ], $messages);
+        $order = Order::find($don_hang_id);
+
+        if (!$order) {
+            return redirect()->back()->withErrors('Đơn hàng không tồn tại.');
+        }
+        $order->nguoi_dung_id = $request->nguoi_dung_id;
+        $order->trang_thai_don_hang = $request->trang_thai_don_hang ?? 'dang_xu_ly';
+        $order->phuong_thuc_thanh_toan = $request->phuong_thuc_thanh_toan ?? 'COD';
+        
+        $order->save();
+        return redirect()->back()->with('success', 'Cập nhật đơn hàng thành công');
+    }
+    public function deleteorder($don_hang_id)
+    {
+        $order = Order::find($don_hang_id);
+
+        $order->delete();
+        return redirect()->back()->with('success', 'Xóa loại sản phẩm thành công');
+    }
+    public function viewctorder($don_hang_id)
+    {
+        $product = Product::all();
+    
+        $order = Order::find($don_hang_id);
+        if (!$order) {
+            return redirect()->route('ctorder.all')->with('error', 'Không tìm thấy chi tiết nhập hàng');
+        }
+        $ct_order = DB::table('chi_tiet_don_hang')
+            ->where('don_hang_id', $don_hang_id)
+            ->paginate(5);
+        // Trả về view với dữ liệu
+        return view('admin.donhang.ctorder', compact('order', 'ct_order', 'product',));
+    }
+
+
+
+
+
+
+
+
+
+    //
     //Quản lý nhập hàng
     public function viewnhap()
     {
@@ -199,28 +269,28 @@ class ManageController extends Controller
         $brand = Brand::all();
         return view('admin.nhaphang.import', compact('nhaphang', 'brand'));
     }
-    //
     public function themnhap()
     {
         $brand = Brand::all();
         $nhaphang = Import::all();
         return view('admin.nhaphang.addnh', compact('nhaphang', 'brand'));
     }
-    public function addnhap(Request $request){
+    public function addnhap(Request $request)
+    {
         $messages = [
             'nhap_hang_id.required' => 'Mã nhập không được để trống.',
             'nhap_hang_id.unique' => 'Mã nhập đã tồn tại.',
             'ngay_nhap.required' => 'Ngày nhập không được để trống.',
             'ngay_nhap.date' => 'Ngày nhập phải là một ngày hợp lệ.'
         ];
-        
+
         $validatedData = $request->validate([
             'nhap_hang_id' => 'required|unique:nhap_hang,nhap_hang_id',
             'ngay_nhap' => 'required|date',
         ], $messages);
         $import = new Import();
         $import->nhap_hang_id = $request->nhap_hang_id;
-        $import->thuong_hieu_nhap=$request->thuong_hieu_nhap ?? 1;
+        $import->thuong_hieu_nhap = $request->thuong_hieu_nhap ?? 1;
         $import->ngay_nhap = $request->ngay_nhap;
         $import->tong_tien = $request->tong_tien ?? 0;
         $import->save();
@@ -242,14 +312,14 @@ class ManageController extends Controller
             'ngay_nhap.required' => 'Ngày nhập không được để trống.',
             'ngay_nhap.date' => 'Ngày nhập phải là một ngày hợp lệ.'
         ];
-        
+
         $validatedData = $request->validate([
             // 'nhap_hang_id' => 'required|unique:nhap_hang,nhap_hang_id,' . $nhap_hang_id . ',nhap_hang_id',
             'ngay_nhap' => 'required|date',
         ], $messages);
         $nhaphang = Import::find($nhap_hang_id);
         $nhaphang->nhap_hang_id = $request->nhap_hang_id;
-        $nhaphang->thuong_hieu_nhap=$request->thuong_hieu_nhap ?? 1;
+        $nhaphang->thuong_hieu_nhap = $request->thuong_hieu_nhap ?? 1;
         $nhaphang->ngay_nhap = $request->ngay_nhap;
         $nhaphang->tong_tien = $request->tong_tien ?? 0;
         $nhaphang->save();
@@ -276,7 +346,7 @@ class ManageController extends Controller
     //Chi tiết đơn hàng
     public function viewctnhap($nhap_hang_id)
     {
-        $product= DB::table ('san_pham')->get();
+        $product = DB::table('san_pham')->get();
         $brand = DB::table('thuong_hieu')->orderByDesc('thuong_hieu_id')->get();
         $nhaphang = Import::find($nhap_hang_id);
         if (!$nhaphang) {
@@ -286,13 +356,13 @@ class ManageController extends Controller
             ->where('nhap_hang_id', $nhap_hang_id)
             ->paginate(5);
         // Trả về view với dữ liệu
-        return view('admin.nhaphang.detailnh', compact('nhaphang','ct_nhap','product','brand'));
+        return view('admin.nhaphang.detailnh', compact('nhaphang', 'ct_nhap', 'product', 'brand'));
     }
     public function themctnhap($nhap_hang_id)
     {
         $nhaphang = Import::find($nhap_hang_id);
         $brand = Brand::all();
-        
+
         $product = Product::all();
         return view('admin.nhaphang.addct', compact('nhaphang', 'brand', 'product'));
     }
@@ -306,7 +376,7 @@ class ManageController extends Controller
             'gia_nhap.numeric' => 'Giá nhập phải là một số hợp lệ.',
             'gia_nhap.min' => 'Giá nhập phải lớn hơn hoặc bằng 0.',
         ];
-        
+
         $validatedData = $request->validate([
             'nhap_hang_id' => 'required|exists:nhap_hang,nhap_hang_id', // Đảm bảo mã nhập hàng tồn tại
             'san_pham_id' => 'required|exists:san_pham,san_pham_id', // Đảm bảo mã sản phẩm tồn tại
@@ -322,8 +392,8 @@ class ManageController extends Controller
         $detail->gia_nhap = $request['gia_nhap'];
         $detail->save();
         return redirect()
-        ->route('ctimport.all', ['nhap_hang_id' => $request['nhap_hang_id']])
-        ->with('success', 'Thêm chi tiết nhập hàng thành công!');
+            ->route('ctimport.all', ['nhap_hang_id' => $request['nhap_hang_id']])
+            ->with('success', 'Thêm chi tiết nhập hàng thành công!');
     }
     public function editctnhap($id)
     {
@@ -342,7 +412,7 @@ class ManageController extends Controller
             'gia_nhap.numeric' => 'Giá nhập phải là một số hợp lệ.',
             'gia_nhap.min' => 'Giá nhập phải lớn hơn hoặc bằng 0.',
         ];
-        
+
         $validatedData = $request->validate([
             'so_luong' => 'required|integer|min:1', // Số lượng phải là số nguyên và lớn hơn 0
             'gia_nhap' => 'required|numeric|min:0',
@@ -370,16 +440,31 @@ class ManageController extends Controller
 
         return view('admin.brand', compact('brand', 'keyword'));
     }
+    public function searchDH(Request $request)
+    {
+        $keyword = $request->input('keyword');
+        $user = nguoiDung::all();
+        $order = Order::with('User')
+        ->where('don_hang_id', 'LIKE', "%$keyword%")
+        ->orWhere('trang_thai_don_hang', 'LIKE', "%$keyword%")
+        ->orWhere('phuong_thuc_thanh_toan', 'LIKE', "%$keyword%")
+        ->orWhereHas('User', function ($query) use ($keyword) {
+            $query->where('ho_ten', 'LIKE', "%$keyword%");
+        })
+        ->paginate(5);
+
+        return view('admin.donhang.order', compact('keyword', 'order','user'));
+    }
     public function searchNH(Request $request)
     {
         $keyword = $request->input('keyword');
         $nhaphang = Import::with(['brand'])
-        ->where('nhap_hang_id', 'LIKE', "%$keyword%")
-        ->orWhereHas('brand', function ($query) use ($keyword) {
-            $query->where('ten_thuong_hieu', 'LIKE', "%$keyword%");
-        })
-        ->paginate(5);
+            ->where('nhap_hang_id', 'LIKE', "%$keyword%")
+            ->orWhereHas('brand', function ($query) use ($keyword) {
+                $query->where('ten_thuong_hieu', 'LIKE', "%$keyword%");
+            })
+            ->paginate(5);
 
-        return view('admin.nhaphang.import', compact('keyword','nhaphang'));
+        return view('admin.nhaphang.import', compact('keyword', 'nhaphang'));
     }
 }

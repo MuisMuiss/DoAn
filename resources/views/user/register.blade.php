@@ -103,16 +103,14 @@
                         <a href="contact.html" class="nav-item nav-link">Contact</a>
                     </div>
                     <div class="d-flex m-3 me-0">
-
-                        {{-- <input class="form-control border-2 border-secondary w-75 py-3 px-4 rounded-pill" type="text" placeholder="Search" fdprocessedid="2yz9ui">
-                                <button class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fas fa-search text-primary"></i></button> --}}
                         <div class="position-relative" style="margin-right: 10em">
+                            <form method="GET" action="{{route('find')}}">
                             <input class="form-control border-2 border-secondary rounded-pill" style="width: 140%"
-                                type="text" placeholder="Search" fdprocessedid="wkib7">
-                            <button type="submit"
+                                type="text" name="key" placeholder="Nhập tên sản phẩm cần tìm" fdprocessedid="wkib7">
+                            <button  type="submit"
                                 class="btn btn-search border-2 border-secondary position-absolute rounded-pill text-white h-100"
                                 style="top: 0; left:140%"><i class="fas fa-search text-primary"></i></button>
-
+                            </form>
                         </div>
                         <a href="cart.html" class="position-relative me-4 my-auto">
                             <i class="fa fa-shopping-bag fa-2x"></i>
