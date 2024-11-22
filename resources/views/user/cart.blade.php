@@ -87,10 +87,10 @@
                             </form>
                         </td>
                         <td>
-                            <form action="{{ route('cart.checkout') }}" method="POST">
+                            <a href="{{ route('cart.checkout') }}">
                                 @csrf
                                 <button type="submit" class="btn btn-primary">Thanh toán</button>
-                            </form>
+                            </a>
                         </td>
                     </tr>
                 </tbody>

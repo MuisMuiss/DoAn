@@ -58,7 +58,8 @@ Route::prefix('account')->group(function () {
     Route::post('/cart/update/{id}', [CartController::class, 'update'])->name('cart.update');
     Route::get('/cart/remove/{id}', [CartController::class, 'delete'])->name('cart.delete');
     Route::get('/cart/clear', [CartController::class, 'clear'])->name('cart.clear');
-    Route::post('/cart/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
+    Route::get('/cart/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
+    Route::post('/cart/checkout', [CartController::class, 'processCheckout'])->name('checkout');
 });
 Route::get('contact', [HomeController::class, 'contact'])->name('contact');
 Route::get('info', [HomeController::class, 'info'])->name('info');
@@ -166,9 +167,18 @@ Route::middleware('auth:admin')->group(function(){
     Route::get('/deletetype/{loai_sp_id}', [ManageController::class, "deletetype"])->name('admin.deletetype');
 
     //Đơn hàng
-    Route::get('/alloder',[ManageController::class,"vieworder"])->name('order.all');
+    Route::get('/allorder',[ManageController::class,"vieworder"])->name('order.all');
+    // Cập nhật đơn hàng
+    Route::get( '/editorder/{don_hang_id}', [ManageController::class, "editorder"])->name('admin.editorder');
+    Route::post( '/updateorder/{don_hang_id}', [ManageController::class, "updateorder"])->name('admin.updateorder');
+    //Xóa đơn hàng
+    Route::get('/deleteorder/{don_hang_id}', [ManageController::class, "deleteorder"])->name('admin.deleteorder');
+    //chi tiết đơn hàng
+    Route::get('/allctorder/{don_hang_id}',[ManageController::class,"viewctorder"])->name('ctorder.all');
 
-    
+
+
+
     //Nhập hàng 
     Route::get('/allnhap',[ManageController::class,"viewnhap"])->name('inport.all');
     Route::get('/addnhap',[ManageController::class,"themnhap"])->name('inport.add');
@@ -196,6 +206,7 @@ Route::middleware('auth:admin')->group(function(){
     Route::get('/nguoidung/search', [AdminController::class, 'searchND'])->name('nguoidung.search');
     Route::get('/product/search', [Product_Controller::class, 'searchSP'])->name('product.search');
     Route::get('/brand/search', [ManageController::class, 'searchTH'])->name('brand.search');
+    Route::get('/donhang/search', [ManageController::class, 'searchDH'])->name('order.search');
     Route::get('/nhaphang/search', [ManageController::class, 'searchNH'])->name('import.search');
     
 });

@@ -1,20 +1,32 @@
 @include('admin.autth.head')
+@php
+    // Mảng trạng thái
+    $trang_thai = [
+        'dang_xu_ly' => 'Đang xử lý',
+        'dang_giao' => 'Đang giao',
+        'da_giao' => 'Đã giao',
+        'da_huy' => 'Đã hủy',
+    ];
+    $phuong_thuc = [
+        'COD' => 'Thanh toán khi nhận hàng',
+        'Online' => 'Thanh toán online',
+    ];
+@endphp
 <!-- Begin Page Content -->
 <div class="container-fluid">
 
     <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800">Quản lý nhập hàng</h1>
-    <a href="{{ route('inport.add') }}" class="btn btn-success btn-icon-split">
+    <h1 class="h3 mb-2 text-gray-800">Quản lý đơn hàng</h1>
+    {{-- <a href="{{ route('admin.themuser') }}" class="btn btn-success btn-icon-split">
         <span class="icon text-white-50">
             <i class="fas fa-plus"></i>
         </span>
-        <span class="text">Nhập hàng</span>
-    </a>
+    </a> --}}
     <hr>
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Bảng dữ liệu nhập hàng / Import datatable</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Bảng dữ liệu đơn hàng / Order datatable</h6>
         </div>
         @if (session('status'))
             <h5 class="alert alert-success">{{ session('status') }}</h5>
@@ -22,7 +34,7 @@
         <div class="card-body">
             <div class="table-responsive">
                 <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
-                    <form action="{{ route('import.search') }}" method="GET">
+                    <form action="{{ route('order.search') }}" method="GET">
                         <div id="dataTable_filter" class="dataTables_filter" style="max-width: 15%">
                             <label>Search:
                                 <input type="search" name="keyword" class="form-control form-control-sm"
@@ -46,54 +58,49 @@
                                         <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Salary: activate to sort column ascending" style="width: 116.512px;">Salary</th>
                                     </tr> -->
                                     <tr>
-                                        <th rowspan="1" colspan="1">Mã nhập hàng</th>
-                                        <th rowspan="1" colspan="1">Thương hiệu</th>
-                                        <th rowspan="1" colspan="1">Ngày nhập</th>
+                                        <th rowspan="1" colspan="1">Id</th>
+                                        <th rowspan="1" colspan="1">Họ và Tên</th>
+                                        <th rowspan="1" colspan="1">Trạng thái đơn hàng</th>
                                         <th rowspan="1" colspan="1">Tổng tiền</th>
+                                        <th rowspan="1" colspan="1">Ngày đặt</th>
+                                        <th rowspan="1" colspan="1">Phương thức thanh toán</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @if ($nhaphang->isEmpty())
+                                    @foreach ($order as $o)
                                         <tr>
-                                            <td colspan="5">Không tìm thấy.</td>
-                                        </tr>
-                                    @else
-                                        @foreach ($nhaphang as $item)
-                                            <tr class="odd">
-                                                <td>{{ $item->nhap_hang_id }}</td>
-                                                {{-- @foreach ($brand as $keybrand => $br)
-                                                @if ($item->thuong_hieu_nhap == $br->thuong_hieu_id)
-                                                    <td>{{ $br->ten_thuong_hieu }}</td>
+                                            <td>{{ $o->don_hang_id }}</td>
+                                            @foreach ($user as $keybrand => $nd)
+                                                @if ($o->nguoi_dung_id == $nd->nguoi_dung_id)
+                                                    <td>{{ $nd->ho_ten }}</td>
                                                 @endif
-                                            @endforeach --}}
-                                                <td>{{ $item->brand->ten_thuong_hieu ?? 'Không xác định' }}</td>
-                                                <td>{{ $item->ngay_nhap }}</td>
-                                                <td>{{ number_format($item->tong_tien, 0, ',', '.') }} VNĐ</td>
-                                                <td>
-                                                    <div
-                                                        style="display: flex; justify-content: center; align-items: center;">
-                                                        <a href="{{ route('admin.editnhap', ['nhap_hang_id' => $item->nhap_hang_id]) }}"
-                                                            class="btn btn-warning btn-circle btn-sm"
-                                                            style=" margin-right: 10px;">
-                                                            <i class="fas fa-fw fa-wrench"></i>
-                                                        </a>
-                                                        <a href="{{ route('ctimport.all', ['nhap_hang_id' => $item->nhap_hang_id]) }}"
-                                                            class="btn btn-success btn-circle btn-sm"
-                                                            style=" margin-right: 10px;">
-                                                            <i class="fas fa-fw fa-pen"></i>
-                                                        </a>
-                                                        <a href="{{ route('admin.deletenhap', ['nhap_hang_id' => $item->nhap_hang_id]) }}"
-                                                            class="btn btn-danger btn-circle btn-sm"data-toggle="modal"
-                                                            data-target="#deleteModal">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <i class="fas fa-trash"></i>
-                                                        </a>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <!-- Delete Modal-->
-                                            <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog"
+                                            @endforeach
+                                            <td>{{ $trang_thai[$o->trang_thai_don_hang] ?? 'Đang xử lý' }}</td>
+                                            <td>{{ number_format($o->tong_tien, 0, ',', '.') }} VNĐ</td>
+                                            <td>{{ $o->ngay_dat }}</td>
+                                            <td>{{ $phuong_thuc[$o->phuong_thuc_thanh_toan] ?? 'Thanh toán khi nhận hàng' }}</td>
+                                            <td>
+                                                <div
+                                                    style="display: flex; justify-content: center; align-items: center;">
+                                                    <a href="{{ route('admin.editorder', ['don_hang_id' => $o->don_hang_id]) }}" class="btn btn-warning btn-circle btn-sm"
+                                                        style=" margin-right: 10px;">
+                                                        <i class="fas fa-fw fa-wrench"></i>
+                                                    </a>
+                                                    <a href="{{ route('ctorder.all', ['don_hang_id' => $o->don_hang_id]) }}" class="btn btn-success btn-circle btn-sm"
+                                                        style=" margin-right: 10px;">
+                                                        <i class="fas fa-fw fa-pen"></i>
+                                                    </a>
+                                                    <a href="{{ route('admin.deleteorder', ['don_hang_id' => $o->don_hang_id]) }}"
+                                                        class="btn btn-danger btn-circle btn-sm"data-toggle="modal"
+                                                        data-target="#deleteModal">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <i class="fas fa-trash"></i>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog"
                                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog" role="document">
                                                     <div class="modal-content">
@@ -110,13 +117,12 @@
                                                             <button class="btn btn-secondary" type="button"
                                                                 data-dismiss="modal">Cancel</button>
                                                             <a class="btn btn-danger"
-                                                                href="{{ route('admin.deletenhap', ['nhap_hang_id' => $item->nhap_hang_id]) }}">Detele</a>
+                                                                href="{{ route('admin.deleteorder', ['don_hang_id' => $o->don_hang_id]) }}">Detele</a>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        @endforeach
-                                    @endif
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -128,8 +134,9 @@
                         </div>
                         <div class="col-sm-12 col-md-7">
                             <div class="dataTables_paginate paging_simple_numbers">
-                                @if ($nhaphang->hasPages())
-                                    {{ $nhaphang->appends(['keyword' => request('keyword')])->links() }}
+                                
+                                @if ($order->hasPages())
+                                    {{ $order->links() }}
                                 @else
                                     <ul class="pagination">
                                         <li class="paginate_button page-item previous disabled"
@@ -148,8 +155,6 @@
             </div>
         </div>
     </div>
-
 </div>
-
 <!-- End of Main Content -->
 @include('admin.autth.footer')
