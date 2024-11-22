@@ -98,8 +98,6 @@
                         <a href="{{route('contact')}}" class="nav-item nav-link">Liên hệ</a>
                     </div>
                     <div class="d-flex m-3 me-0">
-
-                       
                         <div class="position-relative" style="margin-right: 10em">
                             <form method="GET" action="{{route('find')}}">
                             <input class="form-control border-2 border-secondary rounded-pill" style="width: 140%"

@@ -56,7 +56,7 @@
                         <p class="mb-3">Brand: {{$brand->ten_thuong_hieu}}</p>
                         @endif
                         @endforeach
-                        <h5 class="fw-bold mb-3">{{number_format($pro->gia)}} VND</h5>
+                        <h5 class="fw-bold mb-3">{{number_format($pro->gia,0, ',', '.')}} VND</h5>
 
                        
                         <!-- //   <p class="mb-4">Susp endisse ultricies nisi vel quam suscipit. Sabertooth peacock flounder; chain pickerel hatchetfish, pencilfish snailfish</p> -->
@@ -64,7 +64,7 @@
                             @csrf
                             <label for="so_luong">Số lượng:</label>
                             <input type="number" id="so_luong" name="so_luong" value="1" min="1" max="{{ $pro->so_luong_kho }}" required>
-                            <button type="submit">Thêm vào giỏ hàng</button>
+                            <button type="submit" class="btn border border-secondary rounded-pill px-3 text-primary">Add to cart</button>
                         </form>
                     </div>
 

@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Models\nguoiDung;
+use App\Models\Product;
+use App\Models\Order;
+use App\Models\OrderItem;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\File;
@@ -224,10 +227,29 @@ class HomeController extends Controller
     }
     public function viewOrder()
     {
+        $order = Order::all();
+        $user = nguoiDung::all();
+        $order_item = OrderItem::all();
         $category = DB::table('danh_muc_san_pham')->get();
         $cate_product = DB::table('loai_sp')->get();
         $brand_product = DB::table('thuong_hieu')->get();
-        return view('user.taikhoan.order')->with('category', $category)->with('cate_product', $cate_product)->with('brand_product', $brand_product);
+        return view('user.taikhoan.order',compact('order','user','order_item','category','cate_product','brand_product'));
+    }
+    public function viewctOrder($don_hang_id)
+    {
+        $product = Product::all();
+        $category = DB::table('danh_muc_san_pham')->get();
+        $cate_product = DB::table('loai_sp')->get();
+        $brand_product = DB::table('thuong_hieu')->get();
+        $order = Order::find($don_hang_id);
+        if (!$order) {
+            return redirect()->route('ctorder.view')->with('error', 'Không tìm thấy chi tiết nhập hàng');
+        }
+        $ct_order = DB::table('chi_tiet_don_hang')
+            ->where('don_hang_id', $don_hang_id)
+            ->get();
+        // Trả về view với dữ liệu
+        return view('user.taikhoan.ctorder', compact('order', 'ct_order', 'product','category','cate_product','brand_product'));
     }
     public function viewChangepassword()
     {
@@ -272,4 +294,5 @@ class HomeController extends Controller
         $brand_product = DB::table('thuong_hieu')->get();
         return view('user.info')->with('product', $product)->with('category', $category)->with('cate_product', $cate_product)->with('brand_product', $brand_product);
     }
+
 }

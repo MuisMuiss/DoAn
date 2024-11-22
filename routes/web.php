@@ -46,6 +46,10 @@ Route::prefix('account')->group(function () {
     Route::get('profile/account/{nguoi_dung_id}', [HomeController::class, "viewAccout"])->name('accout.view');
     Route::post('profile/account/{nguoi_dung_id}/update', [HomeController::class, "updateAccout"])->name('accout.update');
     Route::get('profile/order', [HomeController::class, "viewOrder"])->name('order.view');
+    Route::get('profile/ctorder/{don_hang_id}', [HomeController::class, "viewctOrder"])->name('ctorder.view');
+
+
+    
     Route::get('profile/changepassword', [HomeController::class, "viewChangepassword"])->name('chpass.view');
     Route::post('/change_password', [HomeController::class, 'changePassword'])->name('change_password');
     Route::get('/proid/{proid}',[ProductController::class,"productdetail"])->name('productdetail');
@@ -60,6 +64,7 @@ Route::prefix('account')->group(function () {
     Route::get('/cart/clear', [CartController::class, 'clear'])->name('cart.clear');
     Route::get('/cart/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
     Route::post('/cart/checkout', [CartController::class, 'processCheckout'])->name('checkout');
+    
 });
 Route::get('contact', [HomeController::class, 'contact'])->name('contact');
 Route::get('info', [HomeController::class, 'info'])->name('info');
