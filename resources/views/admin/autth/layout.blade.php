@@ -11,26 +11,30 @@
 
     <title>MandD Admin 2</title>
 
-    <link href="{{asset('assets/admin/vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('assets/admin/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
-    <link href="{{asset('assets/admin/css/sb-admin-2.min.css')}}" rel="stylesheet">
-    <link href="{{asset('assets/admin/vendor/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
+    <link href="{{ asset('assets/admin/css/sb-admin-2.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/admin/vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
     <script src="https://cdn.ckeditor.com/ckeditor5/37.1.0/classic/ckeditor.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             ClassicEditor
-                .create(document.querySelector('#editor'), {
-                    removeFormat: {
-                        elements: 'p',
-                        attributes: false,
-                        styles: false
-                    }
+                .create(document.querySelector('#editor'))
+                .then(editor => {
+                    // Đồng bộ nội dung CKEditor vào textarea trước khi submit
+                    const form = document.querySelector('form');
+                    form.addEventListener('submit', function() {
+                        // Truy cập nội dung từ CKEditor và gán vào textarea
+                        const content = editor.getData();
+                        document.querySelector('textarea[name="mo_ta"]').value = content;
+                    });
                 })
+                .catch(error => {
+                    console.error('CKEditor error:', error);
+                });
         });
     </script>
-</script>
+    </script>
 </head>
-
-

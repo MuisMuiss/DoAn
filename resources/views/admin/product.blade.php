@@ -68,7 +68,7 @@
                                                         <td>{{ $cate->ten_loaisp }}</td>
                                                     @endif
                                                 @endforeach
-                                                <td>{{ $pro->gia, 0, ',', '.' }} VNĐ</td>
+                                                <td>{{ number_format($pro->gia, 0, ',', '.') }} VNĐ</td>
                                                 <td>{!! $pro->mo_ta !!}</td>
                                                 <td>{{ $pro->so_luong_kho }}</td>
                                                 @foreach ($brand_product as $keybrand => $brand)
