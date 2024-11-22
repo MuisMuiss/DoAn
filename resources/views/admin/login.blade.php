@@ -49,30 +49,34 @@
                                         <div class="form-group">
                                             <input type="email" class="form-control form-control-user"
                                                 id="exampleInputEmail" aria-describedby="emailHelp"
-                                                placeholder="Enter Email Address..."  id="email" name="email" required>
+                                                placeholder="Email"  id="email" name="email" required>
                                         </div>
+
                                         <div class="form-group">
-                                            <input type="password" class="form-control form-control-user" placeholder="Password" name="mat_khau" required>
-                                            {{-- <input type="password" class="form-control form-control-user"
-                                                id="exampleInputPassword" placeholder="Password" id="mat_khau" name="mau_khau" required> --}}
+                                            <input type="password" class="form-control form-control-user" placeholder="Mật khẩu"
+                                                name="mat_khau" id="mat_khau" required>
                                         </div>
                                         <div class="form-group">
                                             <div class="custom-control custom-checkbox small">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck">
-                                                <label class="custom-control-label" for="customCheck">Remember
-                                                    Me</label>
+                                                <input type="checkbox" class="custom-control-input" id="customCheck" onclick="togglePassword()">
+                                                <label class="custom-control-label" for="customCheck">Hiện mật khẩu</label>
                                             </div>
                                         </div>
+                                        <script>
+                                            function togglePassword() {
+                                                const passwordInput = document.getElementById('mat_khau');
+                                                const checkBox = document.getElementById('customCheck');
+                                                if (checkBox.checked) {
+                                                    passwordInput.type = "text";
+                                                } else {
+                                                    passwordInput.type = "password";
+                                                }
+                                            }
+                                        </script>
                                         {{-- <input class="btn btn-primary btn-user btn-block" type="submit" value="login" name="login"> --}}
                                         <button class="btn btn-primary btn-user btn-block" type="submit">Login</button>
                                     </form>
                                     <hr>
-                                    <div class="text-center">
-                                        <a class="small" href="forgot-password.html">Forgot Password?</a>
-                                    </div>
-                                    <div class="text-center">
-                                        <a class="small" href="register">Create an Account!</a>
-                                    </div>
                                 </div>
                             </div>
                         </div>

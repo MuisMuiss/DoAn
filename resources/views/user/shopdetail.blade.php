@@ -73,7 +73,7 @@
                             <div class="nav nav-tabs mb-3">
                                 <button class="nav-link active border-white border-bottom-0" type="button" role="tab"
                                     id="nav-about-tab" data-bs-toggle="tab" data-bs-target="#nav-about"
-                                    aria-controls="nav-about" aria-selected="true">Description</button>
+                                    aria-controls="nav-about" aria-selected="true">Mô tả sản phẩm</button>
                                
                             </div>
                         </nav>

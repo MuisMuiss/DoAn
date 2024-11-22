@@ -28,9 +28,9 @@ class CartController extends Controller
             $cartItems = Cart::where('nguoi_dung_id', $userId)->get();
 
             $product = DB::table('san_pham')->get();
+            $cartCount = count($cartItems);
 
-
-            return view('user.cart')->with('cartItems', $cartItems)->with('product', $product)->with('category', $category)->with('cate_product', $cate_product)->with('brand_product', $brand_product);
+            return view('user.cart',compact('cartItems', 'product', 'category', 'cate_product', 'brand_product','cartCount'));
         }
     }
 

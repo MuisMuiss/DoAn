@@ -186,17 +186,27 @@
                         placeholder="Enter Email Address..."  id="email" name="email" required>
                     </div>
                     <div class="form-group">
-                        <label for="">Mật khẩu:</label>
+                        <label for="mat_khau">Mật khẩu:</label>
                         <input type="password" class="form-control form-control-user" placeholder="Mật khẩu"
-                            name="mat_khau" required>
+                            name="mat_khau" id="mat_khau" required>
                     </div>
                     <div class="form-group">
                         <div class="custom-control custom-checkbox small">
-                            <input type="checkbox" class="custom-control-input" id="customCheck">
-                            <label class="custom-control-label" for="customCheck">Remember Me</label>
+                            <input type="checkbox" class="custom-control-input" id="customCheck" onclick="togglePassword()">
+                            <label class="custom-control-label" for="customCheck">Hiện mật khẩu</label>
                         </div>
                     </div>
-
+                    <script>
+                        function togglePassword() {
+                            const passwordInput = document.getElementById('mat_khau');
+                            const checkBox = document.getElementById('customCheck');
+                            if (checkBox.checked) {
+                                passwordInput.type = "text";
+                            } else {
+                                passwordInput.type = "password";
+                            }
+                        }
+                    </script>
                     <button class="btn btn-primary btn-user btn-block" type="submit">Đăng nhập</button>
                     <hr>
                     <a href="homeadmin" class="btn btn-google btn-user btn-block">

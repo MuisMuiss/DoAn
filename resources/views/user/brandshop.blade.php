@@ -60,24 +60,16 @@
                         <div class="row g-4">
                             <div class="col-lg-12">
                                 <div class="mb-3">
-
                                     <ul class="list-unstyled fruite-categorie">
                                         <li>
                                             @foreach ($cate_product as $cate)
-
-
                                             <div class="d-flex justify-content-between fruite-name">
                                                 <a href="{{route('go.shop',$cate->loai_sp_id)}}"><i
                                                         class="fas fa-apple-alt me-2"></i>{{ $cate->ten_loaisp }}</a>
                                                 <span>//</span>
                                             </div>
-
-
-
-
                                             @endforeach
                                         </li>
-
                                     </ul>
                                 </div>
                             </div>
@@ -95,17 +87,11 @@
                                 <div class="mb-3">
                                     <h4>Thương hiệu</h4>
                                     @foreach ($brand_product as $brand)
-
-
                                     <div class="d-flex justify-content-between fruite-name">
                                         <a href="{{route('go.brand',$brand->thuong_hieu_id)}}"><i
                                                 class="fas fa-apple-alt me-2"></i>{{ $brand->ten_thuong_hieu }}</a>
                                         <span>//</span>
                                     </div>
-
-
-
-
                                     @endforeach
 
                                 </div>

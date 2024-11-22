@@ -28,24 +28,6 @@
                         styles: false
                     }
                 })
-                .then(editor => {
-                    // Lấy nội dung khi người dùng nhấn lưu
-                    document.getElementById('saveButton').addEventListener('click', function() {
-                        let content = editor.getData(); // Lấy dữ liệu từ CKEditor
-                        
-                        // Loại bỏ thẻ <p> khỏi nội dung
-                        content = content.replace(/<\/?p>/g, ''); // Loại bỏ thẻ <p>
-                        
-                        // Gửi dữ liệu đã xử lý đến máy chủ
-                        // Ví dụ sử dụng fetch hoặc AJAX để gửi dữ liệu
-                        console.log(content); // Kiểm tra kết quả
-
-                        // Tiến hành gửi content qua AJAX hoặc form submit
-                    });
-                })
-                .catch(error => {
-                    console.error(error);
-                });
         });
     </script>
 </script>
