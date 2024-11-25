@@ -18,14 +18,12 @@
     <!-- Icon Font Stylesheet -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
-
     <!-- Libraries Stylesheet -->
     <link href="{{ asset('assets/user/lib/lightbox/css/lightbox.min.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/user/lib/owlcarousel/assets/owl.carousel.min.css') }}" rel="stylesheet">
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="{{ asset('assets/user/css/bootstrap.min.css') }}" rel="stylesheet">
-
     <!-- Template Stylesheet -->
     <link href="{{ asset('assets/user/css/style.css') }}" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -110,13 +108,13 @@
                         </div>
                         <a href="{{ route('cart.index') }}" class="position-relative me-4">
                             <i class="fa fa-shopping-bag fa-2x"></i>
-                            {{-- @if ($cartCount > 0)
+                            @if ($cartCount > 0)
                                 <span
                                     class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1"
                                     style="top: -5px; left: 15px; height: 20px; min-width: 20px;">
                                     {{ $cartCount }}
                                 </span>
-                            @endif --}}
+                            @endif
                         </a>
                         <div class="nav-item dropdown">
                             @if (Auth::check())

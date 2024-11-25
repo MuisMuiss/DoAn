@@ -41,4 +41,9 @@ class Product extends Authenticatable
     public function images(){
         return $this->hasMany(ProductImage::class,'album_sp_id','san_pham_id');
     }
+    public function loaiSanPham()
+    {
+        return $this->belongsTo(ProductType::class, 'loai_sp_id');
+    }
+    
 }

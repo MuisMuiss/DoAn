@@ -17,7 +17,10 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $product = DB::table('san_pham')->get();
+        $product = Product::join('loai_sp', 'san_pham.loai_sp_id', '=', 'loai_sp.loai_sp_id')
+        ->join('danh_muc_san_pham', 'loai_sp.danh_muc_id', '=', 'danh_muc_san_pham.danh_muc_id')
+        ->select('san_pham.*', 'danh_muc_san_pham.danh_muc_id as danh_muc_id')
+        ->get();
         $category = DB::table('danh_muc_san_pham')->get();
         $cate_product = DB::table('loai_sp')->get();
         $brand_product = DB::table('thuong_hieu')->get();

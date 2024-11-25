@@ -13,8 +13,8 @@ use Illuminate\Support\Facades\Auth;
 // Route::get('/index', function () {
 //     return view('user.index');
 // });
-Route::get('/index',[HomeController::class,"index"])->name('index');;
-
+Route::get('/index',[HomeController::class,"index"])->name('index');
+Route::get('/products{danh_muc_id}', [ProductController::class, 'getDanhMuc'])->name('getDM.product');
 Route::get('/shopsua', [ProductController::class,"shopsua"])->name('shopsua');
 Route::get('/shopta', [ProductController::class,"shopta"])->name('shopta');
 

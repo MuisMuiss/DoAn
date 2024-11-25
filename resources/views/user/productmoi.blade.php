@@ -1,4 +1,4 @@
-
+    <hr>
     <h4 class="mb-3">Sản phẩm mới</h4>
 
     <div class="tab-content">

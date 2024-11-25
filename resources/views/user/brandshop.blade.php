@@ -40,95 +40,101 @@
         <div class="row g-4">
             <div class="col-lg-12">
                 <div class="row g-4">
-                    
-                    <div class="col-6"></div>
-                    <div class="col-xl-3">
-                        <div class="bg-light ps-3 py-3 rounded d-flex justify-content-between mb-4">
-                            <label for="fruits">Sắp xếp mặc định:</label>
-                            <select id="fruits" name="fruitlist" class="border-0 form-select-sm bg-light me-3"
-                                form="fruitform">
-                                <option value="volvo">Ngẫu nhiên</option>
-                                <option value="saab">Sản phẩm mới</option>
-                                <option value="opel">Giá cao - thấp</option>
-                                <option value="audi">Giá thấp - cao</option>
-                            </select>
+                    <div class="col-9">
+                        <div class="col-lg-12">
+                            <div class="mb-3">
+                                <form id="priceRangeForm" method="GET" action="{{ route('go.brand', $brand) }}">
+                                    <div class="row align-items-end">
+                                        <!-- Nhập giá thấp nhất -->
+                                        <div class="col-md-3" style="width:20%">
+                                            <h5>Tìm kiếm theo giá:</h5>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="minPrice" class="form-label">Giá từ</label>
+                                            <input type="number" class="form-control" id="minPrice" name="minPrice"
+                                                placeholder="Nhập giá thấp nhất" min="0" required>
+                                        </div>
+                                        <!-- Nhập giá cao nhất -->
+                                        <div class="col-md-3">
+                                            <label for="maxPrice" class="form-label">Đến giá</label>
+                                            <input type="number" class="form-control" id="maxPrice" name="maxPrice"
+                                                placeholder="Nhập giá cao nhất" min="0" required>
+                                        </div>
+                                        <!-- Nút tìm kiếm -->
+                                        <div class="col-md-3">
+                                            <button type="submit" class="btn btn-primary mt-2 w-50">Tìm kiếm</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
+
+                    <div class="col-xl-3">
+                        <form action="{{ route('go.brand', $brand) }}" method="GET" id="fruitform">
+                            <div class="bg-light ps-3 py-3 rounded d-flex justify-content-between mb-4">
+                                <label for="fruits">Sắp xếp mặc định:</label>
+                                <select id="fruits" name="sort" class="border-0 form-select-sm bg-light me-3" form="fruitform" onchange="this.form.submit()">
+                                    <option value="random" {{ request('sort') == 'random' ? 'selected' : '' }}>Ngẫu nhiên</option>
+                                    <option value="newest" {{ request('sort') == 'newest' ? 'selected' : '' }}>Sản phẩm mới</option>
+                                    <option value="price_desc" {{ request('sort') == 'price_desc' ? 'selected' : '' }}>Giá cao - thấp</option>
+                                    <option value="price_asc" {{ request('sort') == 'price_asc' ? 'selected' : '' }}>Giá thấp - cao</option>
+                                </select>
+                            </div>
+                        </form>
+                    </div>
+
                 </div>
+                <hr>
                 <div class="row g-4">
                     <div class="col-lg-3">
                         <div class="row g-4">
                             <div class="col-lg-12">
                                 <div class="mb-3">
+                                    <h4>Loại sản phẩm</h4>
                                     <ul class="list-unstyled fruite-categorie">
                                         <li>
                                             @foreach ($cate_product as $cate)
-                                            <div class="d-flex justify-content-between fruite-name">
-                                                <a href="{{route('go.shop',$cate->loai_sp_id)}}"><i
-                                                        class="fas fa-apple-alt me-2"></i>{{ $cate->ten_loaisp }}</a>
-                                                <span>//</span>
-                                            </div>
+                                                
+                                                    <div class="d-flex justify-content-between fruite-name">
+                                                        <a href="{{ route('go.shop', $cate->loai_sp_id) }}"><i
+                                                                class="fas fa-cart-arrow-down me-3"></i>
+                                                            {{ $cate->ten_loaisp }}</a>
+                                                        <span>||</span>
+                                                    </div>
+                                                
                                             @endforeach
                                         </li>
+
                                     </ul>
                                 </div>
                             </div>
-                            <div class="col-lg-12">
-                                <div class="mb-3">
-                                    <h4 class="mb-2">Giá</h4>
-                                    <input type="range" class="form-range w-100" id="rangeInput" name="rangeInput"
-                                        min="0" max="500" value="0"
-                                        oninput="amount.value=rangeInput.value">
-                                    <output id="amount" name="amount" min-velue="0" max-value="500"
-                                        for="rangeInput">0</output>
-                                </div>
-                            </div>
+                            <hr>
                             <div class="col-lg-12">
                                 <div class="mb-3">
                                     <h4>Thương hiệu</h4>
                                     @foreach ($brand_product as $brand)
-                                    <div class="d-flex justify-content-between fruite-name">
-                                        <a href="{{route('go.brand',$brand->thuong_hieu_id)}}"><i
-                                                class="fas fa-apple-alt me-2"></i>{{ $brand->ten_thuong_hieu }}</a>
-                                        <span>//</span>
-                                    </div>
+                                        <div class="d-flex justify-content-between fruite-name">
+                                            <a href="{{ route('go.brand', $brand->thuong_hieu_id) }}"><i
+                                                    class="far fa-hand-point-right me-3"></i>{{ $brand->ten_thuong_hieu }}</a>
+                                            <span>||</span>
+                                        </div>
                                     @endforeach
 
                                 </div>
                             </div>
-                            @include('user.productmoi')
-                            <div class="col-lg-12">
-                                <div class="position-relative">
-                                    <img src="assets/user/img/banner-fruits.jpg" class="img-fluid w-100 rounded"
-                                        alt="">
-                                    <div class="position-absolute"
-                                        style="top: 50%; right: 10px; transform: translateY(-50%);">
-                                        <h3 class="text-secondary fw-bold">Fresh <br> Fruits <br> Banner</h3>
-                                    </div>
-                                </div>
-                            </div>
+
                         </div>
                     </div>
                     <div class="col-lg-9">
                         <div class="row g-4 justify-content-center">
-                        @include('user.product')
-                            <div class="col-12">
-                                <div class="pagination d-flex justify-content-center mt-5">
-                                    <a href="#" class="rounded">&laquo;</a>
-                                    <a href="#" class="active rounded">1</a>
-                                    <a href="#" class="rounded">2</a>
-                                    <a href="#" class="rounded">3</a>
-                                    <a href="#" class="rounded">4</a>
-                                    <a href="#" class="rounded">5</a>
-                                    <a href="#" class="rounded">6</a>
-                                    <a href="#" class="rounded">&raquo;</a>
-                                </div>
-                            </div>
+                            @include('user.product')
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        @include('user.productmoi')
     </div>
 </div>
 @include('user.layout.footer')
