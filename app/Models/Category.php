@@ -24,4 +24,8 @@ class Category extends Model
             $cate->danh_muc_id = $maxId > 0 ? $maxId + 1 : 1; // Tăng lên 1
         });
     }
+    public function loaiSanPhams()
+    {
+        return $this->hasMany(ProductType::class, 'danh_muc_id');
+    }
 }

@@ -174,7 +174,6 @@
         })
     </script>
 @endif
-
 </body>
 
 </html>

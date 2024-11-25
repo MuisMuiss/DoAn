@@ -25,5 +25,14 @@ class ProductType extends Model
             $type->loai_sp_id = $maxId > 0 ? $maxId + 1 : 1;  // Tăng lên 1
         });
     }
+    public function sanPhams()
+    {
+        return $this->hasMany(Product::class, 'loai_sp_id');
+    }
+
+    public function danhMuc()
+    {
+        return $this->belongsTo(Category::class, 'danh_muc_id');
+    }
 
 }
