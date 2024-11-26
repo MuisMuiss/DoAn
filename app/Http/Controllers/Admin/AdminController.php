@@ -4,9 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\nguoiDung;
-use App\Models\Brand;
+use App\Models\Category;
 use App\Models\Product;
 use App\Models\Import;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -16,9 +17,39 @@ use Illuminate\Support\Facades\Log;
 
 class AdminController extends Controller
 {
-    // public function viewhome(){
-    //     return view('admin.home');
-    // }
+    public function Dashboard()
+    {
+
+        $categories = DB::table('chi_tiet_don_hang')
+            ->join('san_pham', 'chi_tiet_don_hang.san_pham_id', '=', 'san_pham.san_pham_id')
+            ->join('loai_sp', 'san_pham.loai_sp_id', '=', 'loai_sp.loai_sp_id')
+            ->join('danh_muc_san_pham', 'loai_sp.danh_muc_id', '=', 'danh_muc_san_pham.danh_muc_id')
+            ->select(
+                'danh_muc_san_pham.ten_danh_muc',
+                DB::raw('SUM(chi_tiet_don_hang.so_luong) as total_san_phams')
+            )
+            ->groupBy('danh_muc_san_pham.danh_muc_id', 'danh_muc_san_pham.ten_danh_muc') // Thêm ten_danh_muc vào GROUP BY
+            ->get();
+
+
+        $soLuongSP = Product::count();
+        $tongDoanhThu = Order::sum('tong_tien');
+        $soLuongDH = Order::count();
+        $soLuongNH = Import::count();
+        $doanhThuNgay = Order::select(DB::raw('DATE(ngay_dat) as ngay, SUM(tong_tien) as doanh_thu'))
+            ->groupBy(DB::raw('DATE(ngay_dat)'))
+            ->pluck('doanh_thu', 'ngay');
+        $doanhThuThang = Order::select(DB::raw('YEAR(ngay_dat) as nam, MONTH(ngay_dat) as thang, SUM(tong_tien) as doanh_thu'))
+            ->groupBy(DB::raw('YEAR(ngay_dat), MONTH(ngay_dat)'))
+            ->orderBy('nam')
+            ->orderBy('thang')
+            ->get();
+        $doanhThuNam = Order::select(DB::raw('YEAR(ngay_dat) as nam, SUM(tong_tien) as doanh_thu'))
+            ->groupBy(DB::raw('YEAR(ngay_dat)'))
+            ->pluck('doanh_thu', 'nam');
+
+        return view('admin.home', compact('soLuongSP', 'tongDoanhThu', 'soLuongDH', 'soLuongNH', 'doanhThuNgay', 'doanhThuThang', 'doanhThuNam', 'categories'));
+    }
     public function viewlogin()
     {
         return view('admin.login');

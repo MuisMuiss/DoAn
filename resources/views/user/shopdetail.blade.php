@@ -37,8 +37,8 @@
 
     <div class="container-fluid py-5 mt-5">
         <div class="container py-5">
-            <div class="row g-4 mb-5">
-                <div class="col-lg-8 col-xl-9">
+            <div class="g-4 mb-5">
+                <div class="col-lg-8 col-xl-9 w-100">
                     <div class="row g-4">
                         <div class="col-lg-6">
                             <div class="border rounded text-center">
@@ -51,7 +51,7 @@
                                         alt="Image">
                                 @endif
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-6 w-100" style="">
                                 <div class="col-12 d-flex justify-content-center flex-wrap">
                                     @foreach ($product_images as $image)
                                         <img src="{{ asset('images/product/' . $image->album_sp) }}"

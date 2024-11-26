@@ -6,6 +6,7 @@ use App\Http\Controllers\User\ProductController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\User\CartController;
 use App\Http\Controllers\Admin\ManageController;
+use App\Models\Product;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -108,12 +109,11 @@ Route::get('/type', function () {
 });
 
 Route::middleware('auth:admin')->group(function(){
-    Route::get('/homeadmin', function() {
-         // Kiểm tra người dùng đã đăng nhập chưa
-        return view('admin.home');
-    })->name('admin.home');
-    // Route::match(['get', 'post'], '/homeadmin', [AdminController::class, 'viewhome'])->name('admin.home');
-
+    // Route::get('/homeadmin', function() {
+    //      // Kiểm tra người dùng đã đăng nhập chưa
+    //     return view('admin.home');
+    // })->name('admin.home');
+    Route::get('/homeadmin',[AdminController::class, "Dashboard"])->name('admin.home');
     //User
     // Thêm User
     Route::get('/themuser', [AdminController::class, "themuser"])->name('admin.themuser');
