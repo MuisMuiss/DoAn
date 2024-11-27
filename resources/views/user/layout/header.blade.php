@@ -99,7 +99,7 @@
                         <div class="position-relative" style="margin-right: 10em">
                             <form method="GET" action="{{ route('find') }}">
                                 <input class="form-control border-2 border-secondary rounded-pill" style="width: 140%"
-                                    type="text" name="key" placeholder="Nhập tên sản phẩm cần tìm"
+                                    type="text" name="key" value="{{ request('key') }}" placeholder="Nhập tên sản phẩm cần tìm"
                                     fdprocessedid="wkib7">
                                 <button type="submit"
                                     class="btn btn-search border-2 border-secondary position-absolute rounded-pill text-white h-100"
@@ -149,7 +149,6 @@
                                 </div>
                             @endif
                         </div>
-
                     </div>
                 </div>
             </nav>

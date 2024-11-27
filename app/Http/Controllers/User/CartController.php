@@ -150,7 +150,8 @@ class CartController extends Controller
         $product = DB::table('san_pham')->get();
 
         $cartItems = DB::table('gio_hang')
-            ->join('san_pham', 'gio_hang.san_pham_id', '=', 'san_pham.san_pham_id') // Liên kết hai bảng
+            ->join('san_pham', 'gio_hang.san_pham_id', '=', 'san_pham.san_pham_id')
+            ->where('gio_hang.nguoi_dung_id', Auth::id())
             ->select('gio_hang.so_luong', 'san_pham.san_pham_id', 'san_pham.ten_san_pham', 'san_pham.gia', 'san_pham.hinh_anh')
             ->get();
 
@@ -170,8 +171,6 @@ class CartController extends Controller
                 ->select('gio_hang.so_luong', 'san_pham.san_pham_id', 'san_pham.ten_san_pham', 'san_pham.gia', 'san_pham.hinh_anh')
                 ->where('gio_hang.nguoi_dung_id', Auth::id())
                 ->get();
-
-            // Tính tổng tiền của đơn hàng
             $total = $cartItems->sum(function ($item) {
                 return $item->gia * $item->so_luong;
             });
@@ -203,7 +202,7 @@ class CartController extends Controller
             }
 
             // Xóa giỏ hàng của người dùng sau khi đặt hàng
-            DB::table('gio_hang')->where('nguoi_dung_id', $user->id)->delete();
+            DB::table('gio_hang')->where('nguoi_dung_id', Auth::id())->delete();
 
             DB::commit();
 

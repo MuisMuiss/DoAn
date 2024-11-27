@@ -62,6 +62,7 @@
                                         </div>
                                         <!-- Nút tìm kiếm -->
                                         <div class="col-md-3">
+                                            <input type="hidden" name="sort" value="{{ request('sort') }}">
                                             <button type="submit" class="btn btn-primary mt-2 w-50">Tìm kiếm</button>
                                         </div>
                                     </div>
@@ -72,6 +73,8 @@
 
                     <div class="col-xl-3">
                         <form action="{{ route('go.brand', $brand) }}" method="GET" id="fruitform">
+                            <input type="hidden" name="minPrice" value="{{ request('minPrice') }}">
+                            <input type="hidden" name="maxPrice" value="{{ request('maxPrice') }}">
                             <div class="bg-light ps-3 py-3 rounded d-flex justify-content-between mb-4">
                                 <label for="fruits">Sắp xếp mặc định:</label>
                                 <select id="fruits" name="sort" class="border-0 form-select-sm bg-light me-3" form="fruitform" onchange="this.form.submit()">
@@ -137,4 +140,12 @@
         @include('user.productmoi')
     </div>
 </div>
+<script>
+    function prepareSortingForm() {
+    const minPriceInput = document.querySelector('#hiddenMinPrice');
+    const maxPriceInput = document.querySelector('#hiddenMaxPrice');
+    if (!minPriceInput.value.trim()) minPriceInput.disabled = true;
+    if (!maxPriceInput.value.trim()) maxPriceInput.disabled = true;
+    document.querySelector('#fruitform').submit();
+}
 @include('user.layout.footer')

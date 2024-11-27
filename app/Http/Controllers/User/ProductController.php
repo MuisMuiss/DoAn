@@ -38,23 +38,25 @@ class ProductController extends Controller
         $minPrice = $request->input('minPrice', 0);
         $maxPrice = $request->input('maxPrice', PHP_INT_MAX);
         $sort = $request->input('sort', 'random');
-        $productsw = Product::where('loai_sp_id', $cate)
-            ->whereBetween('gia', [$minPrice, $maxPrice]);
+        $productsw = Product::where('loai_sp_id', $cate);
+        if (!empty($minPrice) && !empty($maxPrice)) {
+            $productsw->whereBetween('gia', [$minPrice, $maxPrice]);
+        }
         switch ($sort) {
             case 'newest':
-                $productsw->orderBy('sp_moi', 'desc'); // Sắp xếp sản phẩm mới nhất
+                $productsw->orderBy('sp_moi', 'desc');
                 break;
             case 'price_desc':
-                $productsw->orderBy('gia', 'desc'); // Sắp xếp theo giá từ cao đến thấp
+                $productsw->orderBy('gia', 'desc');
                 break;
             case 'price_asc':
-                $productsw->orderBy('gia', 'asc'); // Sắp xếp theo giá từ thấp đến cao
+                $productsw->orderBy('gia', 'asc');
                 break;
             case 'random':
-                $productsw->inRandomOrder(); // Sắp xếp ngẫu nhiên
+                $productsw->inRandomOrder();
                 break;
             default:
-                $productsw->orderBy('sp_moi', 'desc'); // Sắp xếp mặc định (sản phẩm mới nhất)
+                $productsw->orderBy('sp_moi', 'desc');
                 break;
         }
         $products = DB::table('san_pham')->paginate(2);
@@ -75,24 +77,27 @@ class ProductController extends Controller
         $maxPrice = $request->input('maxPrice', PHP_INT_MAX);
         $brand_product = DB::table('thuong_hieu')->get();
         $cate_product = DB::table('loai_sp')->get();
-        $productsw = Product::where('thuong_hieu_id', $brand)
-            ->whereBetween('gia', [$minPrice, $maxPrice]);
+        $productsw = Product::where('thuong_hieu_id', $brand);
+        if (!empty($minPrice) && !empty($maxPrice)) {
+            $productsw->whereBetween('gia', [$minPrice, $maxPrice]);
+        }
+
         $sort = $request->input('sort', 'random');
         switch ($sort) {
             case 'newest':
-                $productsw->orderBy('sp_moi', 'desc'); // Sắp xếp sản phẩm mới nhất
+                $productsw->orderBy('sp_moi', 'desc');
                 break;
             case 'price_desc':
-                $productsw->orderBy('gia', 'desc'); // Sắp xếp theo giá từ cao đến thấp
+                $productsw->orderBy('gia', 'desc');
                 break;
             case 'price_asc':
-                $productsw->orderBy('gia', 'asc'); // Sắp xếp theo giá từ thấp đến cao
+                $productsw->orderBy('gia', 'asc');
                 break;
             case 'random':
-                $productsw->inRandomOrder(); // Sắp xếp ngẫu nhiên
+                $productsw->inRandomOrder();
                 break;
             default:
-                $productsw->orderBy('sp_moi', 'desc'); // Sắp xếp mặc định (sản phẩm mới nhất)
+                $productsw->orderBy('sp_moi', 'desc');
                 break;
         }
         $product = $productsw->paginate(6);
@@ -102,8 +107,32 @@ class ProductController extends Controller
     }
     public function search(Request $request)
     {
+        $minPrice = $request->input('minPrice', 0);
+        $maxPrice = $request->input('maxPrice', PHP_INT_MAX);
 
-        $product = Product::where('ten_san_pham', 'like', '%' . $request->input('key') . '%')->paginate(6);
+        $productsw = Product::where('ten_san_pham', 'like', '%' . $request->input('key') . '%');
+        if (!empty($minPrice) && !empty($maxPrice)) {
+            $productsw->whereBetween('gia', [$minPrice, $maxPrice]);
+        }
+        $sort = $request->input('sort', 'random');
+        switch ($sort) {
+            case 'newest':
+                $productsw->orderBy('sp_moi', 'desc');
+                break;
+            case 'price_desc':
+                $productsw->orderBy('gia', 'desc');
+                break;
+            case 'price_asc':
+                $productsw->orderBy('gia', 'asc');
+                break;
+            case 'random':
+                $productsw->inRandomOrder();
+                break;
+            default:
+                $productsw->orderBy('sp_moi', 'desc');
+                break;
+        }
+        $product= $productsw->paginate(6);
         $products = DB::table('san_pham')->paginate(6);
         $brand_product = DB::table('thuong_hieu')->get();
         $category = DB::table('danh_muc_san_pham')->get();
