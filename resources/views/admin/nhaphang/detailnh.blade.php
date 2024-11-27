@@ -51,6 +51,14 @@
                                     <tr class="odd">
                                         <td>{{$ctn->id}}</td>
                                         <td>{{$ctn->nhap_hang_id}}</td>
+                                        @if (isset($product[$ctn->san_pham_id]))
+                                                <td>
+                                                    <img src="{{ asset('images/product/' . $product[$ctn->san_pham_id]->hinh_anh) }}"
+                                                        alt="Product Image" style="width: 90px; height: 90px;">
+                                                </td>
+                                            @else
+                                                <td>Không tìm thấy sản phẩm</td>
+                                            @endif
                                         @foreach ($product as $keybrand => $pro)
                                                 @if ($ctn->san_pham_id == $pro->san_pham_id)
                                                     <td>{{ $pro->ten_san_pham }}</td>

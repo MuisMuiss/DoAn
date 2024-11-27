@@ -51,6 +51,7 @@
                                     <thead>
                                         <tr>
                                             <th rowspan="1" colspan="1">Mã đơn hàng</th>
+                                            <th rowspan="1" colspan="1">Hình ảnh</th>
                                             <th rowspan="1" colspan="1">Tên sản phẩm</th>
                                             <th rowspan="1" colspan="1">Số lượng</th>
                                             <th rowspan="1" colspan="1">Giá</th>
@@ -60,11 +61,16 @@
                                         @foreach ($ct_order as $cto)
                                             <tr>
                                                 <td>{{ $cto->don_hang_id }}</td>
-                                                @foreach ($product as $keybrand => $pro)
-                                                    @if ($cto->san_pham_id == $pro->san_pham_id)
-                                                        <td>{{ $pro->ten_san_pham }}</td>
-                                                    @endif
-                                                @endforeach
+                                                @if (isset($product[$cto->san_pham_id]))
+                                                    <td>
+                                                        <img src="{{ asset('images/product/' . $product[$cto->san_pham_id]->hinh_anh) }}"
+                                                            alt="Product Image" style="width: 90px; height: 90px;">
+                                                    </td>
+                                                    <td>{{ $product[$cto->san_pham_id]->ten_san_pham }}</td>
+                                                @else
+                                                    <td>Không tìm thấy sản phẩm</td>
+                                                    <td>Không tìm thấy sản phẩm</td>
+                                                @endif
                                                 <td>{{ $cto->so_luong }}</td>
                                                 <td>{{ number_format($cto->gia_don_vi, 0, ',', '.') }} VNĐ</td>
                                             </tr>

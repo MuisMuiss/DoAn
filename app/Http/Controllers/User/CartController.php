@@ -150,7 +150,8 @@ class CartController extends Controller
         $product = DB::table('san_pham')->get();
 
         $cartItems = DB::table('gio_hang')
-            ->join('san_pham', 'gio_hang.san_pham_id', '=', 'san_pham.san_pham_id') // Liên kết hai bảng
+            ->join('san_pham', 'gio_hang.san_pham_id', '=', 'san_pham.san_pham_id')
+            ->where('gio_hang.nguoi_dung_id', Auth::id())
             ->select('gio_hang.so_luong', 'san_pham.san_pham_id', 'san_pham.ten_san_pham', 'san_pham.gia', 'san_pham.hinh_anh')
             ->get();
 

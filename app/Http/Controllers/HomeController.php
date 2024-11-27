@@ -230,7 +230,7 @@ class HomeController extends Controller
     }
     public function viewOrder()
     {
-        $order = Order::all();
+        $order = Order::where('nguoi_dung_id', Auth::id())->get();
         $user = nguoiDung::all();
         $order_item = OrderItem::all();
         $category = DB::table('danh_muc_san_pham')->get();
@@ -240,7 +240,7 @@ class HomeController extends Controller
     }
     public function viewctOrder($don_hang_id)
     {
-        $product = Product::all();
+        $product = Product::all()->keyBy('san_pham_id');
         $category = DB::table('danh_muc_san_pham')->get();
         $cate_product = DB::table('loai_sp')->get();
         $brand_product = DB::table('thuong_hieu')->get();

@@ -240,7 +240,7 @@ class ManageController extends Controller
     }
     public function viewctorder($don_hang_id)
     {
-        $product = Product::all();
+        $product = Product::all()->keyBy('san_pham_id');
     
         $order = Order::find($don_hang_id);
         if (!$order) {
@@ -346,7 +346,7 @@ class ManageController extends Controller
     //Chi tiết đơn hàng
     public function viewctnhap($nhap_hang_id)
     {
-        $product = DB::table('san_pham')->get();
+        $product = Product::all()->keyBy('san_pham_id');
         $brand = DB::table('thuong_hieu')->orderByDesc('thuong_hieu_id')->get();
         $nhaphang = Import::find($nhap_hang_id);
         if (!$nhaphang) {
