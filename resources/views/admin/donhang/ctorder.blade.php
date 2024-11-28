@@ -26,7 +26,7 @@
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Bảng dữ liệu chi tiết đơn hàng / Order item datatable</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Bảng dữ liệu chi tiết đơn hàng của "{{ $order->User->ho_ten ?? 'Không xác định' }}"</h6>
         </div>
         @if (session('status'))
             <h5 class="alert alert-success">{{ session('status') }}</h5>

@@ -69,7 +69,7 @@
                     <div class="navbar-nav" style="margin-left: 10%">
                         <a href="{{ route('index') }}" class="nav-item nav-link">Home</a>
                         <div class="nav-item dropdown">
-                            <a href="{{ route('shopsua') }}" class="nav-link dropdown-toggle">Sữa</a>
+                            <a href="" class="nav-link dropdown-toggle">Sữa</a>
                             <div class="dropdown-menu m-0 bg-secondary rounded-0">
                                 @foreach ($cate_product as $cate)
                                     @if ($cate->danh_muc_id == 1)
@@ -81,7 +81,7 @@
                             </div>
                         </div>
                         <div class="nav-item dropdown">
-                            <a href="{{ route('shopta') }}" class="nav-link dropdown-toggle">Tã</a>
+                            <a href="" class="nav-link dropdown-toggle">Tã</a>
                             <div class="dropdown-menu m-0 bg-secondary rounded-0">
                                 @foreach ($cate_product as $cate)
                                     @if ($cate->danh_muc_id == 2)
@@ -132,6 +132,11 @@
                                         href="{{ route('accout.view', ['nguoi_dung_id' => Auth::id()]) }}">
                                         <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                         Tài khoản
+                                    </a>
+                                    <a class="dropdown-item"
+                                        href="{{ route('order.view') }}">
+                                        <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Đơn hàng
                                     </a>
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="{{ route('user.logout') }}" data-toggle="modal"

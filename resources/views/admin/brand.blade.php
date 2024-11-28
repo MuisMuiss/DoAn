@@ -67,7 +67,7 @@
                                                         <a href="{{ route('admin.editbrand', ['thuong_hieu_id' => $th->thuong_hieu_id]) }}"
                                                             class="btn btn-warning btn-circle btn-sm"
                                                             style=" margin-right: 10px;">
-                                                            <i class="fas fa-fw fa-wrench"></i>
+                                                            <i class="fas fa-fw fa-pen"></i>
                                                         </a>
                                                         <a href="{{ route('admin.deletebrand', ['thuong_hieu_id' => $th->thuong_hieu_id]) }}"
                                                             class="btn btn-danger btn-circle btn-sm"data-toggle="modal"

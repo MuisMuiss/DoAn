@@ -84,8 +84,7 @@
                                 <input type="number" id="so_luong" name="so_luong" value="1" min="1"
                                     max="{{ $pro->so_luong_kho }}" required>
                                 <button type="submit"
-                                    class="btn border border-secondary rounded-pill px-3 text-primary">Add to
-                                    cart</button>
+                                    class="btn border border-secondary rounded-pill px-3 text-primary">Thêm giỏ hàng</button>
                             </form>
                         </div>
                         <div class="col-lg-12">
@@ -124,7 +123,7 @@
                                     <div class="py-4">
                                         <a href="{{ route('productdetail', $pro->san_pham_id) }}" class="h6">{{ $pro->ten_san_pham }}
                                             <h5 class="mb-3" style="color: red">{{ number_format($pro->gia, 0, ',', '.') }} VNĐ</h5>
-                                        <a href="{{ route('cart.add1', $pro->san_pham_id) }}" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                                        <a href="{{ route('cart.add1', $pro->san_pham_id) }}" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Thêm giỏ hàng</a>
                                     </div>
                                 </div>
                             </div>

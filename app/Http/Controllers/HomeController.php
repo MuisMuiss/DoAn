@@ -195,9 +195,9 @@ class HomeController extends Controller
             'so_dien_thoai' => 'required|min:10',
             'dia_chi' => 'required',
         ], $messages);
-        // Kiểm tra email đã tồn tại (trừ email của chính người dùng)
+
         $existingUser = nguoiDung::where('email', $request->email)
-            ->where('nguoi_dung_id', '<>', $nguoi_dung_id) // Tránh kiểm tra email của chính người dùng
+            ->where('nguoi_dung_id', '<>', $nguoi_dung_id)
             ->first();
         if ($existingUser) {
             return redirect()->back()->with(['noE' => 'Email đã tồn tại.']);
@@ -208,7 +208,7 @@ class HomeController extends Controller
         $nguoiDung->so_dien_thoai = $request->input('so_dien_thoai');
         $nguoiDung->dia_chi = $request->input('dia_chi');
         $nguoiDung->vai_tro = 0;
-        // Xử lý ảnh đại diện
+
         if ($request->hasFile('avatar')) {
             $anhcu = public_path('images/avatar/' . $nguoiDung->avatar);
             // Kiểm tra xem ảnh cũ có tồn tại không và xóa nếu có
@@ -220,10 +220,10 @@ class HomeController extends Controller
             $extension = $file->getClientOriginalExtension();
             $filename = time() . '.' . $extension;
             $file->move(public_path('images/avatar'), $filename);
-            // Cập nhật đường dẫn ảnh trong cơ sở dữ liệu
+
             $nguoiDung->avatar = $filename;
         }
-        // Lưu thông tin người dùng
+
         $nguoiDung->save();
 
         return redirect()->back()->with('update', 'Cập nhật user thành công');

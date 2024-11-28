@@ -38,13 +38,13 @@
                             </div> --}}
                             <div class="mb-3 fruite-name text-black">
                                 <a href="{{ route('accout.view', ['nguoi_dung_id' => Auth::id()]) }}"
-                                    onclick="showContent(this)" id="account-tab">Thông tin cá nhân</a>
+                                 style="color: red">Thông tin cá nhân</a>
                             </div>
                             <div class="mb-3 fruite-name">
-                                <a href="{{ route('order.view') }}" onclick="showContent(this)" id="order-tab">Đơn hàng</a>
+                                <a href="{{ route('order.view') }}"  id="order-tab">Đơn hàng</a>
                             </div>
                             <div class="mb-3 fruite-name">
-                                <a href="{{ route('chpass.view') }}" onclick="showContent(this)" id="chpass-tab">Thay đổi mật khẩu</a>
+                                <a href="{{ route('chpass.view') }}" id="chpass-tab">Thay đổi mật khẩu</a>
                             </div>
                         </div>
                     </div>
@@ -106,7 +106,6 @@
                                     </div>
                                 </form>
                                 <script>
-                                    // Lắng nghe sự kiện thay đổi của input file
                                     document.getElementById('avatarInput').addEventListener('change', function(event) {
                                         var reader = new FileReader();
                                         reader.onload = function(e) {

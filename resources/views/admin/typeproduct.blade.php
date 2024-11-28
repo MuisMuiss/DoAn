@@ -53,7 +53,7 @@
                                             <td>
                                                 <div style="display: flex; justify-content: center; align-items: center;">
                                                     <a href="{{ route('admin.edittype', ['loai_sp_id' => $type->loai_sp_id]) }}" class="btn btn-warning btn-circle btn-sm" style=" margin-right: 10px;">
-                                                        <i class="fas fa-fw fa-wrench"></i>
+                                                        <i class="fas fa-fw fa-pen"></i>
                                                     </a>
                                                     <a href="{{ route('admin.deletetype', ['loai_sp_id' => $type->loai_sp_id]) }}"
                                                         class="btn btn-danger btn-circle btn-sm"data-toggle="modal"

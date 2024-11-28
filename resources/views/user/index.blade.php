@@ -198,7 +198,7 @@
         <div class="tab-class text-center">
             <div class="row g-4">
                 <div class="col-lg-4 text-start">
-                    <h1>Products</h1>
+                    <h1>Sản phẩm</h1>
                 </div>
                 <div class="col-lg-8 text-end">
                     <ul class="nav nav-pills d-inline-flex text-center mb-5">
@@ -247,9 +247,8 @@
                                                         <p class="fw-bold mb-0" style="font-size: 1.10rem; color:red">
                                                             {{ number_format($pro->gia, 0, ',', '.') }}VNĐ</p>
                                                         <a href="{{ route('cart.add1', $pro->san_pham_id) }}"
-                                                            class="btn border border-secondary rounded-pill px-3 text-primary"><i
-                                                                class="fa fa-shopping-bag me-2 text-primary"></i> Add
-                                                            to cart</a>
+                                                            class="btn border border-secondary rounded-pill px-3 text-primary" style=""><i
+                                                                class="fa fa-shopping-bag me-2 text-primary"></i>Thêm giỏ hàng</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -288,8 +287,7 @@
                                                             {{ number_format($pro->gia, 0, ',', '.') }}VNĐ</p>
                                                         <a href="{{ route('cart.add1', $pro->san_pham_id) }}"
                                                             class="btn border border-secondary rounded-pill px-3 text-primary"><i
-                                                                class="fa fa-shopping-bag me-2 text-primary"></i> Add
-                                                            to cart</a>
+                                                                class="fa fa-shopping-bag me-2 text-primary"></i> Thêm giỏ hàng</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -329,8 +327,7 @@
                                                             {{ number_format($pro->gia, 0, ',', '.') }}VNĐ</p>
                                                         <a href="{{ route('cart.add1', $pro->san_pham_id) }}"
                                                             class="btn border border-secondary rounded-pill px-3 text-primary"><i
-                                                                class="fa fa-shopping-bag me-2 text-primary"></i> Add
-                                                            to cart</a>
+                                                                class="fa fa-shopping-bag me-2 text-primary"></i> Thêm giỏ hàng</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -408,7 +405,7 @@
                                 </h5>
                                 <a href="{{ route('cart.add1', $pro->san_pham_id) }}" 
                                    class="btn border border-secondary rounded-pill px-3 text-primary">
-                                   <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
+                                   <i class="fa fa-shopping-bag me-2 text-primary"></i> Thêm giỏ hàng
                                 </a>
                             </div>
                         </div>
@@ -473,7 +470,7 @@
                         <div class="py-4">
                             <a href="{{ route('productdetail', $pro->san_pham_id) }}" class="h6">{{ $pro->ten_san_pham }}
                                 <h5 class="mb-3" style="color: red">{{ number_format($pro->gia, 0, ',', '.') }} VNĐ</h5>
-                            <a href="{{ route('cart.add1', $pro->san_pham_id) }}" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                            <a href="{{ route('cart.add1', $pro->san_pham_id) }}" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i>Thêm giỏ hàng</a>
                         </div>
                     </div>
                 </div>

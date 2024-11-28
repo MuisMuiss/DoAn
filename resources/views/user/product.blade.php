@@ -14,7 +14,7 @@
                                 {{ number_format($pro->gia, 0, ',', '.') }}VNĐ</p>
                             <a href="{{ route('cart.add1', $pro->san_pham_id) }}"
                                 class="btn border border-secondary rounded-pill px-3 text-primary"><i
-                                    class="fa fa-shopping-bag me-2 text-primary"></i>Add to cart</a>
+                                    class="fa fa-shopping-bag me-2 text-primary"></i>Thêm giỏ hàng</a>
                         </div>
                     </div>
                 </div>
