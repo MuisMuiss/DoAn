@@ -77,7 +77,7 @@
                                                         <a href="{{ route('admin.edituser', ['nguoi_dung_id' => $nd->nguoi_dung_id]) }}"
                                                             class="btn btn-warning btn-circle btn-sm"
                                                             style=" margin-right: 10px;">
-                                                            <i class="fas fa-fw fa-wrench"></i>
+                                                            <i class="fas fa-fw fa-pen"></i>
                                                         </a>
                                                         <a href="{{ route('admin.deleteUser', ['nguoi_dung_id' => $nd->nguoi_dung_id]) }}"
                                                             class="btn btn-danger btn-circle btn-sm"data-toggle="modal"

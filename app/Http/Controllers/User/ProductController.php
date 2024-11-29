@@ -59,7 +59,7 @@ class ProductController extends Controller
                 $productsw->orderBy('sp_moi', 'desc');
                 break;
         }
-        $products = DB::table('san_pham')->paginate(2);
+        $products = DB::table('san_pham')->get();
         $product = $productsw->paginate(6);
         $cate_product = DB::table('loai_sp')->get();
         $cate_shops = ProductType::where('loai_sp_id', $cate)->get();
@@ -101,7 +101,7 @@ class ProductController extends Controller
                 break;
         }
         $product = $productsw->paginate(6);
-        $products = DB::table('san_pham')->paginate(6);
+        $products = DB::table('san_pham')->get();
         $brand_shops = Brand::where('thuong_hieu_id', $brand)->get();
         return view('user.brandshop', compact('products', 'product', 'cate_product', 'brand_shops', 'brand_product'));
     }
@@ -133,7 +133,7 @@ class ProductController extends Controller
                 break;
         }
         $product= $productsw->paginate(6);
-        $products = DB::table('san_pham')->paginate(6);
+        $products = DB::table('san_pham')->get();
         $brand_product = DB::table('thuong_hieu')->get();
         $category = DB::table('danh_muc_san_pham')->get();
         $cate_product = DB::table('loai_sp')->get();

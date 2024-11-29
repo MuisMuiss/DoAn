@@ -47,7 +47,7 @@
                                         <td>
                                             <div style="display: flex; justify-content: center; align-items: center;">
                                                 <a href="{{ route('admin.editcate', ['danh_muc_id' => $cate->danh_muc_id]) }}" class="btn btn-warning btn-circle btn-sm" style=" margin-right: 10px;">
-                                                    <i class="fas fa-fw fa-wrench"></i>
+                                                    <i class="fas fa-fw fa-pen"></i>
                                                 </a>
                                                 <a href="{{ route('admin.deletecate', ['danh_muc_id' => $cate->danh_muc_id]) }}"
                                                     class="btn btn-danger btn-circle btn-sm"data-toggle="modal"

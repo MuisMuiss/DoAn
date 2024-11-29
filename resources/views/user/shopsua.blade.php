@@ -38,7 +38,6 @@
                                 <form id="priceRangeForm" method="GET"
                                     action="{{ route('go.shop', ['cate' => $cate_shops->first()->loai_sp_id ?? '']) }}">
                                     <div class="row align-items-end">
-                                        <!-- Nhập giá thấp nhất -->
                                         <div class="col-md-3" style="width:20%">
                                             <h5>Tìm kiếm theo giá:</h5>
                                         </div>
@@ -47,13 +46,11 @@
                                             <input type="number" class="form-control" id="minPrice" name="minPrice"
                                                 placeholder="Nhập giá thấp nhất" min="0" required>
                                         </div>
-                                        <!-- Nhập giá cao nhất -->
                                         <div class="col-md-3">
                                             <label for="maxPrice" class="form-label">Đến giá</label>
                                             <input type="number" class="form-control" id="maxPrice" name="maxPrice"
                                                 placeholder="Nhập giá cao nhất" min="0" required>
                                         </div>
-                                        <!-- Nút tìm kiếm -->
                                         <div class="col-md-3">
                                             <input type="hidden" name="sort" value="{{ request('sort') }}">
                                             <button type="submit" class="btn btn-primary mt-2 w-50">Tìm kiếm</button>

@@ -35,7 +35,7 @@
 
                         <button type="submit"
                             class="btn btn-primary border-2 border-secondary py-3 px-4 position-absolute rounded-pill text-white h-100"
-                            style="top: 0; right: 25%;">Submit Now</button>
+                            style="top: 0; right: 25%;">Tìm kiếm</button>
                 </div>
             </div>
             <div class="col-md-12 col-lg-5">
@@ -198,7 +198,7 @@
         <div class="tab-class text-center">
             <div class="row g-4">
                 <div class="col-lg-4 text-start">
-                    <h1>Products</h1>
+                    <h1>Sản phẩm</h1>
                 </div>
                 <div class="col-lg-8 text-end">
                     <ul class="nav nav-pills d-inline-flex text-center mb-5">
@@ -247,9 +247,8 @@
                                                         <p class="fw-bold mb-0" style="font-size: 1.10rem; color:red">
                                                             {{ number_format($pro->gia, 0, ',', '.') }}VNĐ</p>
                                                         <a href="{{ route('cart.add1', $pro->san_pham_id) }}"
-                                                            class="btn border border-secondary rounded-pill px-3 text-primary"><i
-                                                                class="fa fa-shopping-bag me-2 text-primary"></i> Add
-                                                            to cart</a>
+                                                            class="btn border border-secondary rounded-pill px-3 text-primary" style="font-size:0.8rem"><i
+                                                                class="fa fa-shopping-bag me-2 text-primary"></i>Thêm giỏ hàng</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -287,9 +286,8 @@
                                                         <p class="fw-bold mb-0" style="font-size: 1.10rem; color:red">
                                                             {{ number_format($pro->gia, 0, ',', '.') }}VNĐ</p>
                                                         <a href="{{ route('cart.add1', $pro->san_pham_id) }}"
-                                                            class="btn border border-secondary rounded-pill px-3 text-primary"><i
-                                                                class="fa fa-shopping-bag me-2 text-primary"></i> Add
-                                                            to cart</a>
+                                                            class="btn border border-secondary rounded-pill px-3 text-primary" style="font-size:0.8rem"><i
+                                                                class="fa fa-shopping-bag me-2 text-primary"></i> Thêm giỏ hàng</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -328,9 +326,8 @@
                                                         <p class="fw-bold mb-0" style="font-size: 1.10rem; color:red">
                                                             {{ number_format($pro->gia, 0, ',', '.') }}VNĐ</p>
                                                         <a href="{{ route('cart.add1', $pro->san_pham_id) }}"
-                                                            class="btn border border-secondary rounded-pill px-3 text-primary"><i
-                                                                class="fa fa-shopping-bag me-2 text-primary"></i> Add
-                                                            to cart</a>
+                                                            class="btn border border-secondary rounded-pill px-3 text-primary" style="font-size:0.8rem"><i
+                                                                class="fa fa-shopping-bag me-2 text-primary"></i> Thêm giỏ hàng</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -402,13 +399,13 @@
                                 </a>
                             </div>
                             <div class="col-6">
-                                <a href="{{ route('productdetail', $pro->san_pham_id) }}" class="h5">{{ $pro->ten_san_pham }}</a>
-                                <h5 class="mb-3" style="color: red">
+                                <a href="{{ route('productdetail', $pro->san_pham_id) }}" class="h5" style="font-family: 'Arial', sans-serif;">{{ $pro->ten_san_pham }}</a>
+                                <h5 class="mb-3" style="color: red; font-family: 'Arial', sans-serif;">
                                     {{ number_format($pro->gia, 0, ',', '.') }} VNĐ
                                 </h5>
                                 <a href="{{ route('cart.add1', $pro->san_pham_id) }}" 
                                    class="btn border border-secondary rounded-pill px-3 text-primary">
-                                   <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
+                                   <i class="fa fa-shopping-bag me-2 text-primary"></i> Thêm giỏ hàng
                                 </a>
                             </div>
                         </div>
@@ -471,9 +468,9 @@
                             <img src="{{ asset('images/product/' . $pro->hinh_anh) }}" class="img-fluid w-100" alt="">
                         </a>
                         <div class="py-4">
-                            <a href="{{ route('productdetail', $pro->san_pham_id) }}" class="h6">{{ $pro->ten_san_pham }}
-                                <h5 class="mb-3" style="color: red">{{ number_format($pro->gia, 0, ',', '.') }} VNĐ</h5>
-                            <a href="{{ route('cart.add1', $pro->san_pham_id) }}" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                            <a href="{{ route('productdetail', $pro->san_pham_id) }}" class="h6" style="font-family: 'Arial', sans-serif;">{{ $pro->ten_san_pham }}
+                                <h5 class="mb-3" style="color: red; font-family: 'Arial', sans-serif;">{{ number_format($pro->gia, 0, ',', '.') }} VNĐ</h5>
+                            <a href="{{ route('cart.add1', $pro->san_pham_id) }}" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i>Thêm giỏ hàng</a>
                         </div>
                     </div>
                 </div>

@@ -75,12 +75,12 @@
                                                         <a href="{{ route('admin.editnhap', ['nhap_hang_id' => $item->nhap_hang_id]) }}"
                                                             class="btn btn-warning btn-circle btn-sm"
                                                             style=" margin-right: 10px;">
-                                                            <i class="fas fa-fw fa-wrench"></i>
+                                                            <i class="fas fa-fw fa-pen"></i>
                                                         </a>
                                                         <a href="{{ route('ctimport.all', ['nhap_hang_id' => $item->nhap_hang_id]) }}"
                                                             class="btn btn-success btn-circle btn-sm"
                                                             style=" margin-right: 10px;">
-                                                            <i class="fas fa-fw fa-pen"></i>
+                                                            <i class="fas fa-fw fa-eye"></i>
                                                         </a>
                                                         <a href="{{ route('admin.deletenhap', ['nhap_hang_id' => $item->nhap_hang_id]) }}"
                                                             class="btn btn-danger btn-circle btn-sm"data-toggle="modal"

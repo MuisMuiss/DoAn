@@ -4,13 +4,13 @@
 
     <!-- Page Heading -->
     <h1 class="h3 mb-2 text-gray-800">Chi tiết nhập hàng</h1>
-    <a href="{{ route('ctimport.add', ['nhap_hang_id' => $nhaphang->nhap_hang_id]) }}" 
-        class="btn btn-success btn-icon-split"> 
+    <a href="{{ route('ctimport.add', ['nhap_hang_id' => $nhaphang->nhap_hang_id]) }}"
+        class="btn btn-success btn-icon-split">
         <span class="icon text-white-50">
             <i class="fas fa-plus"></i>
         </span>
         <span class="text">Thêm sản phẩm nhập</span>
-     </a>
+    </a>
     <hr>
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
@@ -48,10 +48,10 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($ct_nhap as $ctn)
-                                    <tr class="odd">
-                                        <td>{{$ctn->id}}</td>
-                                        <td>{{$ctn->nhap_hang_id}}</td>
-                                        @if (isset($product[$ctn->san_pham_id]))
+                                        <tr class="odd">
+                                            <td>{{ $ctn->id }}</td>
+                                            <td>{{ $ctn->nhap_hang_id }}</td>
+                                            @if (isset($product[$ctn->san_pham_id]))
                                                 <td>
                                                     <img src="{{ asset('images/product/' . $product[$ctn->san_pham_id]->hinh_anh) }}"
                                                         alt="Product Image" style="width: 90px; height: 90px;">
@@ -59,36 +59,60 @@
                                             @else
                                                 <td>Không tìm thấy sản phẩm</td>
                                             @endif
-                                        @foreach ($product as $keybrand => $pro)
+                                            @foreach ($product as $keybrand => $pro)
                                                 @if ($ctn->san_pham_id == $pro->san_pham_id)
                                                     <td>{{ $pro->ten_san_pham }}</td>
                                                 @endif
                                             @endforeach
-                                        @foreach ($brand as $keybrand => $br)
+                                            @foreach ($brand as $keybrand => $br)
                                                 @if ($ctn->thuong_hieu_id == $br->thuong_hieu_id)
                                                     <td>{{ $br->ten_thuong_hieu }}</td>
                                                 @endif
                                             @endforeach
-                                        <td>{{$ctn->so_luong}}</td>
-                                        <td>{{number_format($ctn->gia_nhap, 0, ',', '.')}} VNĐ</td>
-                                        <td>{{number_format($ctn->thanh_tien, 0, ',', '.')}} VNĐ</td>
-                                        <td>
-                                            <div style="display: flex; justify-content: center; align-items: center;">
-                                                <a href="{{ route('admin.editctnhap', ['id' => $ctn->id]) }}"
-                                                    class="btn btn-warning btn-circle btn-sm"
-                                                    style=" margin-right: 10px;">
-                                                    <i class="fas fa-fw fa-wrench"></i>
-                                                </a>
-                                                <a href="{{ route('admin.deletectnhap', ['id' => $ctn->id]) }}"
-                                                    class="btn btn-danger btn-circle btn-sm"data-toggle="modal"
-                                                    data-target="#deleteModal">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <i class="fas fa-trash"></i>
-                                                </a>
+                                            <td>{{ $ctn->so_luong }}</td>
+                                            <td>{{ number_format($ctn->gia_nhap, 0, ',', '.') }} VNĐ</td>
+                                            <td>{{ number_format($ctn->thanh_tien, 0, ',', '.') }} VNĐ</td>
+                                            <td>
+                                                <div
+                                                    style="display: flex; justify-content: center; align-items: center;">
+                                                    <a href="{{ route('admin.editctnhap', ['id' => $ctn->id]) }}"
+                                                        class="btn btn-warning btn-circle btn-sm"
+                                                        style=" margin-right: 10px;">
+                                                        <i class="fas fa-fw fa-pen"></i>
+                                                    </a>
+                                                    <a href="{{ route('admin.deletectnhap', ['id' => $ctn->id]) }}"
+                                                        class="btn btn-danger btn-circle btn-sm"data-toggle="modal"
+                                                        data-target="#deleteModal">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <i class="fas fa-trash"></i>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <!-- Delete Modal-->
+                                        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog"
+                                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" style="color: red;"
+                                                            id="exampleModalLabel">Thông báo!!!</h5>
+                                                        <button class="close" type="button" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                            <span aria-hidden="true">×</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">Bạn chắc chắn có muốn xóa không</div>
+                                                    <div class="modal-footer">
+                                                        <button class="btn btn-secondary" type="button"
+                                                            data-dismiss="modal">Cancel</button>
+                                                        <a class="btn btn-danger"
+                                                            href="{{ route('admin.deletectnhap', ['id' => $ctn->id]) }}">Detele</a>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </td>
-                                    </tr>
+                                        </div>
                                     @endforeach
                                 </tbody>
                             </table>
@@ -123,25 +147,6 @@
     </div>
 
 </div>
-<!-- Delete Modal-->
-<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" style="color: red;" id="exampleModalLabel">Thông báo!!!</h5>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body">Bạn chắc chắn có muốn xóa không</div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                <a class="btn btn-danger"
-                    href="{{ route('admin.deletectnhap', ['id' => $ctn->id]) }}">Detele</a>
-            </div>
-        </div>
-    </div>
-</div>
+
 <!-- End of Main Content -->
 @include('admin.autth.footer')

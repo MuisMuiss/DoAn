@@ -13,9 +13,7 @@ use Illuminate\Support\Facades\DB;
 
 class CartController extends Controller
 {
-    /**
-     * Hiển thị giỏ hàng
-     */
+    
     public function index()
     {
         $userId = Auth::id(); // ID người dùng
@@ -34,9 +32,6 @@ class CartController extends Controller
         }
     }
 
-    /**
-     * Thêm sản phẩm vào giỏ hàng
-     */
     public function addToCart(Request $request, $id)
     {
         $userId = Auth::id();
@@ -115,19 +110,13 @@ class CartController extends Controller
     public function update(Request $request, $cartId)
     {
 
-        // Lấy giỏ hàng của người dùng
         $cartItem = Cart::find($cartId);
-
-        // Kiểm tra số lượng sản phẩm trong kho
         $quantity = $request->input('so_luong');
 
         $product = $cartItem->product; // Lấy sản phẩm liên quan đến cart item
-
         if ($quantity > $product->so_luong_kho) {
             return redirect()->route('cart.index')->with('no', 'Số lượng sản phẩm vượt quá số lượng trong kho');
         }
-
-        // Cập nhật số lượng sản phẩm trong giỏ hàng
         $cartItem->so_luong = $quantity;
         $cartItem->save();
 
@@ -135,7 +124,7 @@ class CartController extends Controller
     }
     public function clear()
     {
-        $userId = Auth::id(); // Lấy ID người dùng đã đăng nhập (nếu có)
+        $userId = Auth::id(); // Lấy ID người dùng đã đăng nhập
 
         // Xóa tất cả sản phẩm trong giỏ hàng của người dùng
         Cart::where('nguoi_dung_id', $userId)->delete();
@@ -174,7 +163,6 @@ class CartController extends Controller
             $total = $cartItems->sum(function ($item) {
                 return $item->gia * $item->so_luong;
             });
-
             // Tạo đơn hàng
             $orderId = DB::table('don_hang')->insertGetId([
                 'nguoi_dung_id' => $user->nguoi_dung_id,
@@ -184,7 +172,6 @@ class CartController extends Controller
                 'ngay_dat' => now(),
                 'trang_thai_don_hang' => 'Đang xử lý',
             ]);
-
             // Lưu chi tiết đơn hàng
             $cartItems = json_decode($request->input('cartItems'), true);
             foreach ($cartItems as $item) {
@@ -196,16 +183,12 @@ class CartController extends Controller
                         'gia_don_vi' => $item['gia'],
                     ]);
                 } else {
-                    // Xử lý trường hợp không có san_pham_id
                     dd('Không có san_pham_id trong item', $item);
                 }
             }
-
             // Xóa giỏ hàng của người dùng sau khi đặt hàng
             DB::table('gio_hang')->where('nguoi_dung_id', Auth::id())->delete();
-
             DB::commit();
-
             return redirect()->route('checkout')->with('ok', 'Đặt hàng thành công!');
         } catch (\Exception $e) {
             DB::rollBack();

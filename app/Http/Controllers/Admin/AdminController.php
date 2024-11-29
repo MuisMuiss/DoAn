@@ -160,9 +160,8 @@ class AdminController extends Controller
             'vai_tro' => 'required|boolean',
             'trang_thai' => 'required|boolean',
         ], $messages);
-        // Kiểm tra email đã tồn tại (trừ email của chính người dùng)
         $existingUser = nguoiDung::where('email', $request->email)
-            ->where('nguoi_dung_id', '<>', $nguoi_dung_id) // Tránh kiểm tra email của chính người dùng
+            ->where('nguoi_dung_id', '<>', $nguoi_dung_id)
             ->first();
         if ($existingUser) {
             return redirect()->back()->with(['status' => 'Email đã tồn tại.']);
@@ -177,7 +176,6 @@ class AdminController extends Controller
         $nguoiDung->so_dien_thoai = $request->input('so_dien_thoai');
         $nguoiDung->dia_chi = $request->input('dia_chi');
         $nguoiDung->vai_tro = $request->vai_tro ? 1 : 0;
-        // Xử lý ảnh đại diện
         if ($request->hasFile('avatar')) {
             $anhcu = public_path('images/avatar/' . $nguoiDung->avatar);
             // Kiểm tra xem ảnh cũ có tồn tại không và xóa nếu có
@@ -189,11 +187,9 @@ class AdminController extends Controller
             $extension = $file->getClientOriginalExtension();
             $filename = time() . '.' . $extension;
             $file->move(public_path('images/avatar'), $filename);
-            // Cập nhật đường dẫn ảnh trong cơ sở dữ liệu
             $nguoiDung->avatar = $filename;
         }
         $nguoiDung->trang_thai = $request->trang_thai ? 1 : 0;
-        // Lưu thông tin người dùng
         $nguoiDung->save();
 
         return redirect()->back()->with('status', 'Cập nhật user thành công');

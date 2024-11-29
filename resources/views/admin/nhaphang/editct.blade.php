@@ -24,11 +24,22 @@
                             </div>
                             <div class="form-group mb-3">
                                 <label for="">Tên sản phẩm nhập</label>
-                                <select name="san_pham_id" id="" class="form-control">
+                                <input type="text" class="form-control" value="{{ $product }}" readonly>
+                                <input type="hidden" name="san_pham_id" value="{{ $ct_nhap->san_pham_id }}">
+                            </div>
+                            
+                            <div class="form-group mb-3">
+                                <label for="">Thương hiệu nhập:</label>
+                                <input type="text" class="form-control" value="{{ $brand }}" readonly>
+                                <input type="hidden" name="thuong_hieu_id" value="{{ $ct_nhap->thuong_hieu_id }}">
+                            </div>
+                            {{-- <div class="form-group mb-3">
+                                <label for="">Tên sản phẩm nhập</label>
+                                <select name="san_pham_id" id="" class="form-control" >
                                     @foreach ($product as $key => $pro)
-                                        <option value="{{ $pro->san_pham_id }}"
+                                        <option value="{{ $pro->san_pham_id }}" 
                                             {{ old('san_pham_id',$ct_nhap->san_pham_id) == $pro->san_pham_id ? 'selected' : '' }}>
-                                            {{ $pro->ten_san_pham }}
+                                            {{ $pro->ten_san_pham }} 
                                         </option>
                                     @endforeach
                                 </select>
@@ -51,7 +62,7 @@
                                 @error('thuong_hieu_id')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
-                            </div>
+                            </div> --}}
                             <div class="form-group row">
                                 <div class="form-group mb-3 col">
                                     <label for="">Số lượng:</label>

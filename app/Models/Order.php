@@ -33,4 +33,8 @@ class Order extends Model
     {
         return $this->belongsTo(nguoiDung::class, 'nguoi_dung_id');
     }
+    public function orderItems()
+    {
+        return $this->hasMany(OrderItem::class, 'don_hang_id', 'don_hang_id');
+    }
 }

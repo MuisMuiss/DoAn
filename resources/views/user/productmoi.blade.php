@@ -29,9 +29,8 @@
                                                     <p class="fw-bold mb-0" style="font-size: 1.10rem; color:red">
                                                         {{ number_format($pro->gia, 0, ',', '.') }}VNĐ</p>
                                                     <a href="{{ route('cart.add1', $pro->san_pham_id) }}"
-                                                        class="btn border border-secondary rounded-pill px-3 text-primary"><i
-                                                            class="fa fa-shopping-bag me-2 text-primary"></i>Add to
-                                                        cart</a>
+                                                        class="btn border border-secondary rounded-pill px-3 text-primary" style="font-size:0.8rem"><i
+                                                            class="fa fa-shopping-bag me-2 text-primary"></i>Thêm giỏ hàng</a>
                                                 </div>
                                             </div>
                                         </div>

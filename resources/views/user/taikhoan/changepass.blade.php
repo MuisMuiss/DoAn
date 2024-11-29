@@ -29,13 +29,13 @@
                             </div> --}}
                             <div class="mb-3 fruite-name text-black">
                                 <a href="{{ route('accout.view', ['nguoi_dung_id' => Auth::id()]) }}"
-                                    onclick="showContent(this)">Thông tin cá nhân</a>
+                                    >Thông tin cá nhân</a>
                             </div>
                             <div class="mb-3 fruite-name">
-                                <a href="{{ route('order.view') }}" onclick="showContent(this)">Đơn hàng</a>
+                                <a href="{{ route('order.view') }}" >Đơn hàng</a>
                             </div>
                             <div class="mb-3 fruite-name">
-                                <a href="{{ route('chpass.view') }}" onclick="showContent(this)">Thay đổi mật khẩu</a>
+                                <a href="{{ route('chpass.view') }}"  style="color: red">Thay đổi mật khẩu</a>
                             </div>
                         </div>
                     </div>
