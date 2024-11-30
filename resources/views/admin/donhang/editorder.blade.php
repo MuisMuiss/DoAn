@@ -1,4 +1,4 @@
-@include('admin.autth.layout')
+{{-- @include('admin.autth.layout')
 
 <body>
     <div class="container">
@@ -16,20 +16,13 @@
                             @csrf
                             <div class="form-group mb-3">
                                 <label for="">Họ và tên:</label>
-                                <select name="nguoi_dung_id" class="form-control" readonly>
-                                    @foreach ($user as $key => $cate)
-                                        <option value="{{ $cate->nguoi_dung_id }}"
-                                            {{ old('nguoi_dung_id', $order->nguoi_dung_id) == $cate->nguoi_dung_id ? 'selected' : '' }}>
-                                            {{ $cate->ho_ten }}
-                                        </option>
-                                    @endforeach
-                                </select>
+                                <input type="text" class="form-control" name="nguoi_dung_id" value="{{ $order->user->ho_ten }}" readonly>
                             </div>
 
                             <div class="form-group mb-3">
                                 <label for="">Trạng thái đơn hàng:</label>
                                 <select name="trang_thai_don_hang" class="form-control">
-                                    <option value="chao_xu_ly"
+                                    <option value="dang_xu_ly"
                                         {{ old('trang_thai_don_hang', $order->trang_thai_don_hang) == 'dang_xu_ly' ? 'selected' : '' }}>
                                         Đang xử lý</option>
                                     <option value="dang_giao"
@@ -49,17 +42,10 @@
 
                             <div class="form-group mb-3">
                                 <label for="">Phương thức thanh toán:</label>
-                                <select name="phuong_thuc_thanh_toan" class="form-control">
-                                    <option value="COD"
-                                        {{ old('phuong_thuc_thanh_toan', $order->phuong_thuc_thanh_toan) == 'COD' ? 'selected' : '' }}>
-                                        Thanh toán khi nhận hàng</option>
-                                    <option value="Online"
-                                        {{ old('phuong_thuc_thanh_toan', $order->phuong_thuc_thanh_toan) == 'Online' ? 'selected' : '' }}>
-                                        Chuyển khoản</option>
-                                </select>
-                                @error('phuong_thuc_thanh_toan')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
+                                <p class="form-control-plaintext">
+                                    {{ $order->phuong_thuc_thanh_toan == 'COD' ? 'Thanh toán khi nhận hàng' : 'Thanh toán online' }}
+                                </p>
+                                <input type="text" class="form-control" name="phuong_thuc_thanh_toan" value="{{ $order->phuong_thuc_thanh_toan == 'COD' ? 'Thanh toán khi nhận hàng' : 'Thanh toán online' }}" readonly>
                             </div>
 
                             <div class="form-group mb-3">
@@ -74,4 +60,4 @@
     </div>
 </body>
 
-</html>
+</html> --}}

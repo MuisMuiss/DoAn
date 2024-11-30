@@ -116,7 +116,14 @@
                                         <div class="order-header" style="display: flex;">
                                             <p><strong>Phươn thức thanh toán:</strong> {{ $phuong_thuc[$order->phuong_thuc_thanh_toan] }}</p>
                                             <p style="color: red"><strong style="color: #747d88">Tổng tiền: </strong>{{ number_format($order->tong_tien, 0, ',', '.') }} VNĐ</p>
+                                            <form class="mb-0 mt-4" action="{{ route('deleteOrder', ['don_hang_id' => $order->don_hang_id]) }}"
+                                                method="POST" onsubmit="return confirm('Bạn có chắc chắn muốn hủy đơn hàng không?')">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger">Hủy đơn hàng</button>
+                                            </form>
                                         </div>
+                                        
                                     </div>
                                 @empty
                                     <p>Bạn chưa có đơn hàng nào.</p>

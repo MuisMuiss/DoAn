@@ -33,7 +33,8 @@ class AdminController extends Controller
 
 
         $soLuongSP = Product::count();
-        $tongDoanhThu = Order::sum('tong_tien');
+        $tongDoanhThu = Order::where('trang_thai_don_hang', '!=', 'da_huy')
+        ->sum('tong_tien');
         $soLuongDH = Order::count();
         $soLuongNH = Import::count();
         $doanhThuNgay = Order::select(DB::raw('DATE(ngay_dat) as ngay, SUM(tong_tien) as doanh_thu'))

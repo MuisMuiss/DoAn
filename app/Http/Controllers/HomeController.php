@@ -201,32 +201,36 @@ class HomeController extends Controller
 
         return redirect()->back()->with('update', 'Cập nhật user thành công');
     }
-    // public function viewOrder()
-    // {
-    //     $order = Order::where('nguoi_dung_id', Auth::id())->get();
-    //     $user = nguoiDung::all();
-    //     $order_item = OrderItem::all();
-    //     $category = DB::table('danh_muc_san_pham')->get();
-    //     $cate_product = DB::table('loai_sp')->get();
-    //     $brand_product = DB::table('thuong_hieu')->get();
-    //     return view('user.taikhoan.order',compact('order','user','order_item','category','cate_product','brand_product'));
-    // }
+
     public function viewOrder()
     {
         $userId = Auth::id();
-
-        // Lấy đơn hàng của người dùng và chi tiết liên quan
         $orders = Order::with(['orderItems.product'])
             ->where('nguoi_dung_id', $userId)
             ->orderBy('ngay_dat', 'desc')
             ->get();
 
-        // Các dữ liệu khác
+
         $categories = DB::table('danh_muc_san_pham')->get();
         $cate_product = DB::table('loai_sp')->get();
         $brandProducts = DB::table('thuong_hieu')->get();
 
         return view('user.taikhoan.order', compact('orders', 'categories', 'cate_product', 'brandProducts'));
+    }
+    public function deleteOrder($don_hang_id)
+    {
+        $userId = Auth::id();
+        $order = Order::where('don_hang_id', $don_hang_id)
+            ->where('nguoi_dung_id', $userId)
+            ->first();
+        if ($order->trang_thai_don_hang !== 'dang_xu_ly') {
+            return redirect()->back()->with('no', 'Bạn cần liên hệ chúng tôi để hủy đơn hàng.');
+        }
+        DB::transaction(function () use ($order) {
+            $order->orderItems()->delete();
+            $order->delete();
+        });
+        return redirect()->back()->with('ok', 'Đơn hàng đã được hủy thành công.');
     }
     public function viewctOrder($don_hang_id)
     {

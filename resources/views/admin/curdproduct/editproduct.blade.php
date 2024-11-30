@@ -54,7 +54,7 @@
     
                                 <div class="form-group mb-3">
                                     <label for="">Số lượng kho:</label>
-                                    <input type="text" name="so_luong_kho" id="" class="form-control" value="{{$product->so_luong_kho,old('so_luong_kho')}}">
+                                    <input type="text" name="so_luong_kho" id="" class="form-control" value="{{$product->so_luong_kho,old('so_luong_kho')}}" readonly>
                                     @error('so_luong_kho')
                                         <span class="text-danger">{{$message}}</span>
                                     @enderror

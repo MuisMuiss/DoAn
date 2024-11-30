@@ -24,9 +24,9 @@ class Detailimport extends Model
         parent::boot();
 
         static::creating(function ($type) {
-            // Tìm giá trị lớn nhất của nguoi_dung_id và ép kiểu về int
-            $maxId = (int) Detailimport::max('id'); // Ép kiểu về int
-            $type->id = $maxId > 0 ? $maxId + 1 : 1;  // Tăng lên 1
+            
+            $maxId = (int) Detailimport::max('id');
+            $type->id = $maxId > 0 ? $maxId + 1 : 1; 
         });
     }
     public function sanPham()
