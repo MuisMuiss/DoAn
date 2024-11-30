@@ -39,6 +39,7 @@
                                     <tr>
                                         <th rowspan="1" colspan="1">Id</th>
                                         <th rowspan="1" colspan="1">Mã nhập hàng</th>
+                                        <th rowspan="1" colspan="1">Hình ảnh</th>
                                         <th rowspan="1" colspan="1">Tên sản phẩm</th>
                                         <th rowspan="1" colspan="1">Tên thương hiệu</th>
                                         <th rowspan="1" colspan="1">Số lượng</th>

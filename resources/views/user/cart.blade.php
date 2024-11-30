@@ -1,21 +1,26 @@
 @include('user.layout.header')
-
+@php
+    $tongTien = 0;
+@endphp
 <div class="container-fluid py-5">
     <div class="container py-5">
         <div class="table-responsive" style="margin-top:100px">
             <table class="table">
                 <thead>
                     <tr>
-                        <th scope="col">Products</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Price</th>
-                        <th scope="col">Quantity</th>
-                        <th scope="col">Total</th>
-                        <th scope="col">Handle</th>
+                        <th scope="col">Ảnh</th>
+                        <th scope="col">Tên sản phẩm</th>
+                        <th scope="col">Giá</th>
+                        <th scope="col">Số lượng</th>
+                        <th scope="col">Tổng giá</th>
+
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($cartItems as $item)
+                        @php
+                            $tongTien += $item->product->gia * $item->so_luong; // Cộng dồn tiền từng sản phẩm
+                        @endphp
                         {{-- <tr>
                             <td>
                                 <img src=" {{ asset('images/product/' . $item->product->hinh_anh) }}"
@@ -66,7 +71,7 @@
                             </td>
                             <td>
                                 <p class="mb-0 mt-4">
-                                    {{ number_format($item->product->gia * $item->so_luong, 0, ',', '.') }}đ</p>
+                                    {{ number_format($item->product->gia * $item->so_luong, 0, ',', '.') }}VNĐ</p>
                             </td>
                             <td>
                                 <form class="mb-0 mt-4" action="{{ route('cart.delete', $item->gio_hang_id) }}"
@@ -79,7 +84,10 @@
                         </tr>
                     @endforeach
                     <tr>
-                        <td></td>
+                        <td>
+                            <p class="mb-0 mt-4" style="color: red; font-size:1.15rem;font-weight: 600;">
+                                Tổng tiền: {{ number_format($tongTien, 0, ',', '.') }}VNĐ</p>
+                        </td>
                         <td></td>
                         <td></td>
                         <td></td>

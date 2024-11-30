@@ -18,9 +18,9 @@ class HomeController extends Controller
     public function index()
     {
         $product = Product::join('loai_sp', 'san_pham.loai_sp_id', '=', 'loai_sp.loai_sp_id')
-        ->join('danh_muc_san_pham', 'loai_sp.danh_muc_id', '=', 'danh_muc_san_pham.danh_muc_id')
-        ->select('san_pham.*', 'danh_muc_san_pham.danh_muc_id as danh_muc_id')
-        ->get();
+            ->join('danh_muc_san_pham', 'loai_sp.danh_muc_id', '=', 'danh_muc_san_pham.danh_muc_id')
+            ->select('san_pham.*', 'danh_muc_san_pham.danh_muc_id as danh_muc_id')
+            ->get();
         $category = DB::table('danh_muc_san_pham')->get();
         $cate_product = DB::table('loai_sp')->get();
         $brand_product = DB::table('thuong_hieu')->get();
@@ -54,7 +54,8 @@ class HomeController extends Controller
         $brand_product = DB::table('thuong_hieu')->get();
         return view('user.forgotpass')->with('category', $category)->with('cate_product', $cate_product)->with('brand_product', $brand_product);
     }
-    public function checkfp(Request $request){
+    public function checkfp(Request $request)
+    {
         $messages = [
             'email.required' => 'Vui lòng nhập email.',
             'email.email' => 'Email không đúng định dạng.',
@@ -63,7 +64,7 @@ class HomeController extends Controller
         $validatedData = $request->validate([
             'email' => 'required|email|exists:nguoi_dungs,email',
         ], $messages);
-        return redirect()->route('reset.password', ['email' => $request->email])->with('ok','Đã xác nhận email');
+        return redirect()->route('reset.password', ['email' => $request->email])->with('ok', 'Đã xác nhận email');
     }
     public function showResetForm($email)
     {
@@ -82,7 +83,7 @@ class HomeController extends Controller
             'password.min' => 'Mật khẩu phải có ít nhất 6 ký tự.',
             'password.confirmed' => 'Xác nhận mật khẩu không khớp.',
         ];
-    
+
         $validatedData = $request->validate([
             'email' => 'required|email|exists:nguoi_dungs,email',
             'password' => 'required|string|min:6|confirmed',
@@ -142,34 +143,6 @@ class HomeController extends Controller
         $nguoiDung->save();
         return redirect()->route('user.login')->with('dk', 'Đăng ký thành công! Vui lòng đăng nhập.');
     }
-    // public function showProfile()
-    // {
-    //     $category = DB::table('danh_muc_san_pham')->get();
-    //     $cate_product = DB::table('loai_sp')->get();
-    //     $brand_product = DB::table('thuong_hieu')->get();
-    //     $order = DB::table('don_hang')->get();
-    //     return view('user.taikhoan.profile')->with('category', $category)->with('order', $order)->with('cate_product', $cate_product)->with('brand_product', $brand_product);
-    // }
-    // public function getInfo($type)
-    // {
-    //     try {
-    //         if ($type === 'profile') {
-    //             $user = Auth::user();
-    //             $cate_product = DB::table('loai_sp')->get();
-    //             return view('user.taikhoan.accout_content', compact('user', 'cate_product'))->render();
-    //         } elseif ($type === 'orders') {
-    //             $orders = Auth::user()->orders;
-    //             return view('user.taikhoan.order_content', compact('orders'))->render();
-    //         } elseif ($type === 'changepass') {
-    //             $cate_product = DB::table('loai_sp')->get();
-    //             return view('user.taikhoan.changepass_content', compact('cate_product'))->render();
-    //         } else {
-    //             return abort(404);
-    //         }
-    //     } catch (\Exception $e) {
-    //         return response()->json(['error' => 'Đã xảy ra lỗi'], 500);
-    //     }
-    // }
     public function viewAccout($nguoi_dung_id)
     {
         $nguoiDung = nguoiDung::find($nguoi_dung_id);
@@ -228,15 +201,36 @@ class HomeController extends Controller
 
         return redirect()->back()->with('update', 'Cập nhật user thành công');
     }
+
     public function viewOrder()
     {
-        $order = Order::where('nguoi_dung_id', Auth::id())->get();
-        $user = nguoiDung::all();
-        $order_item = OrderItem::all();
-        $category = DB::table('danh_muc_san_pham')->get();
+        $userId = Auth::id();
+        $orders = Order::with(['orderItems.product'])
+            ->where('nguoi_dung_id', $userId)
+            ->orderBy('ngay_dat', 'desc')
+            ->get();
+
+
+        $categories = DB::table('danh_muc_san_pham')->get();
         $cate_product = DB::table('loai_sp')->get();
-        $brand_product = DB::table('thuong_hieu')->get();
-        return view('user.taikhoan.order',compact('order','user','order_item','category','cate_product','brand_product'));
+        $brandProducts = DB::table('thuong_hieu')->get();
+
+        return view('user.taikhoan.order', compact('orders', 'categories', 'cate_product', 'brandProducts'));
+    }
+    public function deleteOrder($don_hang_id)
+    {
+        $userId = Auth::id();
+        $order = Order::where('don_hang_id', $don_hang_id)
+            ->where('nguoi_dung_id', $userId)
+            ->first();
+        if ($order->trang_thai_don_hang !== 'dang_xu_ly') {
+            return redirect()->back()->with('no', 'Bạn cần liên hệ chúng tôi để hủy đơn hàng.');
+        }
+        DB::transaction(function () use ($order) {
+            $order->orderItems()->delete();
+            $order->delete();
+        });
+        return redirect()->back()->with('ok', 'Đơn hàng đã được hủy thành công.');
     }
     public function viewctOrder($don_hang_id)
     {
@@ -252,8 +246,9 @@ class HomeController extends Controller
             ->where('don_hang_id', $don_hang_id)
             ->get();
         // Trả về view với dữ liệu
-        return view('user.taikhoan.ctorder', compact('order', 'ct_order', 'product','category','cate_product','brand_product'));
+        return view('user.taikhoan.ctorder', compact('order', 'ct_order', 'product', 'category', 'cate_product', 'brand_product'));
     }
+
     public function viewChangepassword()
     {
         $category = DB::table('danh_muc_san_pham')->get();
@@ -274,6 +269,7 @@ class HomeController extends Controller
             'new_password.min' => 'Mật khẩu mới phải có ít nhất 6 ký tự.',
             'new_password.confirmed' => 'Xác nhận mật khẩu không khớp.',
         ]);
+        /** @var \App\Models\User $user */
         $user = Auth::user();
         if (!Hash::check($request->mat_khau, $user->mat_khau)) {
             return back()->withErrors(['mat_khau' => 'Mật khẩu hiện tại không đúng.']);
@@ -283,19 +279,20 @@ class HomeController extends Controller
 
         return back()->with('ok', 'Đổi mật khẩu thành công!');
     }
-    public function contact(){
+    public function contact()
+    {
         $product = DB::table('san_pham')->get();
         $category = DB::table('danh_muc_san_pham')->get();
         $cate_product = DB::table('loai_sp')->get();
         $brand_product = DB::table('thuong_hieu')->get();
         return view('user.contact')->with('product', $product)->with('category', $category)->with('cate_product', $cate_product)->with('brand_product', $brand_product);
     }
-    public function info(){
+    public function info()
+    {
         $product = DB::table('san_pham')->get();
         $category = DB::table('danh_muc_san_pham')->get();
         $cate_product = DB::table('loai_sp')->get();
         $brand_product = DB::table('thuong_hieu')->get();
         return view('user.info')->with('product', $product)->with('category', $category)->with('cate_product', $cate_product)->with('brand_product', $brand_product);
     }
-
 }

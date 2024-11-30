@@ -206,30 +206,43 @@ class ManageController extends Controller
         $order_item = OrderItem::all();
         return view('admin.donhang.editorder', compact('order', 'user', 'order_item'));;
     }
-    public function updateorder(Request $request, $don_hang_id)
+    // public function updateorder(Request $request, $don_hang_id)
+    // {
+    //     $messages = [
+    //         'nguoi_dung_id.required' => 'Vui lòng chọn người dùng.',
+    //         'nguoi_dung_id.exists' => 'Người dùng không tồn tại.',
+    //         'trang_thai_don_hang.required' => 'Vui lòng chọn trạng thái đơn hàng.',
+    //         'phuong_thuc_thanh_toan.required' => 'Vui lòng chọn phương thức thanh toán.',
+    //     ];
+    //     $validatedData = $request->validate([
+    //         'nguoi_dung_id' => 'required|exists:nguoi_dungs,nguoi_dung_id',
+    //         'trang_thai_don_hang' => 'required',
+    //         'phuong_thuc_thanh_toan' => 'required',
+    //     ], $messages);
+    //     $order = Order::find($don_hang_id);
+
+    //     if (!$order) {
+    //         return redirect()->back()->withErrors('Đơn hàng không tồn tại.');
+    //     }
+    //     $order->nguoi_dung_id = $request->nguoi_dung_id;
+    //     $order->trang_thai_don_hang = $request->trang_thai_don_hang ?? 'dang_xu_ly';
+    //     $order->phuong_thuc_thanh_toan = $request->phuong_thuc_thanh_toan ?? 'COD';
+
+    //     $order->save();
+    //     return redirect()->back()->with('success', 'Cập nhật đơn hàng thành công');
+    // }
+    public function updateStatus(Request $request)
     {
-        $messages = [
-            'nguoi_dung_id.required' => 'Vui lòng chọn người dùng.',
-            'nguoi_dung_id.exists' => 'Người dùng không tồn tại.',
-            'trang_thai_don_hang.required' => 'Vui lòng chọn trạng thái đơn hàng.',
-            'phuong_thuc_thanh_toan.required' => 'Vui lòng chọn phương thức thanh toán.',
-        ];
-        $validatedData = $request->validate([
-            'nguoi_dung_id' => 'required|exists:nguoi_dungs,nguoi_dung_id',
-            'trang_thai_don_hang' => 'required',
-            'phuong_thuc_thanh_toan' => 'required',
-        ], $messages);
-        $order = Order::find($don_hang_id);
+        $validated = $request->validate([
+            'don_hang_id' => 'required|exists:don_hang,don_hang_id',
+            'trang_thai' => 'required|string',
+        ]);
 
-        if (!$order) {
-            return redirect()->back()->withErrors('Đơn hàng không tồn tại.');
-        }
-        $order->nguoi_dung_id = $request->nguoi_dung_id;
-        $order->trang_thai_don_hang = $request->trang_thai_don_hang ?? 'dang_xu_ly';
-        $order->phuong_thuc_thanh_toan = $request->phuong_thuc_thanh_toan ?? 'COD';
-
+        $order = Order::find($validated['don_hang_id']);
+        $order->trang_thai_don_hang = $validated['trang_thai'];
         $order->save();
-        return redirect()->back()->with('success', 'Cập nhật đơn hàng thành công');
+
+        return redirect()->back()->with('success', 'Trạng thái đơn hàng đã được cập nhật.');
     }
     public function deleteorder($don_hang_id)
     {
@@ -244,7 +257,7 @@ class ManageController extends Controller
 
         $order = Order::with('User')->find($don_hang_id);
         if (!$order) {
-            return redirect()->route('ctorder.all')->with('error', 'Không tìm thấy chi tiết nhập hàng');
+            return redirect()->route('ctorder.all')->with('error', 'Không tìm thấy chi tiết đơn hàng');
         }
         $ct_order = DB::table('chi_tiet_don_hang')
             ->where('don_hang_id', $don_hang_id)

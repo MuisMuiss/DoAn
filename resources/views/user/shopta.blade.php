@@ -143,5 +143,6 @@
     if (!maxPriceInput.value.trim()) maxPriceInput.disabled = true;
     document.querySelector('#fruitform').submit();
 }
+</script>
 <!-- Fruits Shop End-->
 @include('user.layout.footer')

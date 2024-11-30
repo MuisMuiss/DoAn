@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\Product_Controller;
 use App\Http\Controllers\User\ProductController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\User\CartController;
+use App\Http\Controllers\User\PayController;
 use App\Http\Controllers\Admin\ManageController;
 use App\Models\Product;
 use Illuminate\Support\Facades\Route;
@@ -48,7 +49,7 @@ Route::prefix('account')->group(function () {
     Route::post('profile/account/{nguoi_dung_id}/update', [HomeController::class, "updateAccout"])->name('accout.update');
     Route::get('profile/order', [HomeController::class, "viewOrder"])->name('order.view');
     Route::get('profile/ctorder/{don_hang_id}', [HomeController::class, "viewctOrder"])->name('ctorder.view');
-
+    Route::delete('/order/delete/{don_hang_id}', [HomeController::class, 'deleteOrder'])->name('deleteOrder');
 
     
     Route::get('profile/changepassword', [HomeController::class, "viewChangepassword"])->name('chpass.view');
@@ -66,6 +67,7 @@ Route::prefix('account')->group(function () {
     Route::get('/cart/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
     Route::post('/cart/checkout', [CartController::class, 'processCheckout'])->name('checkout');
     
+    // Route::post('/vnpay', [PayController::class, 'pay'])->name('vn');
 });
 Route::get('contact', [HomeController::class, 'contact'])->name('contact');
 Route::get('info', [HomeController::class, 'info'])->name('info');
@@ -176,6 +178,7 @@ Route::middleware('auth:admin')->group(function(){
     // Cập nhật đơn hàng
     Route::get( '/editorder/{don_hang_id}', [ManageController::class, "editorder"])->name('admin.editorder');
     Route::post( '/updateorder/{don_hang_id}', [ManageController::class, "updateorder"])->name('admin.updateorder');
+    Route::post('/update-status', [ManageController::class, 'updateStatus'])->name('updateStatus');
     //Xóa đơn hàng
     Route::get('/deleteorder/{don_hang_id}', [ManageController::class, "deleteorder"])->name('admin.deleteorder');
     //chi tiết đơn hàng

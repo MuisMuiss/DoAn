@@ -135,7 +135,7 @@
                                     </a>
                                     <a class="dropdown-item"
                                         href="{{ route('order.view') }}">
-                                        <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        <i class="fas fa-clipboard-list fa-sm fa-fw mr-2 text-gray-400"></i>
                                         Đơn hàng
                                     </a>
                                     <div class="dropdown-divider"></div>

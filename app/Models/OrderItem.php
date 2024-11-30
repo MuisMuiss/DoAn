@@ -27,4 +27,8 @@ class OrderItem extends Model
             $orderitem->chi_tiet_don_hang_id = $maxId > 0 ? $maxId + 1 : 1; // Tăng lên 1
         });
     }
+    public function product()
+    {
+        return $this->belongsTo(Product::class, 'san_pham_id', 'san_pham_id');
+    }
 }

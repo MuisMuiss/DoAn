@@ -170,7 +170,7 @@ class CartController extends Controller
                 'phuong_thuc_thanh_toan' => $request->input('payment_method'),
                 'dia_chi_giao_hang' => $request->input('address'),
                 'ngay_dat' => now(),
-                'trang_thai_don_hang' => 'Đang xử lý',
+                'trang_thai_don_hang' => 'dang_xu_ly',
             ]);
             // Lưu chi tiết đơn hàng
             $cartItems = json_decode($request->input('cartItems'), true);
@@ -189,7 +189,14 @@ class CartController extends Controller
             // Xóa giỏ hàng của người dùng sau khi đặt hàng
             DB::table('gio_hang')->where('nguoi_dung_id', Auth::id())->delete();
             DB::commit();
-            return redirect()->route('checkout')->with('ok', 'Đặt hàng thành công!');
+            // if ($request->input('payment_method') == 'Online') {
+                
+            //     return redirect()->route('vn');
+            // } else {
+                
+            //     return redirect()->route('checkout')->with('ok', 'Đặt hàng thành công!');
+            // }
+            return redirect()->route('index')->with('ok', 'Đặt hàng thành công!');
         } catch (\Exception $e) {
             DB::rollBack();
             dd($e->getMessage());

@@ -49,7 +49,7 @@
         <form action="{{ route('checkout') }}" method="POST">
             @csrf
             <div class="row g-5">
-                <div class="col-md-12 col-lg-6 col-xl-7">
+                <div class="col-md-12 col-lg-6 col-xl-5">
                     <div class="form-item">
                         <label class="form-label my-3">Họ và tên<sup>*</sup></label>
                         <input type="text" class="form-control" name="name"
@@ -71,23 +71,21 @@
                             value="{{ Auth::user()->dia_chi ?? '' }}" required>
                     </div>
                 </div>
-                <div class="col-md-12 col-lg-6 col-xl-5">
+                <div class="col-md-12 col-lg-6 col-xl-7">
                     <div class="table-responsive">
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th scope="col">Id product</th>
-                                    <th scope="col">Products</th>
-                                    <th scope="col">Name</th>
-                                    <th scope="col">Price</th>
-                                    <th scope="col">Quantity</th>
-                                    <th scope="col">Total</th>
+                                    <th scope="col">Ảnh</th>
+                                    <th scope="col">Tên</th>
+                                    <th scope="col">Giá</th>
+                                    <th scope="col">Gố lượng</th>
+                                    <th scope="col">Tổng giá</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($cartItems as $item)
                                     <tr>
-                                        <td class="py-5">{{ $item->san_pham_id }}</td>
                                         <th scope="row">
                                             <div class="d-flex align-items-center mt-2">
                                                 <img src="{{ asset('images/product/' . $item->hinh_anh) }}"
@@ -107,16 +105,18 @@
                                     <td class="py-5"></td>
                                     <td class="py-5"></td>
                                     <td class="py-5">
-                                        <p class="mb-0 text-dark py-3">Tổng:</p>
+                                        
                                     </td>
                                     <td class="py-5">
-                                        <div class="py-3 border-bottom border-top">
-                                            <p class="mb-0 text-dark">{{ number_format($total, 0, ',', '.') }} VNĐ</p>
-                                        </div>
+
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
+                    </div>
+                    <div class="py-3 border-bottom border-top">
+                        <p class="mb-0 text-dark">Tổng số tiền cần phải thanh toán: 
+                            <span class="text-danger">{{ number_format($total, 0, ',', '.') }} VNĐ</span></p>
                     </div>
                     <div class="row g-4 text-center align-items-center justify-content-center border-bottom py-3">
                         <div class="col-12">
@@ -151,12 +151,34 @@
                         <button type="submit"
                             class="btn border-secondary py-3 px-4 text-uppercase w-100 text-primary">Thanh
                             toán</button>
+                        
                     </div>
+                    {{-- <input type="hidden" name="total" value="{{ $total }}">
+                    <input type="hidden" name="cartItems" value="{{ json_encode($cartItems) }}">
+
+                    <div class="row g-4 text-center align-items-center justify-content-center pt-4">
+                        <!-- Button thanh toán COD -->
+                        <button id="btn_cod" type="submit" name="payment_method" value="COD"
+                            class="btn border-secondary py-3 px-4 text-uppercase w-100 text-primary">
+                            Thanh toán khi nhận hàng
+                        </button>
+
+                        <!-- Form thanh toán VnPay -->
+                        <form action="{{ route('vn') }}" method="POST" id="btn_online">
+                            @csrf
+                            <input type="hidden" name="amount" value="{{ $total }}">
+                            <input type="hidden" name="bank_code" value="NCB">
+                            <button type="submit" name="payment_method" value="Online"
+                                class="btn border-secondary py-3 px-4 text-uppercase w-100 text-primary">
+                                Thanh toán VnPay
+                            </button>
+                        </form>
+                    </div> --}}
                 </div>
             </div>
         </form>
-
     </div>
 </div>
+
 <!-- Checkout Page End -->
 @include('user.layout.footer')

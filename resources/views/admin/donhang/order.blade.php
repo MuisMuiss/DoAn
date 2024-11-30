@@ -28,9 +28,9 @@
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">Bảng dữ liệu đơn hàng / Order datatable</h6>
         </div>
-        @if (session('status'))
-            <h5 class="alert alert-success">{{ session('status') }}</h5>
-        @endif
+        @if (session('success'))
+                        <h5 class="alert alert-success">{{ session('success') }}</h5>
+                    @endif
         <div class="card-body">
             <div class="table-responsive">
                 <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
@@ -75,17 +75,31 @@
                                                     <td>{{ $nd->ho_ten }}</td>
                                                 @endif
                                             @endforeach
-                                            <td>{{ $trang_thai[$o->trang_thai_don_hang] ?? 'Đang xử lý' }}</td>
+                                            <td>
+                                                {{-- {{ $trang_thai[$o->trang_thai_don_hang] ?? 'Đang xử lý' }} --}}
+                                                <form action="{{ route('updateStatus') }}" method="POST">
+                                                    @csrf
+                                                    @method('POST')
+                                                    <input type="hidden" name="don_hang_id" value="{{ $o->don_hang_id }}">
+                                                    <select name="trang_thai" class="form-control" onchange="this.form.submit()">
+                                                        @foreach ($trang_thai as $key => $value)
+                                                            <option value="{{ $key }}" {{ $o->trang_thai_don_hang == $key ? 'selected' : '' }}>
+                                                                {{ $value }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </form>
+                                            </td>
                                             <td>{{ number_format($o->tong_tien, 0, ',', '.') }} VNĐ</td>
                                             <td>{{ $o->ngay_dat }}</td>
                                             <td>{{ $phuong_thuc[$o->phuong_thuc_thanh_toan] ?? 'Thanh toán khi nhận hàng' }}</td>
                                             <td>
                                                 <div
                                                     style="display: flex; justify-content: center; align-items: center;">
-                                                    <a href="{{ route('admin.editorder', ['don_hang_id' => $o->don_hang_id]) }}" class="btn btn-warning btn-circle btn-sm"
+                                                    {{-- <a href="{{ route('admin.editorder', ['don_hang_id' => $o->don_hang_id]) }}" class="btn btn-warning btn-circle btn-sm"
                                                         style=" margin-right: 10px;">
                                                         <i class="fas fa-fw fa-pen"></i>
-                                                    </a>
+                                                    </a> --}}
                                                     <a href="{{ route('ctorder.all', ['don_hang_id' => $o->don_hang_id]) }}" class="btn btn-success btn-circle btn-sm"
                                                         style=" margin-right: 10px;">
                                                         <i class="fas fa-fw fa-eye"></i>

@@ -12,7 +12,8 @@
                         <h5 class="alert alert-success">{{ session('success') }}</h5>
                     @endif
                     <div class="card-body">
-                        <form action="{{ route('admin.addctnhap', ['nhap_hang_id' => $nhaphang->nhap_hang_id]) }}" method="post" enctype="multipart/form-data">
+                        <form action="{{ route('admin.addctnhap', ['nhap_hang_id' => $nhaphang->nhap_hang_id]) }}"
+                            method="post" enctype="multipart/form-data">
                             @csrf
                             <div class="form-group mb-3">
                                 <label for="">Mã nhập:</label>
@@ -53,9 +54,15 @@
                                             <td>
                                                 <input type="number" name="details[0][so_luong]" class="form-control"
                                                     value="1" min="1">
+                                                @error('so_luong')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
                                             </td>
                                             <td>
                                                 <input type="text" name="details[0][gia_nhap]" class="form-control">
+                                                @error('gia_nhap')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
                                             </td>
                                             <td>
                                                 <button type="button" class="btn btn-danger remove-row">Xóa</button>
@@ -98,6 +105,7 @@
             </td>
             <td>
                 <input type="number" name="details[${rowIndex}][so_luong]" class="form-control" value="1" min="1">
+                
             </td>
             <td>
                 <input type="text" name="details[${rowIndex}][gia_nhap]" class="form-control">
