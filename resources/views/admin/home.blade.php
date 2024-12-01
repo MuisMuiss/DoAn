@@ -108,15 +108,6 @@
                             <a class="dropdown-item" href="#month">Tháng</a>
                             <a class="dropdown-item" href="#year">Năm</a>
                         </div> --}}
-                        {{-- <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
-                            <div class="dropdown-header">Doanh thu theo:</div>
-                            @foreach ($doanhThuNam as $year => $months)
-                                <a class="dropdown-item" href="#" data-type="year" data-key="{{ $year }}">Năm {{ $year }}</a>
-                            @endforeach
-                            @foreach ($doanhThuThang as $monthKey => $days)
-                                <a class="dropdown-item" href="#" data-type="month" data-key="{{ $monthKey }}">Tháng {{ $monthKey }}</a>
-                            @endforeach
-                        </div> --}}
                         <select id="yearDropdown" class="form-control">
                             @foreach ($years as $year)
                                 <option value="{{ $year }}">Năm {{ $year }}</option>
@@ -141,12 +132,6 @@
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                     <h6 class="m-0 font-weight-bold text-primary">Thống kê theo danh mục sản phẩm</h6>
-                    <div class="dropdown no-arrow">
-                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                        </a>
-                    </div>
                 </div>
 
                 <!-- Card Body -->
@@ -348,10 +333,10 @@
         let monthSelected = key ? key.split('-')[1] : '1';
         if (type === 'year') {
             const months = doanhThuNam[key] || [];
-            labels = Array.from({length: 12}, (_, i) => (i + 1) + '/' + yearSelected); // 12 tháng
+            labels = Array.from({length: 12}, (_, i) => (i + 1) + '/' + yearSelected);
             data = Array.from({length: 12}, (_, i) => {
                 const monthData = months.find(item => item.thang === i + 1);
-                return monthData ? monthData.doanh_thu : 0; // Nếu không có dữ liệu thì trả về 0
+                return monthData ? monthData.doanh_thu : 0;
             });
         } else if (type === 'month') {
             const days = doanhThuThang[key] || [];
@@ -407,37 +392,34 @@
         });
     }
 
-    // Mặc định hiển thị năm đầu tiên (nếu có dữ liệu)
+    
     const defaultYear = Object.keys(doanhThuNam)[0] || currentYear.toString();
     yearDropdown.value = defaultYear;
     updateChart('year', defaultYear);
 
-    // Lắng nghe sự kiện chọn năm
+    // Chọn năm
     yearDropdown.addEventListener('change', function() {
         updateChart('year', this.value);
     });
     document.getElementById('backButton').addEventListener('click', function() {
         const selectedYear = yearDropdown.value;
-        //updateChart('year', selectedYear); // Quay lại doanh thu theo năm
-        location.reload(); // Tải lại trang
+        //updateChart('year', selectedYear);
+        location.reload();
         
     })
     
-    // Lắng nghe click vào cột tháng (Chỉ cho phép click vào cột tháng, không cho click vào ngày)
     document.getElementById('myBarChart').onclick = function(evt) {
-        // Lấy các điểm gần nhất được click
+        
         const activePoints = myBarChart.getElementsAtEventForMode(evt, 'nearest', {
             intersect: true
         }, true);
         if (activePoints.length > 0) {
-            const index = activePoints[0].index; // Chỉ số cột
-            const selectedMonth = index + 1; // Tháng được chọn
+            const index = activePoints[0].index; 
+            const selectedMonth = index + 1;
             const selectedYear = yearDropdown.value;
 
-            // Kiểm tra nếu cột được click là cột tháng, tránh click vào cột ngày
-            if (index < 12) { // Giới hạn chỉ cho phép click vào 12 cột (12 tháng)
+            if (index < 12) { 
                 const key = `${selectedYear}-${selectedMonth}`;
-                // Cập nhật doanh thu theo ngày của tháng đó
                 updateChart('month', key);
             }
         }
