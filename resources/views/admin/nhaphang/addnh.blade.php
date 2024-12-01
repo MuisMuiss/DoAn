@@ -1,48 +1,59 @@
-@include('admin.autth.layout')
+{{-- @include('admin.autth.layout')
 <body>
     <div class="container">
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3>Tạo nhập hàng</h3>
+                        <h3>Tạo chi tiết nhập hàng</h3>
                     </div>
                     @if (session('success'))
                         <h5 class="alert alert-success">{{session('success')}}</h5>
                     @endif
                     <div class="card-body">
-                        <form action="{{route('admin.addnhap')}}" method="post" enctype="multipart/form-data">
-                            @csrf
-                            <div class="form-group mb-3">
-                                <label for="">Mã nhập:</label>
-                                <input type="text" name="nhap_hang_id" id="" class="form-control" value="{{old('nhap_hang_id')}}">
-                                @error('nhap_hang_id')
-                                    <span class="text-danger">{{$message}}</span>
-                                @enderror
-                            </div>
-                            <div class="form-group mb-3">
-                                <label for="">Thương hiệu nhập:</label>
-                                <select type="text" name="thuong_hieu_nhap" id="" class="form-control" value="{{old('thuong_hieu_nhap')}}">
-                                    @foreach($brand as $key => $cate)
-                                        <option value="{{ $cate->thuong_hieu_id}}">{{ $cate->ten_thuong_hieu}}</option>
-                                    @endforeach
-                                </select>
-                                @error('thuong_hieu_nhap')
-                                    <span class="text-danger">{{$message}}</span>
-                                @enderror
-                            </div>
-                            <div class="form-group mb-3">
-                                <label for="">Ngày giờ nhập:</label>
-                                <input type="datetime-local" name="ngay_nhap" id="" class="form-control" value="{{old('ngay_nhap')}}">
-                                @error('ngay_nhap')
-                                    <span class="text-danger">{{$message}}</span>
-                                @enderror
-                            </div>
-                            <div class="form-group mb-3">
-                                <button type="submit" class="btn btn-primary">Lưu</button>
-                                <a href="{{route('inport.all')}}" class="btn btn-danger float-end">Back</a>
-                            </div>
-                        </form>
+                        <div class="modal-dialog">
+                            <form action="{{ route('import.addproduct') }}" method="POST">
+                                @csrf
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="addProductModalLabel">Thêm sản phẩm nhập</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <label for="thuong_hieu_id">Thương hiệu</label>
+                                            <select name="thuong_hieu_id" id="thuong_hieu_id" class="form-control">
+                                                @foreach ($brand as $brand)
+                                                    <option value="{{ $brand->thuong_hieu_id }}">{{ $brand->ten_thuong_hieu }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="san_pham_id">Sản phẩm</label>
+                                            <select name="san_pham_id" id="san_pham_id" class="form-control">
+                                                @foreach ($product as $product)
+                                                    <option value="{{ $product->san_pham_id }}">{{ $product->ten_san_pham }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="so_luong">Số lượng</label>
+                                            <input type="number" name="so_luong" id="so_luong" class="form-control" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="gia_nhap">Giá nhập</label>
+                                            <input type="number" name="gia_nhap" id="gia_nhap" class="form-control" required>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                                        <button type="submit" class="btn btn-primary">Thêm</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -50,4 +61,4 @@
     </div>
 </body>
 
-</html>
+</html> --}}

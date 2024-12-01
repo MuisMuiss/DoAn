@@ -188,20 +188,22 @@ Route::middleware('auth:admin')->group(function(){
 
 
     //Nhập hàng 
-    Route::get('/allnhap',[ManageController::class,"viewnhap"])->name('inport.all');
-    Route::get('/addnhap',[ManageController::class,"themnhap"])->name('inport.add');
-    Route::post('/addnhap', [ManageController::class, "addnhap"])->name('admin.addnhap');
+    Route::get('/allnhap',[ManageController::class,"viewnhap"])->name('import.all');
+    Route::get('/getBrand/{brand_id}', [ManageController::class, 'getBrand'])->name('get.brand');
+    Route::post('/add-product-to-import', [ManageController::class, 'addProductToImport'])->name('import.addproduct');
+    // Route::get('/addnhap',[ManageController::class,"themnhap"])->name('import.add');
+    // Route::post('/addnhap', [ManageController::class, "addnhap"])->name('admin.addnhap');
     // Cập nhật nhập hàng
-    Route::get( '/editnhap/{nhap_hang_id}', [ManageController::class, "editnhap"])->name('admin.editnhap');
-    Route::post( '/updatenhap/{nhap_hang_id}', [ManageController::class, "updatenhap"])->name('admin.updatenhap');
+    // Route::get( '/editnhap/{nhap_hang_id}', [ManageController::class, "editnhap"])->name('admin.editnhap');
+    // Route::post( '/updatenhap/{nhap_hang_id}', [ManageController::class, "updatenhap"])->name('admin.updatenhap');
     //Xóa nhập hàng
-    Route::get('/deletenhap/{nhap_hang_id}', [ManageController::class, "deletenhap"])->name('admin.deletenhap');
+    Route::delete('/deletenhap/{nhap_hang_id}', [ManageController::class, "deletenhap"])->name('admin.deletenhap');
     
 
     //Chi tiết
     Route::get('/allnhap/{nhap_hang_id}',[ManageController::class,"viewctnhap"])->name('ctimport.all');
-    Route::get('/addctnhap/{nhap_hang_id}',[ManageController::class,"themctnhap"])->name('ctimport.add');
-    Route::post('/addctnhap/{nhap_hang_id}', [ManageController::class, "addctnhap"])->name('admin.addctnhap');
+    // Route::get('/addctnhap/{nhap_hang_id}',[ManageController::class,"themctnhap"])->name('ctimport.add');
+    // Route::post('/addctnhap/{nhap_hang_id}', [ManageController::class, "addctnhap"])->name('admin.addctnhap');
     //
     Route::get( '/editctnhap/{id}', [ManageController::class, "editctnhap"])->name('admin.editctnhap');
     Route::post( '/updatectnhap/{id}', [ManageController::class, "updatectnhap"])->name('admin.updatectnhap');

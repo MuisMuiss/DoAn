@@ -14,7 +14,7 @@ class Detailimport extends Model
         'id',
         'nhap_hang_id',
         'san_pham_id',
-        'thuong_hieu_id ',
+        'thuong_hieu_id',
         'so_luong',
         'gia_nhap',
         'thanh_tien',

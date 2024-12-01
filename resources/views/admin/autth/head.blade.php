@@ -120,7 +120,7 @@
                     <span>Quản lý đơn hàng</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{route('inport.all')}}">
+                <a class="nav-link" href="{{route('import.all')}}">
                     <i class="fab fa-reddit-alien"></i>
                     <span>Quản lý nhập hàng</span></a>
             </li>
