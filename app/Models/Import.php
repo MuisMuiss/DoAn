@@ -23,4 +23,8 @@ class Import extends Model
     {
         return $this->belongsTo(Brand::class, 'thuong_hieu_nhap', 'thuong_hieu_id');
     }
+    public function chiTietNhapHang()
+    {
+        return $this->hasMany(Detailimport::class, 'nhap_hang_id', 'nhap_hang_id');
+    }
 }

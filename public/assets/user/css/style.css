@@ -3,7 +3,7 @@ a .pagination a {
     padding: 10px 16px;
     text-decoration: none;
     transition: 0.5s;
-    border: 1px solid var(--bs-secondary);
+    /* border: 1px solid var(--bs-secondary); */
     margin: 0 4px;
 }
 /*** Spinner Start ***/
@@ -471,7 +471,7 @@ a .pagination a {
     padding: 10px 16px;
     text-decoration: none;
     transition: 0.5s;
-    border: 1px solid var(--bs-secondary);
+    /* border: 1px solid var(--bs-secondary); */
     margin: 0 4px;
 }
 

@@ -1,4 +1,4 @@
-@include('user.layout.header')
+{{-- @include('user.layout.header')
 
 <div class="container-fluid page-header py-5">
     <h1 class="text-center text-white display-6">Shop</h1>
@@ -82,4 +82,4 @@
     </div>
 </section>
 
-@include('user.layout.footer')
+@include('user.layout.footer') --}}

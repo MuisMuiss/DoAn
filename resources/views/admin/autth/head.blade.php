@@ -33,7 +33,7 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{route('admin.home')}}">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
@@ -120,7 +120,7 @@
                     <span>Quản lý đơn hàng</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{route('inport.all')}}">
+                <a class="nav-link" href="{{route('import.all')}}">
                     <i class="fab fa-reddit-alien"></i>
                     <span>Quản lý nhập hàng</span></a>
             </li>

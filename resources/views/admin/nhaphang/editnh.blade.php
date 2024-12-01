@@ -1,4 +1,4 @@
-@include('admin.autth.layout')
+{{-- @include('admin.autth.layout')
 
 <body>
     <div class="container">
@@ -57,4 +57,4 @@
     </div>
 </body>
 
-</html>
+</html> --}}

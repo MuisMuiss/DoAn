@@ -4,13 +4,13 @@
 
     <!-- Page Heading -->
     <h1 class="h3 mb-2 text-gray-800">Chi tiết nhập hàng</h1>
-    <a href="{{ route('ctimport.add', ['nhap_hang_id' => $nhaphang->nhap_hang_id]) }}"
+    {{-- <a href="{{ route('ctimport.add', ['nhap_hang_id' => $nhaphang->nhap_hang_id]) }}"
         class="btn btn-success btn-icon-split">
         <span class="icon text-white-50">
             <i class="fas fa-plus"></i>
         </span>
         <span class="text">Thêm sản phẩm nhập</span>
-    </a>
+    </a> --}}
     <hr>
     <!-- DataTales Example -->
     <div class="card shadow mb-4">

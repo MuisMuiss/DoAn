@@ -53,22 +53,22 @@
                     <div class="form-item">
                         <label class="form-label my-3">Họ và tên<sup>*</sup></label>
                         <input type="text" class="form-control" name="name"
-                            value="{{ Auth::user()->ho_ten ?? '' }}" required>
+                            value="{{ Auth::user()->ho_ten ?? '' }}" readonly>
                     </div>
                     <div class="form-item">
                         <label class="form-label my-3">Email<sup>*</sup></label>
                         <input type="email" class="form-control" name="email"
-                            value="{{ Auth::user()->email ?? '' }}" placeholder="..." required>
+                            value="{{ Auth::user()->email ?? '' }}" placeholder="..." readonly>
                     </div>
                     <div class="form-item">
                         <label class="form-label my-3">Số điện thoại<sup>*</sup></label>
                         <input type="text" class="form-control" name="phone"
-                            value="{{ Auth::user()->so_dien_thoai ?? '' }}" required>
+                            value="{{ Auth::user()->so_dien_thoai ?? '' }}" readonly>
                     </div>
                     <div class="form-item">
                         <label class="form-label my-3">Địa chỉ<sup>*</sup></label>
                         <input type="text" class="form-control" name="address"
-                            value="{{ Auth::user()->dia_chi ?? '' }}" required>
+                            value="{{ Auth::user()->dia_chi ?? '' }}" readonly>
                     </div>
                 </div>
                 <div class="col-md-12 col-lg-6 col-xl-7">

@@ -143,7 +143,7 @@
                                             id="dataTable_previous"><a href="#" aria-controls="dataTable"
                                                 data-dt-idx="0" tabindex="0" class="page-link">‹</a></li>
                                         <li class="page-item active"><span class="page-link">1</span></li>
-                                        <li class="paginate_button page-item next" id="dataTable_next"><a
+                                        <li class="paginate_button page-item next" id="dataTable_next" ><a
                                                 href="#" aria-controls="dataTable" data-dt-idx="2"
                                                 tabindex="0" class="page-link">›</a></li>
                                     </ul>

@@ -10,11 +10,12 @@ use App\Models\Brand;
 use App\Models\Detailimport;
 use App\Models\Import;
 use App\Models\nguoiDung;
-use App\Models\NhapHang;
 use App\Models\Order;
+use Illuminate\Support\Facades\Log;
 use App\Models\OrderItem;
 use App\Models\Product;
 use App\Models\ProductType;
+
 
 class ManageController extends Controller
 {
@@ -194,18 +195,17 @@ class ManageController extends Controller
     public function vieworder()
     {
         $order = Order::paginate(5);
-
         $user = nguoiDung::all();
         $order_item = OrderItem::all();
         return view('admin.donhang.order', compact('order', 'user', 'order_item'));
     }
-    public function editorder($don_hang_id)
-    {
-        $order = Order::find($don_hang_id);
-        $user = nguoiDung::all();
-        $order_item = OrderItem::all();
-        return view('admin.donhang.editorder', compact('order', 'user', 'order_item'));;
-    }
+    // public function editorder($don_hang_id)
+    // {
+    //     $order = Order::find($don_hang_id);
+    //     $user = nguoiDung::all();
+    //     $order_item = OrderItem::all();
+    //     return view('admin.donhang.editorder', compact('order', 'user', 'order_item'));;
+    // }
     // public function updateorder(Request $request, $don_hang_id)
     // {
     //     $messages = [
@@ -278,72 +278,133 @@ class ManageController extends Controller
     public function viewnhap()
     {
         $nhaphang = Import::paginate(5);
+        $product = Product::all();
         $brand = Brand::all();
-        return view('admin.nhaphang.import', compact('nhaphang', 'brand'));
+        return view('admin.nhaphang.import', compact('nhaphang', 'brand', 'product'));
     }
-    public function themnhap()
+    public function getBrand($brand_id)
     {
-        $brand = Brand::all();
-        $nhaphang = Import::all();
-        return view('admin.nhaphang.addnh', compact('nhaphang', 'brand'));
+        $products = Product::where('thuong_hieu_id', $brand_id)->get(['san_pham_id', 'ten_san_pham']);
+        return response()->json($products);
     }
-    public function addnhap(Request $request)
+    public function addProductToImport(Request $request)
     {
-        $messages = [
-            'nhap_hang_id.required' => 'Mã nhập không được để trống.',
-            'nhap_hang_id.unique' => 'Mã nhập đã tồn tại.',
-            'ngay_nhap.required' => 'Ngày nhập không được để trống.',
-            'ngay_nhap.date' => 'Ngày nhập phải là một ngày hợp lệ.'
-        ];
+        $request->validate([
+            'thuong_hieu_id' => 'required|exists:thuong_hieu,thuong_hieu_id',
+            'details' => 'required|array',
+            'details.*.san_pham_id' => 'exists:san_pham,san_pham_id',
+            'details.*.so_luong' => 'required|numeric|min:1',
+            'details.*.gia_nhap' => 'required|numeric|min:0',
+            'details.*.thuong_hieu_id' => 'exists:thuong_hieu,thuong_hieu_id',
+        ]);
+        do {
+            $generatedId = 'NH-' . rand(1000000000, 9999999999);
+            $existing = Import::where('nhap_hang_id', $generatedId)->exists();
+        } while ($existing);
+        // Tạo phiếu nhập
+        $nhapHang = Import::create([
+            'nhap_hang_id' => $generatedId,
+            'thuong_hieu_nhap' => $request->thuong_hieu_id,
+            'ngay_nhap' => now(),
+            'tong_tien' => 0,
+        ]);
 
-        $validatedData = $request->validate([
-            'nhap_hang_id' => 'required|unique:nhap_hang,nhap_hang_id',
-            'ngay_nhap' => 'required|date',
-        ], $messages);
-        $import = new Import();
-        $import->nhap_hang_id = $request->nhap_hang_id;
-        $import->thuong_hieu_nhap = $request->thuong_hieu_nhap ?? 1;
-        $import->ngay_nhap = $request->ngay_nhap;
-        $import->tong_tien = $request->tong_tien ?? 0;
-        $import->save();
+        $tongTien = 0;
+        // Thêm sản phẩm vào phiếu nhập và tính tổng tiền
+        foreach ($request->details as $detail) {
+            $ctNhap = Detailimport::create([
+                'nhap_hang_id' => $nhapHang->nhap_hang_id,
+                'san_pham_id' => $detail['san_pham_id'],
+                'thuong_hieu_id' => $nhapHang->thuong_hieu_nhap,
+                'so_luong' => $detail['so_luong'],
+                'gia_nhap' => $detail['gia_nhap'],
+            ]);
+            $tongTien += $ctNhap->so_luong * $ctNhap->gia_nhap;
+        }
+        $nhapHang->tong_tien = $tongTien;
+        $nhapHang->save();
 
-        return redirect()->back()->with('success', 'Nhập hàng thành công!');
-    }
-    //Edit nhập
-    public function editnhap($nhap_hang_id)
-    {
-        $nhaphang = Import::find($nhap_hang_id);
-        $brand = Brand::all();
-        return view('admin.nhaphang.editnh', compact('nhaphang', 'brand'));
-    }
-    public function updatenhap(Request $request, $nhap_hang_id)
-    {
-        $messages = [
-            // 'nhap_hang_id.required' => 'Mã nhập không được để trống.',
-            // 'nhap_hang_id.unique' => 'Mã nhập đã tồn tại.',
-            'ngay_nhap.required' => 'Ngày nhập không được để trống.',
-            'ngay_nhap.date' => 'Ngày nhập phải là một ngày hợp lệ.'
-        ];
-
-        $validatedData = $request->validate([
-            // 'nhap_hang_id' => 'required|unique:nhap_hang,nhap_hang_id,' . $nhap_hang_id . ',nhap_hang_id',
-            'ngay_nhap' => 'required|date',
-        ], $messages);
-        $nhaphang = Import::find($nhap_hang_id);
-        $nhaphang->nhap_hang_id = $request->nhap_hang_id;
-        $nhaphang->thuong_hieu_nhap = $request->thuong_hieu_nhap ?? 1;
-        $nhaphang->ngay_nhap = $request->ngay_nhap;
-        $nhaphang->tong_tien = $request->tong_tien ?? 0;
-        $nhaphang->save();
-        return redirect()->back()->with('success', 'Cập nhập hàng thành công');
+        return redirect()->route('import.all')->with('status', 'Đã thêm sản phẩm vào phiếu nhập!');
     }
     public function deletenhap($nhap_hang_id)
-    {
-        $nhaphang = Import::find($nhap_hang_id);
+{
+    $nhaphang = Import::find($nhap_hang_id);
 
+    if ($nhaphang) {
+        foreach ($nhaphang->chiTietNhapHang as $item) {
+            // Tìm sản phẩm tương ứng với chi tiết nhập hàng
+            $product = Product::find($item->san_pham_id);
+            if ($product) {
+                $product->so_luong_kho -= $item->so_luong;
+                $product->save();
+            }
+        }
         $nhaphang->delete();
-        return redirect()->back()->with('success', 'Xóa loại sản phẩm thành công');
+
+        return redirect()->back()->with('success', 'Xóa nhập hàng thành công và cập nhật kho');
     }
+    return redirect()->back()->with('error', 'Không tìm thấy nhập hàng');
+}
+
+
+
+    // public function themnhap()
+    // {
+    //     $brand = Brand::all();
+    //     $product = Product::all();
+    //     $nhaphang = Import::all();
+    //     return view('admin.nhaphang.addnh', compact('nhaphang', 'brand', 'product'));
+    // }
+    // public function addnhap(Request $request)
+    // {
+    //     $messages = [
+    //         'nhap_hang_id.required' => 'Mã nhập không được để trống.',
+    //         'nhap_hang_id.unique' => 'Mã nhập đã tồn tại.',
+    //         'ngay_nhap.required' => 'Ngày nhập không được để trống.',
+    //         'ngay_nhap.date' => 'Ngày nhập phải là một ngày hợp lệ.'
+    //     ];
+
+    //     $validatedData = $request->validate([
+    //         'nhap_hang_id' => 'required|unique:nhap_hang,nhap_hang_id',
+    //         'ngay_nhap' => 'required|date',
+    //     ], $messages);
+    //     $import = new Import();
+    //     $import->nhap_hang_id = $request->nhap_hang_id;
+    //     $import->thuong_hieu_nhap = $request->thuong_hieu_nhap ?? 1;
+    //     $import->ngay_nhap = $request->ngay_nhap;
+    //     $import->tong_tien = $request->tong_tien ?? 0;
+    //     $import->save();
+
+    //     return redirect()->back()->with('success', 'Nhập hàng thành công!');
+    // }
+    // //Edit nhập
+    // public function editnhap($nhap_hang_id)
+    // {
+    //     $nhaphang = Import::find($nhap_hang_id);
+    //     $brand = Brand::all();
+    //     return view('admin.nhaphang.editnh', compact('nhaphang', 'brand'));
+    // }
+    // public function updatenhap(Request $request, $nhap_hang_id)
+    // {
+    //     $messages = [
+    //         // 'nhap_hang_id.required' => 'Mã nhập không được để trống.',
+    //         // 'nhap_hang_id.unique' => 'Mã nhập đã tồn tại.',
+    //         'ngay_nhap.required' => 'Ngày nhập không được để trống.',
+    //         'ngay_nhap.date' => 'Ngày nhập phải là một ngày hợp lệ.'
+    //     ];
+
+    //     $validatedData = $request->validate([
+    //         // 'nhap_hang_id' => 'required|unique:nhap_hang,nhap_hang_id,' . $nhap_hang_id . ',nhap_hang_id',
+    //         'ngay_nhap' => 'required|date',
+    //     ], $messages);
+    //     $nhaphang = Import::find($nhap_hang_id);
+    //     $nhaphang->nhap_hang_id = $request->nhap_hang_id;
+    //     $nhaphang->thuong_hieu_nhap = $request->thuong_hieu_nhap ?? 1;
+    //     $nhaphang->ngay_nhap = $request->ngay_nhap;
+    //     $nhaphang->tong_tien = $request->tong_tien ?? 0;
+    //     $nhaphang->save();
+    //     return redirect()->back()->with('success', 'Cập nhập hàng thành công');
+    // }
 
 
 
@@ -355,7 +416,7 @@ class ManageController extends Controller
 
 
 
-    //Chi tiết đơn hàng
+    //Chi tiết nhập hàng
     public function viewctnhap($nhap_hang_id)
     {
         $product = Product::all()->keyBy('san_pham_id');
@@ -369,46 +430,46 @@ class ManageController extends Controller
             ->paginate(5);
         return view('admin.nhaphang.detailnh', compact('nhaphang', 'ct_nhap', 'product', 'brand'));
     }
-    public function themctnhap($nhap_hang_id)
-    {
-        $nhaphang = Import::findOrFail($nhap_hang_id);
-        $thuongHieu = $nhaphang->thuong_hieu_nhap;
-        $brand = Brand::findOrFail($thuongHieu);
-        $product = Product::where('thuong_hieu_id', $thuongHieu)->get();
-        return view('admin.nhaphang.addct', compact('nhaphang', 'brand', 'product'));
-    }
-    public function addctnhap(Request $request)
-    {
-        $messages = [
-            'details.*.so_luong.required' => 'Số lượng không được để trống.',
-            'details.*.so_luong.integer' => 'Số lượng phải là số nguyên.',
-            'details.*.so_luong.min' => 'Số lượng phải lớn hơn hoặc bằng 1.',
-            'details.*.gia_nhap.required' => 'Giá nhập không được để trống.',
-            'details.*.gia_nhap.numeric' => 'Giá nhập phải là một số hợp lệ.',
-            'details.*.gia_nhap.min' => 'Giá nhập phải lớn hơn hoặc bằng 0.',
-        ];
+    // public function themctnhap($nhap_hang_id)
+    // {
+    //     $nhaphang = Import::findOrFail($nhap_hang_id);
+    //     $thuongHieu = $nhaphang->thuong_hieu_nhap;
+    //     $brand = Brand::findOrFail($thuongHieu);
+    //     $product = Product::where('thuong_hieu_id', $thuongHieu)->get();
+    //     return view('admin.nhaphang.addct', compact('nhaphang', 'brand', 'product'));
+    // }
+    // public function addctnhap(Request $request)
+    // {
+    //     $messages = [
+    //         'details.*.so_luong.required' => 'Số lượng không được để trống.',
+    //         'details.*.so_luong.integer' => 'Số lượng phải là số nguyên.',
+    //         'details.*.so_luong.min' => 'Số lượng phải lớn hơn hoặc bằng 1.',
+    //         'details.*.gia_nhap.required' => 'Giá nhập không được để trống.',
+    //         'details.*.gia_nhap.numeric' => 'Giá nhập phải là một số hợp lệ.',
+    //         'details.*.gia_nhap.min' => 'Giá nhập phải lớn hơn hoặc bằng 0.',
+    //     ];
 
-        $validatedData = $request->validate([
-            'nhap_hang_id' => 'required|exists:nhap_hang,nhap_hang_id',
-            'details.*.san_pham_id' => 'required|exists:san_pham,san_pham_id',
-            'details.*.thuong_hieu_id' => 'required|exists:thuong_hieu,thuong_hieu_id',
-            'details.*.so_luong' => 'required|integer|min:1',
-            'details.*.gia_nhap' => 'required|numeric|min:0',
-        ], $messages);
+    //     $validatedData = $request->validate([
+    //         'nhap_hang_id' => 'required|exists:nhap_hang,nhap_hang_id',
+    //         'details.*.san_pham_id' => 'required|exists:san_pham,san_pham_id',
+    //         'details.*.thuong_hieu_id' => 'required|exists:thuong_hieu,thuong_hieu_id',
+    //         'details.*.so_luong' => 'required|integer|min:1',
+    //         'details.*.gia_nhap' => 'required|numeric|min:0',
+    //     ], $messages);
 
-        foreach ($request->details as $detailData) {
-            $detail = new Detailimport();
-            $detail->nhap_hang_id = $request['nhap_hang_id'];
-            $detail->san_pham_id = $detailData['san_pham_id'];
-            $detail->thuong_hieu_id = $detailData['thuong_hieu_id']; 
-            $detail->so_luong = $detailData['so_luong'];
-            $detail->gia_nhap = $detailData['gia_nhap'];
-            $detail->save();
-        }
-        return redirect()
-            ->route('ctimport.all', ['nhap_hang_id' => $request['nhap_hang_id']])
-            ->with('success', 'Thêm chi tiết nhập hàng thành công!');
-    }
+    //     foreach ($request->details as $detailData) {
+    //         $detail = new Detailimport();
+    //         $detail->nhap_hang_id = $request['nhap_hang_id'];
+    //         $detail->san_pham_id = $detailData['san_pham_id'];
+    //         $detail->thuong_hieu_id = $detailData['thuong_hieu_id'];
+    //         $detail->so_luong = $detailData['so_luong'];
+    //         $detail->gia_nhap = $detailData['gia_nhap'];
+    //         $detail->save();
+    //     }
+    //     return redirect()
+    //         ->route('ctimport.all', ['nhap_hang_id' => $request['nhap_hang_id']])
+    //         ->with('success', 'Thêm chi tiết nhập hàng thành công!');
+    // }
     public function editctnhap($id)
     {
         $ct_nhap = Detailimport::find($id);
