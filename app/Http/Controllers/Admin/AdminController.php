@@ -33,23 +33,49 @@ class AdminController extends Controller
 
 
         $soLuongSP = Product::count();
-        $tongDoanhThu = Order::where('trang_thai_don_hang', '!=', 'da_huy')
-        ->sum('tong_tien');
+        $tongDoanhThu = Order::where('trang_thai_don_hang', '!=', 'da_huy')->sum('tong_tien');
         $soLuongDH = Order::count();
         $soLuongNH = Import::count();
-        $doanhThuNgay = Order::select(DB::raw('DATE(ngay_dat) as ngay, SUM(tong_tien) as doanh_thu'))
-            ->groupBy(DB::raw('DATE(ngay_dat)'))
-            ->pluck('doanh_thu', 'ngay');
-        $doanhThuThang = Order::select(DB::raw('YEAR(ngay_dat) as nam, MONTH(ngay_dat) as thang, SUM(tong_tien) as doanh_thu'))
+        // $doanhThuNgay = Order::select(DB::raw('DATE(ngay_dat) as ngay, SUM(tong_tien) as doanh_thu'))
+        //     ->groupBy(DB::raw('DATE(ngay_dat)'))
+        //     ->pluck('doanh_thu', 'ngay');
+        // $doanhThuThang = Order::select(DB::raw('YEAR(ngay_dat) as nam, MONTH(ngay_dat) as thang, SUM(tong_tien) as doanh_thu'))
+        //     ->groupBy(DB::raw('YEAR(ngay_dat), MONTH(ngay_dat)'))
+        //     ->orderBy('nam')
+        //     ->orderBy('thang')
+        //     ->get();
+
+        // $doanhThuNam = Order::select(DB::raw('YEAR(ngay_dat) as nam, SUM(tong_tien) as doanh_thu'))
+        //     ->groupBy(DB::raw('YEAR(ngay_dat)'))
+        //     ->pluck('doanh_thu', 'nam');
+        $currentYear = now()->year;
+        $years = range(2020, $currentYear);
+        $doanhThuNam = Order::select(
+            DB::raw('YEAR(ngay_dat) as nam'),
+            DB::raw('MONTH(ngay_dat) as thang'),
+            DB::raw('SUM(tong_tien) as doanh_thu')
+        )
             ->groupBy(DB::raw('YEAR(ngay_dat), MONTH(ngay_dat)'))
             ->orderBy('nam')
             ->orderBy('thang')
-            ->get();
-        $doanhThuNam = Order::select(DB::raw('YEAR(ngay_dat) as nam, SUM(tong_tien) as doanh_thu'))
-            ->groupBy(DB::raw('YEAR(ngay_dat)'))
-            ->pluck('doanh_thu', 'nam');
-
-        return view('admin.home', compact('soLuongSP', 'tongDoanhThu', 'soLuongDH', 'soLuongNH', 'doanhThuNgay', 'doanhThuThang', 'doanhThuNam', 'categories'));
+            ->get()
+            ->groupBy('nam');
+    
+        $doanhThuThang = Order::select(
+            DB::raw('YEAR(ngay_dat) as nam'),
+            DB::raw('MONTH(ngay_dat) as thang'),
+            DB::raw('DAY(ngay_dat) as ngay'),
+            DB::raw('SUM(tong_tien) as doanh_thu')
+        )
+            ->groupBy(DB::raw('YEAR(ngay_dat), MONTH(ngay_dat), DAY(ngay_dat)'))
+            ->orderBy('nam')
+            ->orderBy('thang')
+            ->orderBy('ngay')
+            ->get()
+            ->groupBy(function ($item) {
+                return $item->nam . '-' . $item->thang;
+            });
+        return view('admin.home', compact('soLuongSP', 'tongDoanhThu', 'soLuongDH', 'soLuongNH', 'doanhThuThang', 'doanhThuNam', 'categories', 'years'));
     }
     public function viewlogin()
     {

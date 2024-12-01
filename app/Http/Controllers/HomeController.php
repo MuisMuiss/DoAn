@@ -208,9 +208,7 @@ class HomeController extends Controller
         $orders = Order::with(['orderItems.product'])
             ->where('nguoi_dung_id', $userId)
             ->orderBy('ngay_dat', 'desc')
-            ->get();
-
-
+            ->paginate(5);
         $categories = DB::table('danh_muc_san_pham')->get();
         $cate_product = DB::table('loai_sp')->get();
         $brandProducts = DB::table('thuong_hieu')->get();
