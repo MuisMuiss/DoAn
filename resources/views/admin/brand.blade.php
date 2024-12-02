@@ -69,9 +69,7 @@
                                                             style=" margin-right: 10px;">
                                                             <i class="fas fa-fw fa-pen"></i>
                                                         </a>
-                                                        <a href="{{ route('admin.deletebrand', ['thuong_hieu_id' => $th->thuong_hieu_id]) }}"
-                                                            class="btn btn-danger btn-circle btn-sm"data-toggle="modal"
-                                                            data-target="#deleteModal">
+                                                        <a href="" class="btn btn-danger btn-circle btn-sm" data-toggle="modal" data-target="#deleteModal{{ $th->thuong_hieu_id }}">
                                                             @csrf
                                                             @method('DELETE')
                                                             <i class="fas fa-trash"></i>
@@ -80,24 +78,20 @@
                                                 </td>
                                             </tr>
                                             <!-- Delete Modal-->
-                                            <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog"
+                                            <div class="modal fade" id="deleteModal{{ $th->thuong_hieu_id }}" tabindex="-1" role="dialog"
                                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title" style="color: red;"
-                                                                id="exampleModalLabel">Thông báo!!!</h5>
-                                                            <button class="close" type="button"
-                                                                data-dismiss="modal" aria-label="Close">
+                                                            <h5 class="modal-title" style="color: red;" id="exampleModalLabel">Thông báo!!!</h5>
+                                                            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                                                                 <span aria-hidden="true">×</span>
                                                             </button>
                                                         </div>
                                                         <div class="modal-body">Bạn chắc chắn có muốn xóa không</div>
                                                         <div class="modal-footer">
-                                                            <button class="btn btn-secondary" type="button"
-                                                                data-dismiss="modal">Cancel</button>
-                                                            <a class="btn btn-danger"
-                                                                href="{{ route('admin.deletebrand', ['thuong_hieu_id' => $th->thuong_hieu_id]) }}">Detele</a>
+                                                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                                                            <a class="btn btn-danger" href="{{ route('admin.deletebrand', ['thuong_hieu_id' => $th->thuong_hieu_id]) }}">Delete</a>
                                                         </div>
                                                     </div>
                                                 </div>

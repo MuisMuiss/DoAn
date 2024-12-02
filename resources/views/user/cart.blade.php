@@ -46,12 +46,12 @@
                             </td>
                         </tr> --}}
                         <tr>
-                            <th scope="row">
+                            <td>
                                 <div class="d-flex align-items-center">
                                     <img src=" {{ asset('images/product/' . $item->product->hinh_anh) }}"
                                         style="width: 80px; height: 80px;" alt="">
                                 </div>
-                            </th>
+                            </td>
                             <td>
                                 <p class="mb-0 mt-4">{{ $item->product->ten_san_pham }}</p>
                             </td>
@@ -65,7 +65,7 @@
                                     @method('POST') <!-- Xác định phương thức là POST -->
                                     <label for="so_luong">Số lượng:</label>
                                     <input type="number" id="so_luong" name="so_luong" value="{{ $item->so_luong }}"
-                                        min="1" max="{{ $item->product->so_luong_kho }}" required>
+                                        min="1" max="{{ $item->product->so_luong_kho }}" style="padding: 5px 5px" required>
                                     <button type="submit" class="btn btn-info">Cập nhật</button>
                                 </form>
                             </td>

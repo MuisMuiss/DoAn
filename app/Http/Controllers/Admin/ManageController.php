@@ -535,6 +535,8 @@ class ManageController extends Controller
     public function searchNH(Request $request)
     {
         $keyword = $request->input('keyword');
+        $brand = Brand::all();
+        $product = Product::all();
         $nhaphang = Import::with(['brand'])
             ->where('nhap_hang_id', 'LIKE', "%$keyword%")
             ->orWhereHas('brand', function ($query) use ($keyword) {
@@ -542,6 +544,6 @@ class ManageController extends Controller
             })
             ->paginate(5);
 
-        return view('admin.nhaphang.import', compact('keyword', 'nhaphang'));
+        return view('admin.nhaphang.import', compact('keyword', 'nhaphang','brand','product'));
     }
 }

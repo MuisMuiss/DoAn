@@ -6,7 +6,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3>Sửa chi tiết nhập hàng</h3>
+                        <h3>Cập nhật chi tiết nhập hàng</h3>
                     </div>
                     @if (session('success'))
                         <h5 class="alert alert-success">{{ session('success') }}</h5>
