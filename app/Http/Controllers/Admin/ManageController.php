@@ -36,7 +36,6 @@ class ManageController extends Controller
             'ten_danh_muc.required' => 'Tên danh mục không được để trống.',
 
         ];
-
         $validatedData = $request->validate([
             'ten_danh_muc' => 'required',
         ], $messages);
@@ -56,7 +55,6 @@ class ManageController extends Controller
             'ten_danh_muc.required' => 'Tên danh mục không được để trống.',
 
         ];
-
         $validatedData = $request->validate([
             'ten_danh_muc' => 'required',
         ], $messages);
@@ -68,7 +66,6 @@ class ManageController extends Controller
     public function deletecate($danh_muc_id)
     {
         $category = Category::find($danh_muc_id);
-
         $category->delete();
         return redirect()->back()->with('status', 'Xóa danh mục thành công');
     }
@@ -91,7 +88,6 @@ class ManageController extends Controller
             'ten_thuong_hieu.required' => 'Tên thương hiệu không được để trống.',
             'mo_ta.required' => 'Mô tả thương hiệu không được để trống.',
         ];
-
         $validatedData = $request->validate([
             'ten_thuong_hieu' => 'required',
             'mo_ta' => 'required',
@@ -113,7 +109,6 @@ class ManageController extends Controller
             'ten_thuong_hieu.required' => 'Tên thương hiệu không được để trống.',
             'mo_ta.required' => 'Mô tả thương hiệu không được để trống.',
         ];
-
         $validatedData = $request->validate([
             'ten_thuong_hieu' => 'required',
             'mo_ta' => 'required',
@@ -127,7 +122,6 @@ class ManageController extends Controller
     public function deletebrand($thuong_hieu_id)
     {
         $brand = Brand::find($thuong_hieu_id);
-
         $brand->delete();
         return redirect()->back()->with('status', 'Xóa thương hiệu thành công');
     }
@@ -142,7 +136,6 @@ class ManageController extends Controller
     }
     public function themtype()
     {
-
         $typeproduct = ProductType::all();
         $category = Category::all();
         return view('admin.curd.addtype', compact('typeproduct', 'category'));
@@ -152,7 +145,6 @@ class ManageController extends Controller
         $messages = [
             'ten_loaisp.required' => 'Tên loại sản phẩm không được để trống.',
         ];
-
         $validatedData = $request->validate([
             'ten_loaisp' => 'required',
         ], $messages);
@@ -173,7 +165,6 @@ class ManageController extends Controller
         $messages = [
             'ten_loaisp.required' => 'Tên loại sản phẩm không được để trống.',
         ];
-
         $validatedData = $request->validate([
             'ten_loaisp' => 'required',
         ], $messages);
@@ -186,7 +177,6 @@ class ManageController extends Controller
     public function deletetype($loai_sp_id)
     {
         $typeproduct = ProductType::find($loai_sp_id);
-
         $typeproduct->delete();
         return redirect()->back()->with('status', 'Xóa loại sản phẩm thành công');
     }
@@ -237,24 +227,20 @@ class ManageController extends Controller
             'don_hang_id' => 'required|exists:don_hang,don_hang_id',
             'trang_thai' => 'required|string',
         ]);
-
         $order = Order::find($validated['don_hang_id']);
         $order->trang_thai_don_hang = $validated['trang_thai'];
         $order->save();
-
         return redirect()->back()->with('success', 'Trạng thái đơn hàng đã được cập nhật.');
     }
     public function deleteorder($don_hang_id)
     {
         $order = Order::find($don_hang_id);
-
         $order->delete();
         return redirect()->back()->with('success', 'Xóa loại sản phẩm thành công');
     }
     public function viewctorder($don_hang_id)
     {
         $product = Product::all()->keyBy('san_pham_id');
-
         $order = Order::with('User')->find($don_hang_id);
         if (!$order) {
             return redirect()->route('ctorder.all')->with('error', 'Không tìm thấy chi tiết đơn hàng');
@@ -326,7 +312,6 @@ class ManageController extends Controller
             }
             $nhapHang->tong_tien = $tongTien;
             $nhapHang->save();
-
             return redirect()->route('import.all')->with('status', 'Đã thêm sản phẩm vào phiếu nhập!');
         } catch (\Exception $e) {
             return redirect()->back()->with('error','Lỗi!! Giá sản phẩm chỉ được nhập số');
@@ -335,7 +320,6 @@ class ManageController extends Controller
     public function deletenhap($nhap_hang_id)
     {
         $nhaphang = Import::find($nhap_hang_id);
-
         if ($nhaphang) {
             foreach ($nhaphang->chiTietNhapHang as $item) {
                 // Tìm sản phẩm tương ứng với chi tiết nhập hàng
@@ -346,7 +330,6 @@ class ManageController extends Controller
                 }
             }
             $nhaphang->delete();
-
             return redirect()->back()->with('success', 'Xóa nhập hàng thành công và cập nhật kho');
         }
         return redirect()->back()->with('error', 'Không tìm thấy nhập hàng');
@@ -495,7 +478,6 @@ class ManageController extends Controller
             'gia_nhap.numeric' => 'Giá nhập phải là một số hợp lệ.',
             'gia_nhap.min' => 'Giá nhập phải lớn hơn hoặc bằng 0.',
         ];
-
         $validatedData = $request->validate([
             'so_luong' => 'required|integer|min:1',
             'gia_nhap' => 'required|numeric|min:0',

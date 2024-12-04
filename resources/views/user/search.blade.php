@@ -26,17 +26,16 @@
 <!-- Milk Shop Start-->
 <div class="container-fluid fruite py-5">
     <div class="container py-5">
-      
-        <h1 class="mb-4"><a  href="{{ route('index') }}" >Home . </a>Tìm kiếm</h1>
-    
+
+        <h1 class="mb-4"><a href="{{ route('index') }}">Home . </a>Tìm kiếm</h1>
+
         <div class="row g-4">
             <div class="col-lg-12">
                 <div class="row g-4">
                     <div class="col-9">
                         <div class="col-lg-12">
                             <div class="mb-3">
-                                <form id="priceRangeForm" method="GET"
-                                    action="{{ route('find') }}">
+                                <form id="priceRangeForm" method="GET" action="{{ route('find') }}">
                                     <div class="row align-items-end">
                                         <!-- Nhập giá thấp nhất -->
                                         <div class="col-md-3" style="width:20%">
@@ -72,11 +71,16 @@
 
                             <div class="bg-light ps-3 py-3 rounded d-flex justify-content-between mb-4">
                                 <label for="fruits">Sắp xếp mặc định:</label>
-                                <select id="fruits" name="sort" class="border-0 form-select-sm bg-light me-3" form="fruitform" onchange="this.form.submit()">
-                                    <option value="random" {{ request('sort') == 'random' ? 'selected' : '' }}>Ngẫu nhiên</option>
-                                    <option value="newest" {{ request('sort') == 'newest' ? 'selected' : '' }}>Sản phẩm mới</option>
-                                    <option value="price_desc" {{ request('sort') == 'price_desc' ? 'selected' : '' }}>Giá cao - thấp</option>
-                                    <option value="price_asc" {{ request('sort') == 'price_asc' ? 'selected' : '' }}>Giá thấp - cao</option>
+                                <select id="fruits" name="sort" class="border-0 form-select-sm bg-light me-3"
+                                    form="fruitform" onchange="this.form.submit()">
+                                    <option value="random" {{ request('sort') == 'random' ? 'selected' : '' }}>Ngẫu
+                                        nhiên</option>
+                                    <option value="newest" {{ request('sort') == 'newest' ? 'selected' : '' }}>Sản phẩm
+                                        mới</option>
+                                    <option value="price_desc" {{ request('sort') == 'price_desc' ? 'selected' : '' }}>
+                                        Giá cao - thấp</option>
+                                    <option value="price_asc" {{ request('sort') == 'price_asc' ? 'selected' : '' }}>
+                                        Giá thấp - cao</option>
                                 </select>
                             </div>
                         </form>
@@ -90,13 +94,12 @@
                                     <ul class="list-unstyled fruite-categorie">
                                         <li>
                                             @foreach ($cate_product as $cate)
-                                            
-                                            <div class="d-flex justify-content-between fruite-name">
-                                                <a href="{{route('go.shop',$cate->loai_sp_id)}}"><i
-                                                    class="fas fa-cart-arrow-down me-3"></i>
-                                                {{ $cate->ten_loaisp }}</a>
-                                            <span>||</span>
-                                            </div>
+                                                <div class="d-flex justify-content-between fruite-name">
+                                                    <a href="{{ route('go.shop', $cate->loai_sp_id) }}"><i
+                                                            class="fas fa-cart-arrow-down me-3"></i>
+                                                        {{ $cate->ten_loaisp }}</a>
+                                                    <span>||</span>
+                                                </div>
                                             @endforeach
                                         </li>
                                     </ul>
@@ -107,20 +110,20 @@
                                 <div class="mb-3">
                                     <h4>Thương hiệu</h4>
                                     @foreach ($brand_product as $brand)
-                                    <div class="d-flex justify-content-between fruite-name">
-                                        <a href="{{route('go.brand',$brand->thuong_hieu_id)}}"><i
-                                            class="far fa-hand-point-right me-3"></i>{{ $brand->ten_thuong_hieu }}</a>
-                                    <span>||</span>
-                                    </div>
+                                        <div class="d-flex justify-content-between fruite-name">
+                                            <a href="{{ route('go.brand', $brand->thuong_hieu_id) }}"><i
+                                                    class="far fa-hand-point-right me-3"></i>{{ $brand->ten_thuong_hieu }}</a>
+                                            <span>||</span>
+                                        </div>
                                     @endforeach
                                 </div>
                             </div>
-                       
+
                         </div>
                     </div>
                     <div class="col-lg-9">
                         <div class="row g-4 justify-content-center">
-                        @include('user.product')
+                            @include('user.product')
                         </div>
                     </div>
                 </div>
@@ -131,11 +134,11 @@
 </div>
 <script>
     function prepareSortingForm() {
-    const minPriceInput = document.querySelector('#hiddenMinPrice');
-    const maxPriceInput = document.querySelector('#hiddenMaxPrice');
-    if (!minPriceInput.value.trim()) minPriceInput.disabled = true;
-    if (!maxPriceInput.value.trim()) maxPriceInput.disabled = true;
-    document.querySelector('#fruitform').submit();
-}
+        const minPriceInput = document.querySelector('#hiddenMinPrice');
+        const maxPriceInput = document.querySelector('#hiddenMaxPrice');
+        if (!minPriceInput.value.trim()) minPriceInput.disabled = true;
+        if (!maxPriceInput.value.trim()) maxPriceInput.disabled = true;
+        document.querySelector('#fruitform').submit();
+    }
 </script>
 @include('user.layout.footer')

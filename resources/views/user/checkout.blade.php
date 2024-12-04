@@ -79,7 +79,7 @@
                                     <th scope="col">Ảnh</th>
                                     <th scope="col">Tên</th>
                                     <th scope="col">Giá</th>
-                                    <th scope="col">Gố lượng</th>
+                                    <th scope="col">Số lượng</th>
                                     <th scope="col">Tổng giá</th>
                                 </tr>
                             </thead>

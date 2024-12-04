@@ -66,11 +66,16 @@
                             <input type="hidden" name="maxPrice" value="{{ request('maxPrice') }}">
                             <div class="bg-light ps-3 py-3 rounded d-flex justify-content-between mb-4">
                                 <label for="fruits">Sắp xếp mặc định:</label>
-                                <select id="fruits" name="sort" class="border-0 form-select-sm bg-light me-3" form="fruitform" onchange="this.form.submit()">
-                                    <option value="random" {{ request('sort') == 'random' ? 'selected' : '' }}>Ngẫu nhiên</option>
-                                    <option value="newest" {{ request('sort') == 'newest' ? 'selected' : '' }}>Sản phẩm mới</option>
-                                    <option value="price_desc" {{ request('sort') == 'price_desc' ? 'selected' : '' }}>Giá cao - thấp</option>
-                                    <option value="price_asc" {{ request('sort') == 'price_asc' ? 'selected' : '' }}>Giá thấp - cao</option>
+                                <select id="fruits" name="sort" class="border-0 form-select-sm bg-light me-3"
+                                    form="fruitform" onchange="this.form.submit()">
+                                    <option value="random" {{ request('sort') == 'random' ? 'selected' : '' }}>Ngẫu
+                                        nhiên</option>
+                                    <option value="newest" {{ request('sort') == 'newest' ? 'selected' : '' }}>Sản phẩm
+                                        mới</option>
+                                    <option value="price_desc" {{ request('sort') == 'price_desc' ? 'selected' : '' }}>
+                                        Giá cao - thấp</option>
+                                    <option value="price_asc" {{ request('sort') == 'price_asc' ? 'selected' : '' }}>
+                                        Giá thấp - cao</option>
                                 </select>
                             </div>
                         </form>
@@ -131,11 +136,11 @@
 </div>
 <script>
     function prepareSortingForm() {
-    const minPriceInput = document.querySelector('#hiddenMinPrice');
-    const maxPriceInput = document.querySelector('#hiddenMaxPrice');
-    if (!minPriceInput.value.trim()) minPriceInput.disabled = true;
-    if (!maxPriceInput.value.trim()) maxPriceInput.disabled = true;
-    document.querySelector('#fruitform').submit();
-}
+        const minPriceInput = document.querySelector('#hiddenMinPrice');
+        const maxPriceInput = document.querySelector('#hiddenMaxPrice');
+        if (!minPriceInput.value.trim()) minPriceInput.disabled = true;
+        if (!maxPriceInput.value.trim()) maxPriceInput.disabled = true;
+        document.querySelector('#fruitform').submit();
+    }
 </script>
 @include('user.layout.footer')

@@ -68,19 +68,23 @@
                             <p class="fw-bold mb-3" style="font-size: 2rem;">Loại sản phẩm: {{ $pro->ten_loaisp }}</p>
                             @foreach ($brand_product as $keybrand => $brand)
                                 @if ($pro->thuong_hieu_id == $brand->thuong_hieu_id)
-                                    <p class="fw-bold mb-3" style="font-size: 2rem;">Brand: {{ $brand->ten_thuong_hieu }}</p>
+                                    <p class="fw-bold mb-3" style="font-size: 2rem;">Brand:
+                                        {{ $brand->ten_thuong_hieu }}</p>
                                 @endif
                             @endforeach
-                            <h5 class="fw-bold mb-3" style="color: red; font-size: 2rem;">{{ number_format($pro->gia, 0, ',', '.') }} VND
+                            <h5 class="fw-bold mb-3" style="color: red; font-size: 2rem;">
+                                {{ number_format($pro->gia, 0, ',', '.') }} VND
                             </h5>
                             <!-- //   <p class="mb-4">Susp endisse ultricies nisi vel quam suscipit. Sabertooth peacock flounder; chain pickerel hatchetfish, pencilfish snailfish</p> -->
                             <form action="{{ route('cart.add', $pro->san_pham_id) }}" method="POST">
                                 @csrf
-                                <label class="fw-bold" for="so_luong" style="font-size: 1.5rem;" >Số lượng:</label>
+                                <label class="fw-bold" for="so_luong" style="font-size: 1.5rem;">Số lượng:</label>
                                 <input type="number" id="so_luong" name="so_luong" value="1" min="1"
                                     max="{{ $pro->so_luong_kho }}" required>
                                 <button type="submit"
-                                    class="btn border border-secondary rounded-pill px-3 text-primary" style="font-size: 1.5rem;"><i class="fa fa-shopping-bag me-2 text-primary"></i>Thêm vào giỏ hàng</button>
+                                    class="btn border border-secondary rounded-pill px-3 text-primary"
+                                    style="font-size: 1.5rem;"><i class="fa fa-shopping-bag me-2 text-primary"></i>Thêm
+                                    vào giỏ hàng</button>
                             </form>
                         </div>
                         <div class="col-lg-12">
@@ -111,18 +115,25 @@
                     <div class="row g-4">
                         @foreach ($products as $key => $pro)
                             @if ($pro->sp_bestseller == 1)
-                            <div class="col-md-6 col-lg-6 col-xl-3">
-                                <div class="text-center" style="border:1px solid #81c408;border-radius: 25px;">
-                                    <a href="{{ route('productdetail', $pro->san_pham_id) }}">
-                                        <img src="{{ asset('images/product/' . $pro->hinh_anh) }}" class="img-fluid w-100" alt="">
-                                    </a>
-                                    <div class="py-4">
-                                        <a href="{{ route('productdetail', $pro->san_pham_id) }}" class="h6" style="font-family: 'Arial', sans-serif;">{{ $pro->ten_san_pham }}
-                                            <h5 class="mb-3" style="color: red; font-family: 'Arial', sans-serif;">{{ number_format($pro->gia, 0, ',', '.') }} VNĐ</h5>
-                                        <a href="{{ route('cart.add1', $pro->san_pham_id) }}" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Thêm giỏ hàng</a>
+                                <div class="col-md-6 col-lg-6 col-xl-3">
+                                    <div class="text-center" style="border:1px solid #81c408;border-radius: 25px;">
+                                        <a href="{{ route('productdetail', $pro->san_pham_id) }}">
+                                            <img src="{{ asset('images/product/' . $pro->hinh_anh) }}"
+                                                class="img-fluid w-100" alt="">
+                                        </a>
+                                        <div class="py-4">
+                                            <a href="{{ route('productdetail', $pro->san_pham_id) }}" class="h6"
+                                                style="font-family: 'Arial', sans-serif;">{{ $pro->ten_san_pham }}
+                                                <h5 class="mb-3"
+                                                    style="color: red; font-family: 'Arial', sans-serif;">
+                                                    {{ number_format($pro->gia, 0, ',', '.') }} VNĐ</h5>
+                                                <a href="{{ route('cart.add1', $pro->san_pham_id) }}"
+                                                    class="btn border border-secondary rounded-pill px-3 text-primary"><i
+                                                        class="fa fa-shopping-bag me-2 text-primary"></i> Thêm giỏ
+                                                    hàng</a>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
                             @endif
                         @endforeach
                     </div>

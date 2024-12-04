@@ -144,7 +144,6 @@ class AdminController extends Controller
             //'so_dien_thoai.integer' => 'Số điện thoại phải là số nguyên.',
             'dia_chi.required' => 'Địa chỉ không được để trống.'
         ];
-
         $validatedData = $request->validate([
             'ho_ten' => 'required',
             'email' => 'required|email',
@@ -240,7 +239,6 @@ class AdminController extends Controller
         }
         $nguoiDung->trang_thai = $request->trang_thai ? 1 : 0;
         $nguoiDung->save();
-
         return redirect()->back()->with('status', 'Cập nhật user thành công');
     }
     //Delete
@@ -258,13 +256,11 @@ class AdminController extends Controller
     public function searchND(Request $request)
     {
         $keyword = $request->input('keyword');
-
         // Tìm kiếm theo các cột họ tên, email, số điện thoại
         $nguoiDung = nguoiDung::where('ho_ten', 'LIKE', "%$keyword%")
             ->orWhere('email', 'LIKE', "%$keyword%")
             ->orWhere('so_dien_thoai', 'LIKE', "%$keyword%")
             ->paginate(5);
-
         return view('admin.user', compact('nguoiDung', 'keyword'));
     }
 }

@@ -1,3 +1,3 @@
-@include("admin.autth.head")
+{{-- @include("admin.autth.head")
 
-@include("admin.autth.footer")
+@include("admin.autth.footer") --}}

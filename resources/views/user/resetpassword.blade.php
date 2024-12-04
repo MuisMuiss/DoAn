@@ -79,11 +79,11 @@
                             <a href="{{ route('shopsua') }}" class="nav-link dropdown-toggle">Sữa</a>
                             <div class="dropdown-menu m-0 bg-secondary rounded-0">
                                 @foreach ($cate_product as $cate)
-                                @if ($cate->danh_muc_id == 1)
-                                <a href="{{route('go.shop',$cate->loai_sp_id)}}" class="dropdown-item">
-                                    <option value=" ">{{ $cate->ten_loaisp }}</option>
-                                </a>
-                                @endif
+                                    @if ($cate->danh_muc_id == 1)
+                                        <a href="{{ route('go.shop', $cate->loai_sp_id) }}" class="dropdown-item">
+                                            <option value=" ">{{ $cate->ten_loaisp }}</option>
+                                        </a>
+                                    @endif
                                 @endforeach
                             </div>
                         </div>
@@ -91,25 +91,26 @@
                             <a href="{{ route('shopta') }}" class="nav-link dropdown-toggle">Tã</a>
                             <div class="dropdown-menu m-0 bg-secondary rounded-0">
                                 @foreach ($cate_product as $cate)
-                                @if ($cate->danh_muc_id == 2)
-                                <a href="{{route('go.shop',$cate->loai_sp_id)}}" class="dropdown-item">
-                                    <option value=" ">{{ $cate->ten_loaisp }}</option>
-                                </a>
-                                @endif
+                                    @if ($cate->danh_muc_id == 2)
+                                        <a href="{{ route('go.shop', $cate->loai_sp_id) }}" class="dropdown-item">
+                                            <option value=" ">{{ $cate->ten_loaisp }}</option>
+                                        </a>
+                                    @endif
                                 @endforeach
                             </div>
                         </div>
-                        <a href="{{route('info')}}" class="nav-item nav-link">Thông tin</a>
-                        <a href="{{route('contact')}}" class="nav-item nav-link">Liên hệ</a>
+                        <a href="{{ route('info') }}" class="nav-item nav-link">Thông tin</a>
+                        <a href="{{ route('contact') }}" class="nav-item nav-link">Liên hệ</a>
                     </div>
                     <div class="d-flex m-3 me-0">
                         <div class="position-relative" style="margin-right: 10em">
-                            <form method="GET" action="{{route('find')}}">
-                            <input class="form-control border-2 border-secondary rounded-pill" style="width: 140%"
-                                type="text" name="key" placeholder="Nhập tên sản phẩm cần tìm" fdprocessedid="wkib7">
-                            <button  type="submit"
-                                class="btn btn-search border-2 border-secondary position-absolute rounded-pill text-white h-100"
-                                style="top: 0; left:140%"><i class="fas fa-search text-primary"></i></button>
+                            <form method="GET" action="{{ route('find') }}">
+                                <input class="form-control border-2 border-secondary rounded-pill" style="width: 140%"
+                                    type="text" name="key" placeholder="Nhập tên sản phẩm cần tìm"
+                                    fdprocessedid="wkib7">
+                                <button type="submit"
+                                    class="btn btn-search border-2 border-secondary position-absolute rounded-pill text-white h-100"
+                                    style="top: 0; left:140%"><i class="fas fa-search text-primary"></i></button>
                             </form>
                         </div>
                         <a href="{{ route('cart.index') }}" class="position-relative me-4 my-auto">
@@ -124,7 +125,8 @@
                         </a>
                         <div class="nav-item dropdown">
                             @if (Auth::check())
-                                <a href="{{ route('accout.view', ['nguoi_dung_id' => Auth::id()]) }}" onclick="showContent(this)">
+                                <a href="{{ route('accout.view', ['nguoi_dung_id' => Auth::id()]) }}"
+                                    onclick="showContent(this)">
                                     <span class="mr-2 d-none d-lg-inline text-gray-600 small">Hi,
                                         {{ Auth::user()->ho_ten }}</span>
                                     <img class="img-profile"
@@ -187,17 +189,15 @@
                     <div class="form-group">
                         <label for="">Email:</label>
                         <input type="email" class="form-control form-control-user" id="exampleInputEmail"
-                            aria-describedby="emailHelp" placeholder="Email..." name="email"
-                            required>
-                            @error('email')
+                            aria-describedby="emailHelp" placeholder="Email..." name="email" required>
+                        @error('email')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
                     <div class="form-group">
                         <label for="">Mật khẩu:</label>
                         <input type="password" class="form-control form-control-user" id="exampleInputPassword"
-                            placeholder="Password..." name="password" value="{{ old('password') }}"
-                            required>
+                            placeholder="Password..." name="password" value="{{ old('password') }}" required>
                         @error('password')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror

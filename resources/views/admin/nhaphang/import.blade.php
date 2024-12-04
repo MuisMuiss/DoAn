@@ -20,7 +20,6 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <!-- Form cho thương hiệu -->
                         <div class="form-group row">
                             <label for="thuong_hieu_id" class="col-sm-3 col-form-label">Thương hiệu</label>
                             <div class="col-sm-9">
@@ -32,8 +31,6 @@
                                 </select>
                             </div>
                         </div>
-
-                        <!-- Form cho chi tiết nhập hàng -->
                         <div class="form-group">
                             <label for="">Chi tiết nhập hàng:</label>
                             <table class="table">
@@ -284,7 +281,6 @@
             `;
             // Append dòng mới vào bảng
             productRows.appendChild(newRow);
-            //xóa dòng
             newRow.querySelector('.remove-row').addEventListener('click', function() {
                 newRow.remove();
             });

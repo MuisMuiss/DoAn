@@ -112,11 +112,15 @@
                                 style="top: 0; left:140%"><i class="fas fa-search text-primary"></i></button>
                             </form>
                         </div>
-                        <a href="cart.html" class="position-relative me-4 my-auto">
+                        <a href="{{ route('cart.index') }}" class="position-relative me-4 my-auto">
                             <i class="fa fa-shopping-bag fa-2x"></i>
-                            <span
-                                class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1"
-                                style="top: -5px; left: 15px; height: 20px; min-width: 20px;">3</span>
+                            @if ($cartCount > 0)
+                                <span
+                                    class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1"
+                                    style="top: -5px; left: 15px; height: 20px; min-width: 20px;">
+                                    {{ $cartCount }}
+                                </span>
+                            @endif
                         </a>
                         <div class="nav-item dropdown">
                             @if (Auth::check())
