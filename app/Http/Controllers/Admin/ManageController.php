@@ -11,7 +11,7 @@ use App\Models\Detailimport;
 use App\Models\Import;
 use App\Models\nguoiDung;
 use App\Models\Order;
-use Illuminate\Support\Facades\Log;
+use Carbon\Carbon;
 use App\Models\OrderItem;
 use App\Models\Product;
 use App\Models\ProductType;
@@ -287,64 +287,70 @@ class ManageController extends Controller
         $products = Product::where('thuong_hieu_id', $brand_id)->get(['san_pham_id', 'ten_san_pham']);
         return response()->json($products);
     }
-    public function addProductToImport(Request $request)
+    public function addNH(Request $request)
     {
-        $request->validate([
-            'thuong_hieu_id' => 'required|exists:thuong_hieu,thuong_hieu_id',
-            'details' => 'required|array',
-            'details.*.san_pham_id' => 'exists:san_pham,san_pham_id',
-            'details.*.so_luong' => 'required|numeric|min:1',
-            'details.*.gia_nhap' => 'required|numeric|min:0',
-            'details.*.thuong_hieu_id' => 'exists:thuong_hieu,thuong_hieu_id',
-        ]);
-        do {
-            $generatedId = 'NH-' . rand(1000000000, 9999999999);
-            $existing = Import::where('nhap_hang_id', $generatedId)->exists();
-        } while ($existing);
-        // Tạo phiếu nhập
-        $nhapHang = Import::create([
-            'nhap_hang_id' => $generatedId,
-            'thuong_hieu_nhap' => $request->thuong_hieu_id,
-            'ngay_nhap' => now(),
-            'tong_tien' => 0,
-        ]);
-
-        $tongTien = 0;
-        // Thêm sản phẩm vào phiếu nhập và tính tổng tiền
-        foreach ($request->details as $detail) {
-            $ctNhap = Detailimport::create([
-                'nhap_hang_id' => $nhapHang->nhap_hang_id,
-                'san_pham_id' => $detail['san_pham_id'],
-                'thuong_hieu_id' => $nhapHang->thuong_hieu_nhap,
-                'so_luong' => $detail['so_luong'],
-                'gia_nhap' => $detail['gia_nhap'],
+        try {
+            $request->validate([
+                'thuong_hieu_id' => 'required|exists:thuong_hieu,thuong_hieu_id',
+                'details' => 'required|array',
+                'details.*.san_pham_id' => 'exists:san_pham,san_pham_id',
+                'details.*.so_luong' => 'required|numeric|min:1',
+                'details.*.gia_nhap' => 'required|numeric|min:0',
+                'details.*.thuong_hieu_id' => 'exists:thuong_hieu,thuong_hieu_id',
             ]);
-            $tongTien += $ctNhap->so_luong * $ctNhap->gia_nhap;
-        }
-        $nhapHang->tong_tien = $tongTien;
-        $nhapHang->save();
+            $date = Carbon::now()->format('Ymd');
+            $lastId = DB::table('nhap_hang')
+                ->where('nhap_hang_id', 'like', "NH{$date}%")
+                ->orderBy('nhap_hang_id', 'desc')
+                ->first();
 
-        return redirect()->route('import.all')->with('status', 'Đã thêm sản phẩm vào phiếu nhập!');
+            $nextNumber = $lastId ? ((int) substr($lastId->nhap_hang_id, -4)) + 1 : 1;
+
+            $Id = 'NH' . $date . str_pad($nextNumber, 4, '0', STR_PAD_LEFT);
+            $nhapHang = Import::create([
+                'nhap_hang_id' => $Id,
+                'thuong_hieu_nhap' => $request->thuong_hieu_id,
+                'ngay_nhap' => now(),
+                'tong_tien' => 0,
+            ]);
+            $tongTien = 0;
+            foreach ($request->details as $detail) {
+                $ctNhap = Detailimport::create([
+                    'nhap_hang_id' => $nhapHang->nhap_hang_id,
+                    'san_pham_id' => $detail['san_pham_id'],
+                    'thuong_hieu_id' => $nhapHang->thuong_hieu_nhap,
+                    'so_luong' => $detail['so_luong'],
+                    'gia_nhap' => $detail['gia_nhap'],
+                ]);
+                $tongTien += $ctNhap->so_luong * $ctNhap->gia_nhap;
+            }
+            $nhapHang->tong_tien = $tongTien;
+            $nhapHang->save();
+
+            return redirect()->route('import.all')->with('status', 'Đã thêm sản phẩm vào phiếu nhập!');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error','Lỗi!! Giá sản phẩm chỉ được nhập số');
+        }
     }
     public function deletenhap($nhap_hang_id)
-{
-    $nhaphang = Import::find($nhap_hang_id);
+    {
+        $nhaphang = Import::find($nhap_hang_id);
 
-    if ($nhaphang) {
-        foreach ($nhaphang->chiTietNhapHang as $item) {
-            // Tìm sản phẩm tương ứng với chi tiết nhập hàng
-            $product = Product::find($item->san_pham_id);
-            if ($product) {
-                $product->so_luong_kho -= $item->so_luong;
-                $product->save();
+        if ($nhaphang) {
+            foreach ($nhaphang->chiTietNhapHang as $item) {
+                // Tìm sản phẩm tương ứng với chi tiết nhập hàng
+                $product = Product::find($item->san_pham_id);
+                if ($product) {
+                    $product->so_luong_kho -= $item->so_luong;
+                    $product->save();
+                }
             }
-        }
-        $nhaphang->delete();
+            $nhaphang->delete();
 
-        return redirect()->back()->with('success', 'Xóa nhập hàng thành công và cập nhật kho');
+            return redirect()->back()->with('success', 'Xóa nhập hàng thành công và cập nhật kho');
+        }
+        return redirect()->back()->with('error', 'Không tìm thấy nhập hàng');
     }
-    return redirect()->back()->with('error', 'Không tìm thấy nhập hàng');
-}
 
 
 
@@ -544,6 +550,6 @@ class ManageController extends Controller
             })
             ->paginate(5);
 
-        return view('admin.nhaphang.import', compact('keyword', 'nhaphang','brand','product'));
+        return view('admin.nhaphang.import', compact('keyword', 'nhaphang', 'brand', 'product'));
     }
 }

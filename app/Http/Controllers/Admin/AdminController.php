@@ -60,7 +60,7 @@ class AdminController extends Controller
             ->orderBy('thang')
             ->get()
             ->groupBy('nam');
-    
+
         $doanhThuThang = Order::select(
             DB::raw('YEAR(ngay_dat) as nam'),
             DB::raw('MONTH(ngay_dat) as thang'),
@@ -102,6 +102,28 @@ class AdminController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         return redirect()->route('admin.login');
+    }
+
+
+    public function viewchangePass()
+    {
+        return view('admin.resetpass');
+    }
+    public function changePass(Request $request)
+    {
+        $currentUser = Auth::user();
+        if (!Hash::check($request->input('current_password'), $currentUser->mat_khau)) {
+            return back()->with('msg', 'Mật khẩu hiện tại không đúng.');
+        }
+        $newPassword = $request->input('new_password');
+        $confirmPassword = $request->input('confirm_password');
+        if ($newPassword !== $confirmPassword) {
+            return back()->with('msg', 'Xác nhận mật khẩu không khớp.');
+        }
+        $currentUser->mat_khau = Hash::make($newPassword);
+        /** @var \App\Models\User $currentUser **/
+        $currentUser->save();
+        return redirect()->route('admin.viewchange')->with('success', 'Đổi mật khẩu thành công.');
     }
     //CRUD 
     //Thêm user

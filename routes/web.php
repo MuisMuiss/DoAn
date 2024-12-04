@@ -111,11 +111,10 @@ Route::get('/type', function () {
 });
 
 Route::middleware('auth:admin')->group(function(){
-    // Route::get('/homeadmin', function() {
-    //      // Kiểm tra người dùng đã đăng nhập chưa
-    //     return view('admin.home');
-    // })->name('admin.home');
+
     Route::get('/homeadmin',[AdminController::class, "Dashboard"])->name('admin.home');
+    Route::get('/changepasswordadmin',[AdminController::class,"viewchangePass"])->name('admin.viewchange');
+    Route::post('/changepasswordadmin',[AdminController::class,"changePass"])->name('admin.change');
     //User
     // Thêm User
     Route::get('/themuser', [AdminController::class, "themuser"])->name('admin.themuser');
@@ -190,7 +189,7 @@ Route::middleware('auth:admin')->group(function(){
     //Nhập hàng 
     Route::get('/allnhap',[ManageController::class,"viewnhap"])->name('import.all');
     Route::get('/getBrand/{brand_id}', [ManageController::class, 'getBrand'])->name('get.brand');
-    Route::post('/add-product-to-import', [ManageController::class, 'addProductToImport'])->name('import.addproduct');
+    Route::post('/add-product-to-import', [ManageController::class, 'addNH'])->name('import.addproduct');
     // Route::get('/addnhap',[ManageController::class,"themnhap"])->name('import.add');
     // Route::post('/addnhap', [ManageController::class, "addnhap"])->name('admin.addnhap');
     // Cập nhật nhập hàng

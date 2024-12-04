@@ -4,7 +4,8 @@
 
     <!-- Page Heading -->
     <h1 class="h3 mb-2 text-gray-800">Quản lý nhập hàng</h1>
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addProductModal"><i class="fas fa-plus"></i>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addProductModal"><i
+            class="fas fa-plus"></i>
         Thêm sản phẩm nhập
     </button>
     <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
@@ -61,6 +62,7 @@
                                         <td>
                                             <input type="text" name="details[0][gia_nhap]" class="form-control"
                                                 required>
+
                                         </td>
                                         <td>
                                             <button type="button" class="btn btn-danger remove-row">Xóa</button>
@@ -88,6 +90,8 @@
         </div>
         @if (session('status'))
             <h5 class="alert alert-success">{{ session('status') }}</h5>
+        @elseif (session('error'))
+            <h5 class="alert alert-danger">{{ session('error') }}</h5>
         @endif
         <div class="card-body">
             <div class="table-responsive">
@@ -220,7 +224,6 @@
         const brandSelect = document.getElementById('thuong_hieu_id');
         const productRows = document.getElementById('product-rows');
         const addRowButton = document.getElementById('add-row');
-
         // Hàm để lấy sản phẩm theo thương hiệu
         function getProductsByBrand(brandId, callback) {
             $.ajax({
@@ -239,12 +242,10 @@
         // Khi thay đổi thương hiệu
         brandSelect.addEventListener('change', function() {
             const brandId = brandSelect.value;
-
             // Cập nhật tất cả các dòng trong bảng theo thương hiệu
             getProductsByBrand(brandId, function(products) {
                 // Xóa tất cả các dòng cũ
                 productRows.innerHTML = '';
-
                 // Nếu có sản phẩm, chỉ hiển thị một dòng trống cho phép chọn sản phẩm
                 if (products.length > 0) {
                     // Thêm một dòng mới
@@ -262,7 +263,6 @@
             const productOptions = products
                 .map(product => `<option value="${product.san_pham_id}">${product.ten_san_pham}</option>`)
                 .join('');
-
             newRow.innerHTML = `
                 <td>
                     <select name="details[${rowIndex}][san_pham_id]" class="form-control">
@@ -274,25 +274,24 @@
                 </td>
                 <td>
                     <input type="text" name="details[${rowIndex}][gia_nhap]" class="form-control" required>
+                    @error('details.[${rowIndex}].gia_nhap')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
                 </td>
                 <td>
                     <button type="button" class="btn btn-danger remove-row">Xóa</button>
                 </td>
             `;
-
             // Append dòng mới vào bảng
             productRows.appendChild(newRow);
-
-            // Thêm sự kiện xóa dòng
+            //xóa dòng
             newRow.querySelector('.remove-row').addEventListener('click', function() {
                 newRow.remove();
             });
         }
-
-        // Thêm dòng thủ công khi nhấn nút "Thêm dòng"
+        // Thêm dòng
         addRowButton.addEventListener('click', function() {
             const brandId = brandSelect.value;
-
             // Lấy danh sách sản phẩm theo thương hiệu
             getProductsByBrand(brandId, function(products) {
                 if (products.length > 0) {
